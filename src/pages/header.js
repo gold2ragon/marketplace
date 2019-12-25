@@ -6,10 +6,10 @@ import { auth } from '../firebase';
 import SignIn from './auth/signin';
 import SignUp from './auth/signup';
 import { selectCurrentUser } from '../redux/actions/auth';
-import { ReactComponent as Logo } from '../assets/logo.svg';
 import Button from '../components/button';
 
 import './header.scss';
+import { Row, Col } from 'react-bootstrap';
 
 class Header extends Component {
   constructor(props) {
@@ -29,7 +29,6 @@ class Header extends Component {
       showSignInModal: false,
     });
     if (this.signUpRef.current) {
-      console.log('====1', this.signUpRef);
       this.signUpRef.current.openModal();
     }
   };
@@ -48,23 +47,27 @@ class Header extends Component {
     const { currentUser } = this.props;
     return (
       <Fragment>
-        <div className="header">
-          <Link className="logo-container" to="/">
-            <Logo className="logo" />
-          </Link>
-          <div className="options">
-            {currentUser ? (
-              <Button onClick={() => auth.signOut()}>
-                Log out
-              </Button>
-            ) : (
-              <Fragment>
-                <Button onClick={this.signUp}>New User? Register</Button>
-                <Button onClick={this.signIn}>Login</Button>
-              </Fragment>
-            )}
-          </div>
-        </div>
+        <Row className="header">
+          <Col md={2}>
+            <Link className="logo-container" to="/">
+              <img src={require('../assets/logo.png')} className="logo" alt="logo" />
+            </Link>
+          </Col>
+          <Col md={10}>
+            <div className="options">
+              {currentUser ? (
+                <Button onClick={() => auth.signOut()}>
+                  Log out
+                </Button>
+              ) : (
+                <Fragment>
+                  <Button onClick={this.signUp}>New User? Register</Button>
+                  <Button onClick={this.signIn}>Login</Button>
+                </Fragment>
+              )}
+            </div>
+          </Col>
+        </Row>
         {this.state.showSignInModal && <SignIn ref={this.signInRef}/>}
         {this.state.showSignUpModal && <SignUp ref={this.signUpRef}/>}
       </Fragment>

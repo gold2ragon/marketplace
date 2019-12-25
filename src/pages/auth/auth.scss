@@ -1,17 +1,8 @@
 .auth-modal {
-  width: 380px;
-  display: flex;
-  flex-direction: column;
+  width: 350px;
   text-align: center;
-
-  .title {
-    margin: 10px 0;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-  }
+  padding-top: 30px !important;
+  padding-bottom: 50px !important;
 }
 
 .oauth-button {

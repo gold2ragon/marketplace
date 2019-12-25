@@ -8,6 +8,8 @@ import { selectCurrentUser } from './redux/actions/auth';
 import Header from './pages/header';
 import Homepage from './pages/homepage';
 import './app.scss';
+import { Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   unsubscribeFromAuth = null;
@@ -34,14 +36,14 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <Header />
         <Router>
           <Switch>
             <Route exact path="/" component={Homepage} />
           </Switch>
         </Router>
-      </div>
+      </Container>
     );
   }
 }

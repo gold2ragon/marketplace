@@ -1,3 +1,15 @@
 body {
   font-family: 'Lato', sans-serif;
 }
+
+button {
+  outline: none !important;
+  cursor: pointer !important;
+}
+
+.modal-content {
+  & > div {
+    margin: 0 auto;
+    border: none;
+  }
+}

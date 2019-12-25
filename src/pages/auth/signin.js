@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import FormInput from '../../components/form-input';
 import Button from '../../components/button';
-import Modal from '../../components/modal';
 import SocialOAuth from './social-oauth';
 import { auth } from '../../firebase';
+import { Modal } from 'react-bootstrap';
 
 class SignIn extends Component {
   constructor(props) {
@@ -48,13 +48,21 @@ class SignIn extends Component {
 
   hideModal = () => {
     this.setState({ showModal: false });
-  }
+  };
 
   render() {
+    const { showModal } = this.state;
     if (this.state.showModal) {
       return (
-        <Modal key={this.state.key}>
-          <div className="auth-modal">
+        <Modal
+          key={this.state.key}
+          size="lg"
+          centered
+          show={showModal}
+          animation={true}
+          onHide={this.hideModal}
+        >
+          <Modal.Body className="auth-modal">
             <h1 className="sign">Log in with</h1>
             <SocialOAuth hideModal={this.hideModal} />
             <h1 className="sign">or Log in</h1>
@@ -79,7 +87,7 @@ class SignIn extends Component {
                 <Button type="submit">Log in</Button>
               </div>
             </form>
-          </div>
+          </Modal.Body>
         </Modal>
       );
     } else {
