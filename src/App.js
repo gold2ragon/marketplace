@@ -10,6 +10,7 @@ import Homepage from './pages/homepage';
 import './app.scss';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MainPage from './pages/profile/MainPage';
 
 class App extends Component {
   unsubscribeFromAuth = null;
@@ -43,6 +44,7 @@ class App extends Component {
             <Route exact path="/" component={Homepage} />
           </Switch>
         </Router>
+        <MainPage/>
       </Container>
     );
   }

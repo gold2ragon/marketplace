@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    margin-top: 20px;
+}
+.container * {
+    color: #47525E;
+}
+.nav {
+    margin-right: 150px;
+   flex-basis: content;
+}
+.nav a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #47525E;
+}
+.nav .active {
+    font-weight: bold;
+}
