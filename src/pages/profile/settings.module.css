@@ -8,18 +8,9 @@
 .settings img {
     height: 80px;
     width: 80px;
+    margin-bottom: 15px;
 }
-.settings p {
 
-}
-.nameControl {
-    width: 40%;
-    margin-bottom: 20px;
-}
-.nameControl2 {
-    width: 40%;
-    margin-bottom: 10px;
-}
 .nameControlArea {
     width: 100%;
     margin-bottom: 20px;
@@ -40,14 +31,15 @@
     margin-top: 30px;
     margin-bottom: 20px;
 }
-.paymentControl {
-    width: 55%;
-    margin-bottom: 20px;
-}
+
 .noteText {
     margin-top: 40px;
     margin-bottom: 30px;
 }
 .noteText p {
     margin: 0;
+}
+.profileText {
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
