@@ -3,31 +3,35 @@ import { store } from '../store';
 import firebase from 'firebase';
 import { firestore } from '../../firebase';
 
-
 export const setInputValue = (value, name) => {
   for (let key in store.getState().userSettings) {
     if (key.toLowerCase() === name.trim().split(' ').join('').toLowerCase()) {
-      return {
-        type: SET_SETTINGS_INPUT_VALUE,
-        payload: {
-          key,
-          value,
-        },
+      return dispatch => {
+        dispatch({
+          type: SET_SETTINGS_INPUT_VALUE,
+          payload: {
+            key,
+            value,
+          },
+        });
       };
     }
   }
 };
 
-export const createSettingsData = async (data) => {
-  const { currentUser } = firebase.auth();
-  const userRef = await firestore.doc(`users/${currentUser.uid}`);
+export const createSettingsData = () => {
 
-  try {
-    await userRef.set({
-      settings: data,
-    });
-  } catch (e) {
-    console.log('error creating user', e.message);
-  }
+  return async (dispatch, getState) => {
+    const { currentUser } = firebase.auth();
+    const userRef = await firestore.doc(`users/${currentUser.uid}`);
+
+    try {
+      await userRef.set({
+        settings: getState().userSettings,
+      });
+    } catch (e) {
+      console.log('error creating user', e.message);
+    }
+    dispatch();
+  };
 };
-

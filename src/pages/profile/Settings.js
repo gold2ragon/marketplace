@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSettingsData, setInputValue } from '../../redux/actions/userSettings';
 import logo from '../../assets/356e996071544808b68b59f070dcee3e.png';
 
-const Settings = ({ setInputValue, userSettings, a }, props) => {
+const Settings = ({ setInputValue, userSettings, createSettingsData}) => {
   const setValueControl = (control, data) => {
     for (let key in data) {
       if (key.toLowerCase() === control.trim().split(' ').join('').toLowerCase()) {
@@ -58,7 +58,7 @@ const Settings = ({ setInputValue, userSettings, a }, props) => {
       <Input value={() => setValueControl('Confirm password', userSettings)} placeholder='Confirm password'
              type='password' margin='5px 0 17px 0' callback={setInputValue}/>
 
-      <button className={`btn`} onClick={() => createSettingsData(userSettings)}>Save</button>
+      <button className={`btn`} onClick={createSettingsData}>Save</button>
 
       <h4 className={styles.paymentText}>Payment Details</h4>
 
@@ -84,4 +84,11 @@ const mapStateToProps1 = ({ userSettings }) => {
   return { userSettings };
 };
 
-export default connect(mapStateToProps1, { setInputValue, createSettingsData })(Settings);
+function mapDispatchToProps(dispatch) {
+  return {
+    createSettingsData: () => dispatch(createSettingsData()),
+    setInputValue: (value, name) => dispatch(setInputValue(value, name))
+  }
+}
+
+export default connect(mapStateToProps1, mapDispatchToProps)(Settings);
