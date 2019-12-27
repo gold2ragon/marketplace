@@ -70,7 +70,7 @@ class SignIn extends Component {
                 name="email"
                 value={this.state.email}
                 onChange={this.handleChange}
-                label="Email"
+                placeholder="Email"
                 required
               />
 
@@ -79,7 +79,7 @@ class SignIn extends Component {
                 type="password"
                 value={this.state.password}
                 onChange={this.handleChange}
-                label="Password"
+                placeholder="Password"
                 required
               />
               <div className="buttons">

@@ -45,21 +45,17 @@ class Settings extends Component {
         <br />
         <h3>Profile</h3>
         <a>
-          <img className="upload-picture" src={require('../../assets/picture.png')} alt="picture" />
+          <img className="upload-picture" src={require('../../assets/user.png')} alt="picture" />
           <div>Choose/Edit profile pic</div>
         </a>
         <br />
-        <h3>Public Profile</h3>
-        <br />
+        <h3>Public Profile</h3><br />
         <Form.Control type="text" name="username" placeholder="Username" />
-        <br />
         <Form.Control type="text" name="first_name" placeholder="First Name" />
-        <br />
         <Form.Control type="text" name="last_name" placeholder="Last Name" />
-        <br />
         <Form.Control as="textarea" rows="3" placeholder="bio" />
-        <br />
 
+        <br />
         <h3>Private Information</h3>
         <br />
         <div>
@@ -74,21 +70,15 @@ class Settings extends Component {
         <h3>Change password</h3>
         <br />
         <Form.Control type="password" name="current_password" placeholder="Current Password" />
-        <br />
         <Form.Control type="password" name="new_password" placeholder="New Password" />
-        <br />
         <Form.Control type="password" name="confirm_password" placeholder="Confirm Password" />
-        <br />
         <br />
         
         <h3>Payment Details</h3>
         <br />
         <Form.Control type="password" name="bank_name" placeholder="Bank Name" />
-        <br />
         <Form.Control type="password" name="bank_account_number" placeholder="Bank Accout Number" />
-        <br />
         <Form.Control type="password" name="name_of_account_holder" placeholder="Name of Account Holder" />
-        <br />
         <Button variant="secondary" className="btn-main">
           Save
         </Button>
