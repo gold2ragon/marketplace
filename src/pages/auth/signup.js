@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import FormInput from '../../components/form-input';
-import Button from '../../components/button';
 import SocialOAuth from './social-oauth';
 import { auth, createUserProfileDocument } from '../../firebase';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button, Form,InputGroup } from 'react-bootstrap';
 
 class SignUp extends Component {
   constructor(props) {
@@ -71,42 +69,56 @@ class SignUp extends Component {
           onHide={this.hideModal}
         >
           <Modal.Body className="auth-modal">
-            <h1 className="sign">Sign up with</h1>
+            <h1 className="sign">Sign in with</h1>
             <SocialOAuth hideModal={this.hideModal} />
             <h1 className="sign">or Sign up</h1>
             <form onSubmit={this.handleSubmit}>
-              <FormInput
+              <Form.Control
                 type="text"
-                name="displayName"
+                name="first_name"
                 value={displayName}
                 onChange={this.handleChange}
-                label="Your name"
+                placeholder="First Name"
                 required
               />
-              <FormInput
+              <Form.Control
+                type="text"
+                name="last_name"
+                value={displayName}
+                onChange={this.handleChange}
+                placeholder="Last Name"
+                required
+              />
+              <Form.Control
                 type="email"
                 name="email"
                 value={email}
                 onChange={this.handleChange}
-                label="Email"
+                placeholder="Email"
                 required
               />
-              <FormInput
+              <Form.Control
                 type="password"
                 name="password"
                 value={password}
                 onChange={this.handleChange}
-                label="Password"
+                placeholder="Password"
                 required
               />
-              <FormInput
-                name="phoneNumber"
-                value={phoneNumber}
-                onChange={this.handleChange}
-                label="Mobile Number"
-                required
-              />
-              <Button type="submit">SIGN UP</Button>
+              <InputGroup>
+                <Form.Control
+                  type="tel"
+                  name="mobile_number"
+                  value={phoneNumber}
+                  onChange={this.handleChange}
+                  placeholder="Mobile Number"
+                  required
+                />
+                <InputGroup.Append>
+                  <InputGroup.Text><a className="btn-addon">Verify</a></InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+              <Button variant="secondary" className="form-control" type="submit">Sign up</Button>
             </form>
           </Modal.Body>
         </Modal>

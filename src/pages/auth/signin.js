@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import FormInput from '../../components/form-input';
-import Button from '../../components/button';
 import SocialOAuth from './social-oauth';
 import { auth } from '../../firebase';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 class SignIn extends Component {
   constructor(props) {
@@ -35,6 +33,7 @@ class SignIn extends Component {
   };
 
   handleChange = (event) => {
+    console.log(event);
     const { value, name } = event.target;
     this.setState({ [name]: value });
   };
@@ -67,24 +66,24 @@ class SignIn extends Component {
             <SocialOAuth hideModal={this.hideModal} />
             <h1 className="sign">or Log in</h1>
             <form onSubmit={this.handleSubmit}>
-              <FormInput
+              <Form.Control
                 name="email"
                 value={this.state.email}
-                handleChange={this.handleChange}
+                onChange={this.handleChange}
                 label="Email"
                 required
               />
 
-              <FormInput
+              <Form.Control
                 name="password"
                 type="password"
                 value={this.state.password}
-                handleChange={this.handleChange}
+                onChange={this.handleChange}
                 label="Password"
                 required
               />
               <div className="buttons">
-                <Button type="submit">Log in</Button>
+                <Button variant="secondary" className="form-control" type="submit">Log in</Button>
               </div>
             </form>
           </Modal.Body>
