@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { auth } from '../firebase';
 import SignIn from './auth/signin';
 import SignUp from './auth/signup';
 import { selectCurrentUser } from '../redux/actions/auth';
-import Button from '../components/button';
 
 import './header.scss';
-import { Row, Col } from 'react-bootstrap';
+import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 
 class Header extends Component {
   constructor(props) {
@@ -46,31 +44,50 @@ class Header extends Component {
   render() {
     const { currentUser } = this.props;
     return (
-      <Fragment>
-        <Row className="header">
-          <Col md={2}>
-            <Link className="logo-container" to="/">
+      <div className="header">
+        <Container>
+          <Navbar collapseOnSelect expand="lg">
+            <Navbar.Brand href="/" className="logo-container">
               <img src={require('../assets/logo.png')} className="logo" alt="logo" />
-            </Link>
-          </Col>
-          <Col md={10}>
-            <div className="options">
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
               {currentUser ? (
-                <Button onClick={() => auth.signOut()}>
-                  Log out
-                </Button>
+                <NavDropdown title="My Profile" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/profile">{'Profile & Settings'}</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/" onClick={() => auth.signOut()}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
-                <Fragment>
-                  <Button onClick={this.signUp}>New User? Register</Button>
-                  <Button onClick={this.signIn}>Login</Button>
-                </Fragment>
+                <Nav>
+                  <Nav.Link onClick={this.signUp}>
+                    New User? Register
+                  </Nav.Link>
+                  <Nav.Link onClick={this.signIn}>
+                    Login
+                  </Nav.Link>
+                </Nav>
               )}
-            </div>
-          </Col>
-        </Row>
-        {this.state.showSignInModal && <SignIn ref={this.signInRef}/>}
-        {this.state.showSignUpModal && <SignUp ref={this.signUpRef}/>}
-      </Fragment>
+            </Navbar.Collapse>
+          </Navbar>
+        </Container>
+        <hr />
+        {this.state.showSignInModal && <SignIn ref={this.signInRef} />}
+        {this.state.showSignUpModal && <SignUp ref={this.signUpRef} />}
+      </div>
     );
   }
 }

@@ -1,10 +1,20 @@
-body {
-  font-family: 'Lato', sans-serif;
+$baseColor: #47525E;
+$baseFontSize: 18px;
+
+body, p, div, input, textarea {
+  font-family: 'Lato', sans-serif !important;
+  color: $baseColor !important;
+  font-size: $baseFontSize !important;
+  ::-webkit-input-placeholder {
+    font-size: $baseFontSize !important;
+  }
 }
 
 button {
+  font-family: 'Lato', sans-serif !important;
   outline: none !important;
   cursor: pointer !important;
+  padding: 0.5rem .75rem !important;
 }
 
 .modal-content {
@@ -12,4 +22,50 @@ button {
     margin: 0 auto;
     border: none;
   }
+}
+
+.body {
+  margin: 50px 0;
+}
+
+/* sidebar & menu styles */
+.nav-pills{
+  .nav-link {
+    color: $baseColor !important;
+    outline: none;
+    letter-spacing: 1px;
+    font-size: 20px;
+    &.active {
+      font-weight: 900 !important;
+      text-shadow: 1px 0 $baseColor;
+      background-color: transparent !important;
+    }
+  }
+}
+
+.sidebar {
+  font-size: $baseFontSize !important;
+}
+
+/* form controls */
+.upload-picture {
+  width: 150px;
+}
+
+.form-control {
+  height: auto !important;
+  padding: 0.7rem .75rem !important;
+}
+
+.btn-main {
+  width: 200px;
+  font-size: 1.2rem !important;
+}
+
+.form-control, .input-group {
+  margin-bottom: 20px;
+}
+
+.btn-addon {
+  cursor: pointer;
 }

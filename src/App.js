@@ -7,8 +7,9 @@ import { setCurrentUser } from './redux/actions/auth';
 import { selectCurrentUser } from './redux/actions/auth';
 import Header from './pages/header';
 import Homepage from './pages/homepage';
+import Profile from './pages/profile';
+
 import './app.scss';
-import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
@@ -36,14 +37,15 @@ class App extends Component {
 
   render() {
     return (
-      <Container>
+      <div>
         <Header />
         <Router>
           <Switch>
             <Route exact path="/" component={Homepage} />
+            <Route exact path="/profile" component={Profile} />
           </Switch>
         </Router>
-      </Container>
+      </div>
     );
   }
 }
