@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './settings.module.css';
 import Input from './components/Input';
 import { connect } from 'react-redux';
-import { setInputValue } from '../../redux/actions/userSettings';
+import { createSettingsData, setInputValue } from '../../redux/actions/userSettings';
+import logo from '../../assets/356e996071544808b68b59f070dcee3e.png';
 
-const Settings = ({ setInputValue }) => {
-  const [valueTextArea, setValueTextArea] = useState('');
+const Settings = ({ setInputValue, userSettings, a }, props) => {
+  const setValueControl = (control, data) => {
+    for (let key in data) {
+      if (key.toLowerCase() === control.trim().split(' ').join('').toLowerCase()) {
+        return data[key];
+      }
+    }
+  };
 
   return (
     <div className={styles.settings}>
@@ -13,45 +20,54 @@ const Settings = ({ setInputValue }) => {
 
       <h4>Profile</h4>
 
-      <img
-        src="data:image/jpeg;base64,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"
-        alt=""/>
+      <img src={logo} alt="logo"/>
 
       <h4>Choose/Edit profile pic</h4>
 
       <h4 className={styles.profileText}>Public Profile</h4>
 
-      <Input placeholder={'Username'} margin='10px 0 15px 0' callback={setInputValue}/>
-      <Input placeholder={'First Name'} margin='10px 0 0 0' callback={setInputValue}/>
-      <Input placeholder={'Last Name'} margin='10px 0 20px 0' callback={setInputValue}/>
+      <Input value={() => setValueControl('Username', userSettings)} placeholder={'Username'} margin='10px 0 15px 0'
+             callback={setInputValue}/>
+      <Input value={() => setValueControl('First Name', userSettings)} placeholder={'First Name'} margin='10px 0 0 0'
+             callback={setInputValue}/>
+      <Input value={() => setValueControl('Last Name', userSettings)} placeholder={'Last Name'} margin='10px 0 20px 0'
+             callback={setInputValue}/>
       <textarea
         className={`form-control ${styles.nameControlArea}`}
         cols="30" rows="5" placeholder='Bio'
-        onChange={(e) => setValueTextArea(e.target.value)}
-        onBlur={() => setInputValue(valueTextArea, 'bio')}
+        onChange={(e) => setInputValue(e.target.value, 'bio')}
+        value={setValueControl('Bio', userSettings)}
       />
 
       <h4 className={styles.privateText}>Private Information</h4>
 
       <h6>We do not share these information with users unless explicit permission is given by you</h6>
 
-      <Input placeholder={'Email'} margin='0 0 10px 0' type='email' callback={setInputValue}/>
-      <Input placeholder={'Mobile Number'} margin='10px 0 10px 0' callback={setInputValue}/>
+      <Input value={() => setValueControl('Email', userSettings)} placeholder={'Email'} margin='0 0 10px 0' type='email'
+             callback={setInputValue}/>
+      <Input value={() => setValueControl('Mobile Number', userSettings)} placeholder={'Mobile Number'}
+             margin='10px 0 10px 0' callback={setInputValue}/>
 
 
       <h4 className={styles.passwordText}>Change password</h4>
 
-      <Input placeholder='Current password' type='password' margin='5px 0 10px 0' callback={setInputValue}/>
-      <Input placeholder='New password' type='password' margin='5px 0 10px 0' callback={setInputValue}/>
-      <Input placeholder='Confirm password' type='password' margin='5px 0 17px 0' callback={setInputValue}/>
+      <Input value={() => setValueControl('Current password', userSettings)} placeholder='Current password'
+             type='password' margin='5px 0 10px 0' callback={setInputValue}/>
+      <Input value={() => setValueControl('New password', userSettings)} placeholder='New password' type='password'
+             margin='5px 0 10px 0' callback={setInputValue}/>
+      <Input value={() => setValueControl('Confirm password', userSettings)} placeholder='Confirm password'
+             type='password' margin='5px 0 17px 0' callback={setInputValue}/>
 
-      <button className={`btn`}>Save</button>
+      <button className={`btn`} onClick={() => createSettingsData(userSettings)}>Save</button>
 
       <h4 className={styles.paymentText}>Payment Details</h4>
 
-      <Input placeholder='Bank Name' margin='0 0 20px 0' width='60%' callback={setInputValue}/>
-      <Input placeholder='Bank Account Number' margin='0 0 20px 0' width='60%' callback={setInputValue}/>
-      <Input placeholder='Name of Account Holder' margin='0 0 10px 0' width='60%' callback={setInputValue}/>
+      <Input value={() => setValueControl('Bank Name', userSettings)} placeholder='Bank Name' margin='0 0 20px 0'
+             width='60%' callback={setInputValue}/>
+      <Input value={() => setValueControl('Bank Account Number', userSettings)} placeholder='Bank Account Number'
+             margin='0 0 20px 0' width='60%' callback={setInputValue}/>
+      <Input value={() => setValueControl('Name of Account Holder', userSettings)} placeholder='Name of Account Holder'
+             margin='0 0 10px 0' width='60%' callback={setInputValue}/>
 
       <div className={styles.noteText}>
         <p>Refer a business to us and let us do all the rest.</p>
@@ -64,9 +80,8 @@ const Settings = ({ setInputValue }) => {
   );
 };
 
-const mapStateToProps = ({ userSettings }) => {
-  return userSettings;
+const mapStateToProps1 = ({ userSettings }) => {
+  return { userSettings };
 };
 
-
-export default connect(mapStateToProps, { setInputValue })(Settings);
+export default connect(mapStateToProps1, { setInputValue, createSettingsData })(Settings);

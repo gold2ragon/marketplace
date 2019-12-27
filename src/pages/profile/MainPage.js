@@ -12,7 +12,7 @@ export default props => {
     <div className={styles.container}>
       <div className={`navbar-nav ${styles.nav}`}>
         <NavLink activeClassName={styles.active} exact to='/'>Settings </NavLink>
-        <NavLink activeClassName={styles.active} exact to='/business'> Refer a Businessh </NavLink>
+        <NavLink activeClassName={styles.active} exact to='/business'> Refer a Business </NavLink>
         <NavLink activeClassName={styles.active} exact to='/nda'>NDAs </NavLink>
         <NavLink activeClassName={styles.active} exact to='/messages'>Messages </NavLink>
       </div>

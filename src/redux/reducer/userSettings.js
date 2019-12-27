@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   currentPassword: '',
   newPassword: '',
   confirmPassword: '',
-  bankName: 'hyi',
+  bankName: '',
   bankAccountNumber: '',
   nameOfAccountHolder: '',
 };

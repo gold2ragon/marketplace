@@ -1,21 +1,18 @@
-import React, {useState} from 'react'
+import React from 'react';
 
-export default ({callback = ()=>{}, placeholder, type = 'text', margin = '15px 0', width = '40%' }) => {
-const [value, setValue] = useState('')
+export default ({ callback, value, placeholder, type = 'text', margin = '15px 0', width = '40%' }) => {
   const style = {
     margin,
-    width
-  }
+    width,
+  };
 
-
- return (
-   <input
-     className='form-control'
-     type={type} placeholder={placeholder}
-     style={style}
-     value={value}
-     onChange={(e) => setValue(e.target.value)}
-     onBlur={() => callback(value, placeholder)}
-   />
- )
+  return (
+    <input
+      className='form-control'
+      type={type} placeholder={placeholder}
+      style={style}
+      value={value()}
+      onChange={(e) => callback(e.target.value, placeholder)}
+    />
+  );
 }
