@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SocialOAuth from './social-oauth';
 import { auth, createUserProfileDocument } from '../../firebase';
-import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
+import { Modal, Button, Form, InputGroup, FormGroup } from 'react-bootstrap';
 import firebase from 'firebase/app';
 
 class SignUp extends Component {
@@ -16,7 +16,8 @@ class SignUp extends Component {
       password: '',
       mobile_number: '',
       code: '',
-      invalid_message: '',
+      invalid_mobile_number: false,
+      invalid_code: false,
       showModal: true,
       showCodeInput: false,
       validated: false,
@@ -51,75 +52,118 @@ class SignUp extends Component {
       mobile_number: '',
       code: '',
       code_invalid: true,
-      invalid_message: '',
+      invalid_message: 'Please enter a mobile number',
       showModal: true,
       showCodeInput: false,
       validated: false,
     });
-  }
+  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
-  handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-      return;
-    }
-
-    try {
-      if (!this.verifyCode()) {
-        this.setState({ code: '' });
-        return;
-      }
-      const { email, password } = this.state;
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      await createUserProfileDocument(user, this.state);
-      this.setState({ validated: true });
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   submitPhoneNumber = async (event) => {
     event.preventDefault();
-    console.log('verification code sent!');
-
     const { mobile_number } = this.state;
+    this.setState({
+      invalid_mobile_number: false,
+    });
 
     let appVerifier = window.recaptchaVerifier;
-    let that = this;
+    let self = this;
     auth
       .signInWithPhoneNumber(mobile_number, appVerifier)
       .then(function(confirmationResult) {
         window.confirmationResult = confirmationResult;
-        that.setState({ showCodeInput: true });
+        self.setState({
+          showCodeInput: true,
+          invalid_mobile_number: false,
+        });
       })
       .catch(function(err) {
-        let invalid_message = 'The code is not correct.';
-        if (err.code === "auth/invalid-phone-number") {
-          invalid_message = 'The phone number is not valid';
+        if (err.code === 'auth/invalid-phone-number') {
+          self.setState({
+            invalid_mobile_number: true,
+            validated: false,
+            invalid_message: 'This mobile number is not valid',
+          });
+          return;
+        } else if (err.code === 400) {
+          if (err.message === "TOO_MANY_ATTEMPTS_TRY_LATER") {
+            self.setState({
+              invalid_mobile_number: true,
+              validated: false,
+              invalid_message: 'Too many attempts. Try later',
+            });
+            return;
+          }
         }
-        that.setState({ code: '' });
+        self.setState({
+          invalid_mobile_number: true,
+          validated: false,
+          invalid_message: 'Some Error happend',
+        });
+        console.log(err);
       });
   };
 
   verifyCode = async () => {
-    const { code } = this.state;
-
-    window.confirmationResult
-      .confirm(code)
-      .then(function(result) {
-        return true;
-      })
-      .catch(function(err) {
-        return false;
+    const { mobile_number, code } = this.state;
+    if (!mobile_number) {
+      this.setState({
+        invalid_mobile_number: false,
+        invalid_message: 'Please enter a mobile number.',
       });
+      return false;
+    }
+    if (!window.confirmationResult) {
+      this.setState({
+        validated: false,
+        invalid_mobile_number: true,
+        invalid_message: 'Please verify mobile number',
+      });
+      return false;
+    }
+
+    try {
+      const isVerifed = await window.confirmationResult.confirm(code);
+      if (isVerifed) return true;
+    } catch (err) {
+      console.log(err);
+    }
+    this.setState({
+      code: '',
+      invalid_code: true,
+      validated: false,
+    });
+    return false;
+  };
+
+  handleSubmit = async (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.setState({ validated: true });
+    event.preventDefault();
+    try {
+      if (!this.verifyCode()) {
+        event.stopPropagation();
+        return;
+      }
+      const { first_name, last_name, email, password, mobile_number } = this.state;
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
+      await createUserProfileDocument(user, {
+        first_name,
+        last_name,
+        mobile_number,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
@@ -132,10 +176,13 @@ class SignUp extends Component {
         password,
         phoneNumber,
         code,
-        code_invalid,
+        showCodeInput,
         validated,
+        invalid_code,
+        invalid_mobile_number,
         invalid_message,
       } = this.state;
+      console.log(invalid_code, invalid_mobile_number, invalid_message, validated);
       return (
         <Modal
           key={this.state.key}
@@ -146,61 +193,76 @@ class SignUp extends Component {
           onHide={this.hideModal}
         >
           <Modal.Body className="auth-modal">
-            <h1 className="sign">Sign in with</h1>
-            <SocialOAuth hideModal={this.hideModal} />
-            <h1 className="sign">or Sign up</h1>
+            <div>
+              <h3 className="sign">Sign in with</h3>
+              <SocialOAuth hideModal={this.hideModal} />
+              <br />
+            </div>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
-              <Form.Control
-                type="text"
-                name="first_name"
-                value={first_name}
-                onChange={this.handleChange}
-                placeholder="First Name"
-                required
-              />
-              <Form.Control
-                type="text"
-                name="last_name"
-                value={last_name}
-                onChange={this.handleChange}
-                placeholder="Last Name"
-                required
-              />
-              <Form.Control
-                type="email"
-                name="email"
-                value={email}
-                onChange={this.handleChange}
-                placeholder="Email"
-                required
-              />
-              <Form.Control
-                type="password"
-                name="password"
-                value={password}
-                onChange={this.handleChange}
-                placeholder="Password"
-                required
-              />
-              <InputGroup>
+              <FormGroup>
                 <Form.Control
-                  type="tel"
-                  name="mobile_number"
-                  value={phoneNumber}
+                  required
+                  type="text"
+                  name="first_name"
+                  placeholder="First Name"
+                  value={first_name}
                   onChange={this.handleChange}
-                  placeholder="Mobile Number"
+                />
+              </FormGroup>
+              <FormGroup>
+                <Form.Control
+                  type="text"
+                  name="last_name"
+                  value={last_name}
+                  onChange={this.handleChange}
+                  placeholder="Last Name"
                   required
                 />
-                <InputGroup.Append>
-                  <InputGroup.Text>
-                    <a className="btn-addon" onClick={this.submitPhoneNumber}>
-                      Verify
-                    </a>
-                  </InputGroup.Text>
-                </InputGroup.Append>
-              </InputGroup>
-              {this.state.showCodeInput && (
-                <div>
+              </FormGroup>
+              <FormGroup>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChange}
+                  placeholder="Email"
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={this.handleChange}
+                  placeholder="Password"
+                  required
+                />
+              </FormGroup>
+              <Form.Group className="form-input-mobile">
+                <InputGroup>
+                  <Form.Control
+                    type="tel"
+                    name="mobile_number"
+                    value={phoneNumber}
+                    onChange={this.handleChange}
+                    placeholder="Mobile Number"
+                    required
+                  />
+                  <InputGroup.Append>
+                    <InputGroup.Text>
+                      <a className="btn-addon" onClick={this.submitPhoneNumber}>
+                        Verify
+                      </a>
+                    </InputGroup.Text>
+                  </InputGroup.Append>
+                  {invalid_mobile_number && (
+                    <Form.Control.Feedback type="invalid">{invalid_message}</Form.Control.Feedback>
+                  )}
+                </InputGroup>
+              </Form.Group>
+              {showCodeInput && (
+                <FormGroup className="form-input-mobile">
                   <Form.Control
                     type="text"
                     name="code"
@@ -209,12 +271,14 @@ class SignUp extends Component {
                     placeholder="6 digit verification code"
                     required
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {invalid_message}
-                  </Form.Control.Feedback>
-                </div>
+                  {invalid_code && (
+                    <Form.Control.Feedback type="invalid">
+                      Code is not correct.
+                    </Form.Control.Feedback>
+                  )}
+                </FormGroup>
               )}
-              <Button variant="secondary" className="form-control" type="submit">
+              <Button variant="secondary" type="submit">
                 Sign up
               </Button>
               <div className="hidden" id="invisible-recapture" />
