@@ -1,8 +1,13 @@
 .auth-modal {
   width: 350px;
-  text-align: center;
   padding-top: 30px !important;
   padding-bottom: 50px !important;
+  & > div {
+    text-align: center;
+  }
+  button[type="submit"] {
+    width: 100%;
+  }
 }
 
 .oauth-button {
@@ -30,4 +35,8 @@
     margin: 0;
     padding: 0;
   }
+}
+
+.form-input-mobile .invalid-feedback {
+  display: block !important;
 }
