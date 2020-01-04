@@ -8,6 +8,7 @@ import { selectCurrentUser } from './redux/actions/auth';
 import Header from './pages/header';
 import Homepage from './pages/homepage';
 import Profile from './pages/profile';
+import LinkedInPopUp from './pages/auth/linkedin/LinkedInPopUp';
 
 import './app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -38,10 +39,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header />
         <Router>
           <Switch>
             <Route exact path="/" component={Homepage} />
+            <Route exact path="/linkedin" component={LinkedInPopUp} />
             <Route exact path="/profile" component={Profile} />
           </Switch>
         </Router>

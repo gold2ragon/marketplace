@@ -1,7 +1,7 @@
 $baseColor: #47525E;
-$baseFontSize: 18px;
+$baseFontSize: 16px;
 
-body, p, div, input, textarea {
+body, p, input, textarea {
   font-family: 'Lato', sans-serif !important;
   color: $baseColor !important;
   font-size: $baseFontSize !important;
@@ -25,7 +25,8 @@ button {
 }
 
 .body {
-  margin: 50px 0;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 /* sidebar & menu styles */
@@ -54,7 +55,7 @@ button {
 
 .form-control {
   height: auto !important;
-  padding: 0.7rem .75rem !important;
+  // padding: 0.7rem .75rem !important;
 }
 
 .btn-main {
@@ -62,10 +63,15 @@ button {
   font-size: 1.2rem !important;
 }
 
-.form-control, .input-group {
-  margin-bottom: 20px;
-}
-
 .btn-addon {
   cursor: pointer;
+}
+
+.rc-anchor-normal-footer {
+  display: none !important;
+}
+
+.invalid-field {
+  text-align: left;
+  color: red;
 }

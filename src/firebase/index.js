@@ -64,4 +64,5 @@ const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 facebookAuthProvider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithFacebook = () => auth.signInWithPopup(facebookAuthProvider);
 
+
 export default firebase;

@@ -72,10 +72,11 @@ class Settings extends Component {
         <br />
         <h3>Profile</h3>
         <a>
-          <img className="upload-picture" src={require('../../assets/picture.png')} alt="picture" />
+          <img className="upload-picture" src={require('../../assets/user.png')} alt="picture" />
           <div>Choose/Edit profile pic</div>
         </a>
         <br />
+            
         <h3>Public Profile</h3>
         <br />
         <Form.Control
@@ -111,7 +112,7 @@ class Settings extends Component {
           onChange={this.handleChange}
         />
         <br />
-
+        <br />
         <h3>Private Information</h3>
         <br />
         <div>
@@ -138,9 +139,7 @@ class Settings extends Component {
         <h3>Change password</h3>
         <br />
         <Form.Control type="password" name="current_password" placeholder="Current Password" />
-        <br />
         <Form.Control type="password" name="new_password" placeholder="New Password" />
-        <br />
         <Form.Control type="password" name="confirm_password" placeholder="Confirm Password" />
         <br />
         <br />
