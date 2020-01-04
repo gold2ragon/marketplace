@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import QueryString from 'query-string';
 
 class LinkedInPopUp extends Component {
@@ -26,7 +26,7 @@ class LinkedInPopUp extends Component {
     }
   }
   render() {
-    return 'Please wait...';
+    return <div className="oauth-popup">Please wait...</div>
   }
 }
 

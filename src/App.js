@@ -39,6 +39,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Header />
         <Router>
           <Switch>
             <Route exact path="/" component={Homepage} />
