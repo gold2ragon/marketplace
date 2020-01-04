@@ -10,14 +10,18 @@ class Settings extends Component {
 
     this.state = {
       username: '',
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       bio: '',
       email: '',
-      mobile_number: '',
-      bank_name: '',
-      bank_account_number: '',
-      name_of_account_holder: '',
+      mobileNumber: '',
+      bankName: '',
+      bankAccountNumber: '',
+      nameOfAccountHolder: '',
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+      validated: false,
     };
   }
 
@@ -31,6 +35,12 @@ class Settings extends Component {
   };
 
   handleSubmit = async (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.setState({ validated: true });
     event.preventDefault();
     try {
       const user = await auth.currentUser;
@@ -38,14 +48,14 @@ class Settings extends Component {
 
       this.setState({
         username: '',
-        first_name: '',
-        last_name: '',
+        firstName: '',
+        lastName: '',
         bio: '',
         email: '',
-        mobile_number: '',
-        bank_name: '',
-        bank_account_number: '',
-        name_of_account_holder: '',
+        mobileNumber: '',
+        bankName: '',
+        bankAccountNumber: '',
+        nameOfAccountHolder: '',
       });
     } catch (error) {
       console.log(error, 'err');
@@ -55,19 +65,23 @@ class Settings extends Component {
   render() {
     const {
       username,
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       bio,
       email,
-      mobile_number,
-      bank_name,
-      bank_account_number,
-      name_of_account_holder,
+      mobileNumber,
+      bankName,
+      bankAccountNumber,
+      nameOfAccountHolder,
+      currentPassword,
+      newPassword,
+      confirmPassword,
+      validated,
     } = this.state;
 
     console.log(this.state);
     return (
-      <Form className="profile-settings" onSubmit={this.handleSubmit}>
+      <Form noValidate validated={validated} className="profile-settings" onSubmit={this.handleSubmit}>
         <h3>Settings</h3>
         <br />
         <h3>Profile</h3>
@@ -85,22 +99,25 @@ class Settings extends Component {
           value={username}
           placeholder="Username"
           onChange={this.handleChange}
+          required
         />
         <br />
         <Form.Control
           type="text"
-          name="first_name"
-          value={first_name}
+          name="firstName"
+          value={firstName}
           placeholder="First Name"
           onChange={this.handleChange}
+          required
         />
         <br />
         <Form.Control
           type="text"
-          name="last_name"
-          value={last_name}
+          name="lastName"
+          value={lastName}
           placeholder="Last Name"
           onChange={this.handleChange}
+          required
         />
         <br />
         <Form.Control
@@ -110,6 +127,7 @@ class Settings extends Component {
           placeholder="bio"
           value={bio}
           onChange={this.handleChange}
+          required
         />
         <br />
         <br />
@@ -125,22 +143,48 @@ class Settings extends Component {
           placeholder="Email"
           value={email}
           onChange={this.handleChange}
+          required
         />
         <br />
         <Form.Control
           type="tel"
-          name="mobile_number"
+          name="mobileNumber"
           placeholder="Mobile Number"
-          value={mobile_number}
+          value={mobileNumber}
           onChange={this.handleChange}
+          required
         />
         <br />
 
         <h3>Change password</h3>
         <br />
-        <Form.Control type="password" name="current_password" placeholder="Current Password" />
-        <Form.Control type="password" name="new_password" placeholder="New Password" />
-        <Form.Control type="password" name="confirm_password" placeholder="Confirm Password" />
+        <Form.Control 
+          type="password"
+          name="currentPassword"
+          placeholder="Current Password"
+          value={currentPassword}
+          onChange={this.handleChange}
+          required
+        />
+        <br />
+
+        <Form.Control 
+          type="password"
+          name="newPassword"
+          placeholder="New Password" 
+          value={newPassword}
+          onChange={this.handleChange}
+          required
+        />
+        <br />
+        <Form.Control
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={this.handleChange}
+          required
+        />
         <br />
         <br />
 
@@ -148,26 +192,29 @@ class Settings extends Component {
         <br />
         <Form.Control
           type="password"
-          name="bank_name"
+          name="bankName"
           placeholder="Bank Name"
-          value={bank_name}
+          value={bankName}
           onChange={this.handleChange}
+          required
         />
         <br />
         <Form.Control
           type="password"
-          name="bank_account_number"
+          name="bankAccountNumber"
           placeholder="Bank Accout Number"
-          value={bank_account_number}
+          value={bankAccountNumber}
           onChange={this.handleChange}
+          required
         />
         <br />
         <Form.Control
           type="password"
-          name="name_of_account_holder"
+          name="nameOfAccountHolder"
           placeholder="Name of Account Holder"
           onChange={this.handleChange}
-          value={name_of_account_holder}
+          value={nameOfAccountHolder}
+          required
         />
         <br />
         <Button variant="secondary" className="btn-main" type="submit">
