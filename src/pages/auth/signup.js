@@ -10,14 +10,14 @@ class SignUp extends Component {
 
     this.state = {
       key: 1,
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
-      mobile_number: '',
+      mobileNumber: '',
       code: '',
-      invalid_mobile_number: false,
-      invalid_code: false,
+      invalidMobileNumber: false,
+      invalidCode: false,
       showModal: true,
       showCodeInput: false,
       validated: false,
@@ -45,17 +45,18 @@ class SignUp extends Component {
 
   clearFormValues = () => {
     this.setState({
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
-      mobile_number: '',
+      mobileNumber: '',
       code: '',
-      code_invalid: true,
-      invalid_message: 'Please enter a mobile number',
+      codeInvalid: true,
+      invalidMessage: 'Please enter a mobile number',
       showModal: true,
       showCodeInput: false,
       validated: false,
+      signupErrorMessage: '',
     });
   };
 
@@ -66,63 +67,63 @@ class SignUp extends Component {
 
   submitPhoneNumber = async (event) => {
     event.preventDefault();
-    const { mobile_number } = this.state;
+    const { mobileNumber } = this.state;
     this.setState({
-      invalid_mobile_number: false,
+      invalidMobileNumber: false,
     });
 
     let appVerifier = window.recaptchaVerifier;
     let self = this;
     auth
-      .signInWithPhoneNumber(mobile_number, appVerifier)
+      .signInWithPhoneNumber(mobileNumber, appVerifier)
       .then(function(confirmationResult) {
         window.confirmationResult = confirmationResult;
         self.setState({
           showCodeInput: true,
-          invalid_mobile_number: false,
+          invalidMobileNumber: false,
         });
       })
       .catch(function(err) {
         if (err.code === 'auth/invalid-phone-number') {
           self.setState({
-            invalid_mobile_number: true,
+            invalidMobileNumber: true,
             validated: false,
-            invalid_message: 'This mobile number is not valid',
+            invalidMessage: 'This mobile number is not valid',
           });
           return;
         } else if (err.code === 400) {
           if (err.message === "TOO_MANY_ATTEMPTS_TRY_LATER") {
             self.setState({
-              invalid_mobile_number: true,
+              invalidMobileNumber: true,
               validated: false,
-              invalid_message: 'Too many attempts. Try later',
+              invalidMessage: 'Too many attempts. Try later',
             });
             return;
           }
         }
         self.setState({
-          invalid_mobile_number: true,
+          invalidMobileNumber: true,
           validated: false,
-          invalid_message: 'Some Error happend',
+          invalidMessage: 'Some Error happend',
         });
         console.log(err);
       });
   };
 
   verifyCode = async () => {
-    const { mobile_number, code } = this.state;
-    if (!mobile_number) {
+    const { mobileNumber, code } = this.state;
+    if (!mobileNumber) {
       this.setState({
-        invalid_mobile_number: false,
-        invalid_message: 'Please enter a mobile number.',
+        invalidMobileNumber: false,
+        invalidMessage: 'Please enter a mobile number.',
       });
       return false;
     }
     if (!window.confirmationResult) {
       this.setState({
         validated: false,
-        invalid_mobile_number: true,
-        invalid_message: 'Please verify mobile number',
+        invalidMobileNumber: true,
+        invalidMessage: 'Please verify mobile number',
       });
       return false;
     }
@@ -135,7 +136,7 @@ class SignUp extends Component {
     }
     this.setState({
       code: '',
-      invalid_code: true,
+      invalidCode: true,
       validated: false,
     });
     return false;
@@ -154,35 +155,44 @@ class SignUp extends Component {
         event.stopPropagation();
         return;
       }
-      const { first_name, last_name, email, password, mobile_number } = this.state;
+      const { firstName, lastName, email, password, mobileNumber } = this.state;
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await createUserProfileDocument(user, {
-        first_name,
-        last_name,
-        mobile_number,
+        firstName,
+        lastName,
+        mobileNumber,
       });
+      this.setState({ showModal: false });
     } catch (error) {
-      console.log(error);
+      this.setState({
+        signupErrorMessage: error.message,
+      });
     }
   };
+
+  handleFailure = (error) => {
+    this.setState({
+      signupErrorMessage: error.errorMessage,
+    });
+  }
 
   render() {
     const { showModal } = this.state;
     if (this.state.showModal) {
       const {
-        first_name,
-        last_name,
+        firstName,
+        lastName,
         email,
         password,
         phoneNumber,
         code,
         showCodeInput,
         validated,
-        invalid_code,
-        invalid_mobile_number,
-        invalid_message,
+        invalidCode,
+        invalidMobileNumber,
+        invalidMessage,
       } = this.state;
-      console.log(invalid_code, invalid_mobile_number, invalid_message, validated);
+      console.log(invalidCode, invalidMobileNumber, invalidMessage, validated);
       return (
         <Modal
           key={this.state.key}
@@ -195,7 +205,7 @@ class SignUp extends Component {
           <Modal.Body className="auth-modal">
             <div>
               <h3 className="sign">Sign in with</h3>
-              <SocialOAuth hideModal={this.hideModal} />
+              <SocialOAuth hideModal={this.hideModal} onFailure={this.handleFailure}/>
               <br />
             </div>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
@@ -203,17 +213,17 @@ class SignUp extends Component {
                 <Form.Control
                   required
                   type="text"
-                  name="first_name"
+                  name="firstName"
                   placeholder="First Name"
-                  value={first_name}
+                  value={firstName}
                   onChange={this.handleChange}
                 />
               </FormGroup>
               <FormGroup>
                 <Form.Control
                   type="text"
-                  name="last_name"
-                  value={last_name}
+                  name="lastName"
+                  value={lastName}
                   onChange={this.handleChange}
                   placeholder="Last Name"
                   required
@@ -243,7 +253,7 @@ class SignUp extends Component {
                 <InputGroup>
                   <Form.Control
                     type="tel"
-                    name="mobile_number"
+                    name="mobileNumber"
                     value={phoneNumber}
                     onChange={this.handleChange}
                     placeholder="Mobile Number"
@@ -256,8 +266,8 @@ class SignUp extends Component {
                       </a>
                     </InputGroup.Text>
                   </InputGroup.Append>
-                  {invalid_mobile_number && (
-                    <Form.Control.Feedback type="invalid">{invalid_message}</Form.Control.Feedback>
+                  {invalidMobileNumber && (
+                    <Form.Control.Feedback type="invalid">{invalidMessage}</Form.Control.Feedback>
                   )}
                 </InputGroup>
               </Form.Group>
@@ -271,7 +281,7 @@ class SignUp extends Component {
                     placeholder="6 digit verification code"
                     required
                   />
-                  {invalid_code && (
+                  {invalidCode && (
                     <Form.Control.Feedback type="invalid">
                       Code is not correct.
                     </Form.Control.Feedback>
