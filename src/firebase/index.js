@@ -27,8 +27,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createAt,
-        ...additionalData
-      })
+        ...additionalData,
+      });
     } catch (error) {
       console.log('error creating user', error.message);
     }
@@ -37,9 +37,23 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const updateUserProfileDocument = async (user, data) => {
+  if (!user) return;
+  const userRef = firestore.doc(`users/${user.uid}`);
+
+  try {
+    await userRef.set({
+      ...data,
+    });
+  } catch (error) {
+    console.log('error updating user', error);
+  }
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
+
 export const firestore = firebase.firestore();
 
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
