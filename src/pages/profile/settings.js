@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { Form, Button, FormGroup } from 'react-bootstrap';
 import { saveProfileData } from '../../redux/actions/profile';
 import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
-import firebase from '../../firebase';
+import firebase, { auth } from '../../firebase';
 import './settings.scss';
 
 class Settings extends Component {
@@ -28,11 +28,16 @@ class Settings extends Component {
       newPassword: '',
       confirmPassword: '',
       validated: false,
+      authProviderId: '',
+      isUpdatePasswordSucceeded: 0,
+      errorMessageForPassword: '',
     };
   }
   componentDidMount() {
+    const provider = auth.currentUser.providerData;
     this.setState({
       ...this.props.currentUser,
+      authProviderId: provider.length > 0 ? provider[0].providerId : '',
     });
   }
 
@@ -57,14 +62,47 @@ class Settings extends Component {
       .then(url => this.setState({ avatarURL: url }));
   };
 
+  // Reauthenticates the current user and returns a promise...
+  reauthenticate = (currentPassword) => {
+    let user = auth.currentUser;
+    let cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred);
+  }
+
+  handleChangePassword = () => {
+    const { currentPassword, newPassword } = this.state;
+    this.reauthenticate(currentPassword).then(() => {
+      let user = auth.currentUser;
+      user.updatePassword(newPassword).then(() => {
+        this.setState({
+          isUpdatePasswordSucceeded: 1,
+          errorMessageForPassword: 'Password is changed successfully.',
+        });
+      }).catch((error) => {
+        this.setState({
+          isUpdatePasswordSucceeded: -1,
+          errorMessageForPassword: error.message,
+        });
+      });
+    }).catch((error) => {
+      this.setState({
+        isUpdatePasswordSucceeded: -1,
+        errorMessageForPassword: error.message,
+      });
+    });
+  }
+
   handleSubmit = async (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      this.setState({ validated: true });
+      return;
     }
-    this.setState({ validated: true });
+
     event.preventDefault();
+
     try {
       const {
         username,
@@ -77,7 +115,10 @@ class Settings extends Component {
         bankAccountNumber,
         nameOfAccountHolder,
         avatarURL,
+        newPassword,
+        authProviderId,
       } = this.state;
+
       const profileData = {
         ...this.props.currentUser,
         username,
@@ -92,10 +133,9 @@ class Settings extends Component {
         avatarURL,
       }
       this.props.saveProfileData(profileData);
-
-      this.setState({
-        validated: false,
-      });
+      if (authProviderId === 'password' && newPassword) {
+        this.handleChangePassword();
+      }
     } catch (error) {
       console.log(error, 'err');
     }
@@ -116,7 +156,12 @@ class Settings extends Component {
       newPassword,
       confirmPassword,
       validated,
+      authProviderId,
+      isUpdatePasswordSucceeded,
+      errorMessageForPassword,
     } = this.state;
+
+    console.log('auth provider : ', authProviderId);
 
     return (
       <Form
@@ -208,37 +253,52 @@ class Settings extends Component {
         />
         <br />
 
-        <h3>Change password</h3>
-        <br />
-        <Form.Control
-          type="password"
-          name="currentPassword"
-          placeholder="Current Password"
-          value={currentPassword}
-          onChange={this.handleChange}
-          required
-        />
-        <br />
-
-        <Form.Control
-          type="password"
-          name="newPassword"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={this.handleChange}
-          required
-        />
-        <br />
-        <Form.Control
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={this.handleChange}
-          required
-        />
-        <br />
-        <br />
+        {authProviderId === 'password' && (
+          <Fragment>
+            <h3>Change password</h3>
+            <br />
+            <FormGroup>
+              <Form.Control
+                type="password"
+                name="currentPassword"
+                placeholder="Current Password"
+                value={currentPassword}
+                onChange={this.handleChange}
+                isInvalid={!currentPassword && newPassword}
+              />
+              <Form.Control.Feedback type="invalid">Please enter current password to update password.</Form.Control.Feedback>
+            </FormGroup>
+            <FormGroup>
+              <Form.Control
+                type="password"
+                name="newPassword"
+                placeholder="New Password"
+                value={newPassword}
+                onChange={this.handleChange}
+                isInvalid={currentPassword && !newPassword}
+              />
+              <Form.Control.Feedback type="invalid">Please enter new password.</Form.Control.Feedback>
+            </FormGroup>
+            <FormGroup>
+              <Form.Control
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={this.handleChange}
+                isInvalid={(newPassword || confirmPassword) && (newPassword !== confirmPassword)}
+              />
+              <Form.Control.Feedback type="invalid">Password is not matched.</Form.Control.Feedback>
+              {isUpdatePasswordSucceeded < 0 && (
+                <div className="invalid-field">{errorMessageForPassword}</div>
+              )}
+              {isUpdatePasswordSucceeded > 0 && (
+                <div className="valid-field">Password is changed successfully!</div>
+              )}
+            </FormGroup>
+            <br />
+          </Fragment>
+        )}
 
         <h3>Payment Details</h3>
         <br />

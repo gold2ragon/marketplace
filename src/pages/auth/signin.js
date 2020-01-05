@@ -12,10 +12,17 @@ class SignIn extends Component {
       email: '',
       password: '',
       showModal: true,
+      validated: false,
     };
   }
 
   handleSubmit = async (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.setState({ validated: true });
     event.preventDefault();
 
     const { email, password } = this.state;
@@ -50,7 +57,7 @@ class SignIn extends Component {
   };
 
   render() {
-    const { showModal } = this.state;
+    const { showModal, validated} = this.state;
     if (this.state.showModal) {
       return (
         <Modal
@@ -66,7 +73,7 @@ class SignIn extends Component {
               <SocialOAuth hideModal={this.hideModal} />
               <br />
             </div>
-            <form onSubmit={this.handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
               <Form.Control
                 name="email"
                 value={this.state.email}
@@ -89,7 +96,7 @@ class SignIn extends Component {
               <div className="buttons">
                 <Button variant="secondary" className="form-control" type="submit">Log in</Button>
               </div>
-            </form>
+            </Form>
           </Modal.Body>
         </Modal>
       );
