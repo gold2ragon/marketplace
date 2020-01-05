@@ -64,8 +64,8 @@ class Header extends Component {
                 </NavDropdown>
               </Nav>
               {currentUser ? (
-                <NavDropdown title="My Profile" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/profile">{'Profile & Settings'}</NavDropdown.Item>
+                <NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
+                  <NavDropdown.Item href="/mypage">My Page</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/" onClick={() => auth.signOut()}>
                     Logout
