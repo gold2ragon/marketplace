@@ -1,8 +1,9 @@
-import { SET_CURRENT_USER } from '../actions/action-types';
+import { SET_CURRENT_USER, SET_USER_BUSINESS } from '../actions/action-types';
 
 // initial state is the default state
 const INITIAL_STATE = {
-  currentUser: null
+  currentUser: null,
+  business: [],
 }
 
 // if states is undefined or not set
@@ -13,9 +14,15 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         currentUser: action.payload
       }
+    case SET_USER_BUSINESS:
+      return {
+        ...state,
+        business: action.payload
+      }
     default:
       return state;
   }
 }
+
 
 export default userReducer;
