@@ -72,7 +72,7 @@ class Header extends Component {
               </Nav>
               {currentUser ? (
                 <NavDropdown title={displayName || ''} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/mypage">My Page</NavDropdown.Item>
+                  <NavDropdown.Item href="/mypage/settings">My Page</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/" onClick={() => auth.signOut()}>
                     Logout

@@ -55,7 +55,7 @@ class App extends Component {
             <Route exact path="/linkedin" component={LinkedInPopUp} />
             {isLoggedIn && (
               <Fragment>
-                <Route exact path="/mypage" component={Profile} />
+                <Route exact path="/mypage/:id" component={Profile} />
               </Fragment>
             )}
           </Switch>
