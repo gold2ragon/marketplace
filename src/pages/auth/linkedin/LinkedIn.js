@@ -54,7 +54,8 @@ export class LinkedIn extends Component {
         const redirectUri = process.env.REACT_APP_LINKEDIN_REDIRECT_URI;
 
         // Get access token from code.
-        const url = `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}&client_id=${clientId}&client_secret=${clientSecret}`;
+        const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
+        const url = CORS_URL + `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}&client_id=${clientId}&client_secret=${clientSecret}`;
         const fetchToken = await fetch(url, {
           method: 'POST',
           headers: {
@@ -64,7 +65,7 @@ export class LinkedIn extends Component {
         const { access_token: accessToken } = await fetchToken.json();
 
         // Get profile info
-        const fetchProfile = await fetch('https://api.linkedin.com/v2/me', {
+        const fetchProfile = await fetch(CORS_URL + 'https://api.linkedin.com/v2/me', {
           headers: {
             'Connection': 'keep-alive',
             'Authorization': `Bearer ${accessToken}`
@@ -73,7 +74,7 @@ export class LinkedIn extends Component {
         const userResults = await fetchProfile.json();
 
         // Get email
-        const fetchEmail = await fetch('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
+        const fetchEmail = await fetch(CORS_URL + 'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
           headers: {
             'Connection': 'keep-alive',
             'Authorization': `Bearer ${accessToken}`
@@ -88,7 +89,7 @@ export class LinkedIn extends Component {
         const projectID = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN.split('.')[0];
 
         const fetchFirebaseToken = await fetch(
-          `https://us-central1-${projectID}.cloudfunctions.net/getCredential`,
+          CORS_URL + `https://us-central1-${projectID}.cloudfunctions.net/getCredential`,
           {
             method: 'POST',
             headers: {
