@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
 import Settings from './settings';
+import ReferBusiness from './refer-business';
 
 class Profile extends Component {
 
@@ -24,7 +25,7 @@ class Profile extends Component {
                   <Nav.Link ref={this.defaultTab} eventKey="settings">Settings</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="refer-a-business">Refer a Business</Nav.Link>
+                  <Nav.Link eventKey="refer-a-business">List/Refer a Business</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                   <Nav.Link eventKey="ndas">NDAs</Nav.Link>
@@ -39,7 +40,9 @@ class Profile extends Component {
                 <Tab.Pane eventKey="settings">
                   <Settings />
                 </Tab.Pane>
-                <Tab.Pane eventKey="refer-a-business">Refer a Business</Tab.Pane>
+                <Tab.Pane eventKey="refer-a-business">
+                  <ReferBusiness />
+                </Tab.Pane>
                 <Tab.Pane eventKey="ndas">NDAs</Tab.Pane>
                 <Tab.Pane eventKey="messages">Messages</Tab.Pane>
               </Tab.Content>

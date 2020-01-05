@@ -43,6 +43,13 @@ class Header extends Component {
 
   render() {
     const { currentUser } = this.props;
+    let displayName = '';
+    if (currentUser) {
+      displayName = currentUser.displayName;
+      if (!displayName && currentUser.firstName) {
+        displayName = currentUser.firstName + ' ' + currentUser.lastName;
+      }
+    }
     return (
       <div className="header">
         <Container>
@@ -64,7 +71,7 @@ class Header extends Component {
                 </NavDropdown>
               </Nav>
               {currentUser ? (
-                <NavDropdown title={currentUser.displayName} id="basic-nav-dropdown">
+                <NavDropdown title={displayName || ''} id="basic-nav-dropdown">
                   <NavDropdown.Item href="/mypage">My Page</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/" onClick={() => auth.signOut()}>
