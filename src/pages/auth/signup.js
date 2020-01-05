@@ -196,7 +196,6 @@ class SignUp extends Component {
       return (
         <Modal
           key={this.state.key}
-          size="lg"
           centered
           show={showModal}
           animation={true}
@@ -261,9 +260,9 @@ class SignUp extends Component {
                   />
                   <InputGroup.Append>
                     <InputGroup.Text>
-                      <a className="btn-addon" onClick={this.submitPhoneNumber}>
+                      <span className="btn-addon" onClick={this.submitPhoneNumber}>
                         Verify
-                      </a>
+                      </span>
                     </InputGroup.Text>
                   </InputGroup.Append>
                   {invalidMobileNumber && (

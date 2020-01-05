@@ -55,16 +55,17 @@ class SignIn extends Component {
       return (
         <Modal
           key={this.state.key}
-          size="lg"
           centered
           show={showModal}
           animation={true}
           onHide={this.hideModal}
         >
           <Modal.Body className="auth-modal">
-            <h1 className="sign">Log in with</h1>
-            <SocialOAuth hideModal={this.hideModal} />
-            <h1 className="sign">or Log in</h1>
+            <div>
+              <h3 className="sign">Log in with</h3>
+              <SocialOAuth hideModal={this.hideModal} />
+              <br />
+            </div>
             <form onSubmit={this.handleSubmit}>
               <Form.Control
                 name="email"
@@ -73,6 +74,7 @@ class SignIn extends Component {
                 placeholder="Email"
                 required
               />
+              <br />
 
               <Form.Control
                 name="password"
@@ -82,6 +84,8 @@ class SignIn extends Component {
                 placeholder="Password"
                 required
               />
+              <br />
+
               <div className="buttons">
                 <Button variant="secondary" className="form-control" type="submit">Log in</Button>
               </div>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
-import { auth, updateUserProfileDocument } from '../../firebase';
-
+import { saveProfileData } from '../../redux/actions/profile';
+import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
+import firebase from '../../firebase';
 import './settings.scss';
 
 class Settings extends Component {
@@ -10,6 +12,10 @@ class Settings extends Component {
 
     this.state = {
       username: '',
+      avatar: "",
+      isUploading: false,
+      progress: 0,
+      avatarURL: "",
       firstName: '',
       lastName: '',
       bio: '',
@@ -24,14 +30,31 @@ class Settings extends Component {
       validated: false,
     };
   }
-
   componentDidMount() {
-    const user = auth.currentUser;
+    this.setState({
+      ...this.props.currentUser,
+    });
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+  handleProgress = progress => this.setState({ progress });
+  handleUploadError = error => {
+    this.setState({ isUploading: false });
+    console.error(error);
+  };
+  handleUploadSuccess = filename => {
+    this.setState({ avatar: filename, progress: 100, isUploading: false });
+    firebase
+      .storage()
+      .ref("images")
+      .child(filename)
+      .getDownloadURL()
+      .then(url => this.setState({ avatarURL: url }));
   };
 
   handleSubmit = async (event) => {
@@ -43,19 +66,35 @@ class Settings extends Component {
     this.setState({ validated: true });
     event.preventDefault();
     try {
-      const user = await auth.currentUser;
-      await updateUserProfileDocument(user, { ...this.state });
+      const {
+        username,
+        firstName,
+        lastName,
+        bio,
+        email,
+        mobileNumber,
+        bankName,
+        bankAccountNumber,
+        nameOfAccountHolder,
+        avatarURL,
+      } = this.state;
+      const profileData = {
+        ...this.props.currentUser,
+        username,
+        firstName,
+        lastName,
+        bio,
+        email,
+        mobileNumber,
+        bankName,
+        bankAccountNumber,
+        nameOfAccountHolder,
+        avatarURL,
+      }
+      this.props.saveProfileData(profileData);
 
       this.setState({
-        username: '',
-        firstName: '',
-        lastName: '',
-        bio: '',
-        email: '',
-        mobileNumber: '',
-        bankName: '',
-        bankAccountNumber: '',
-        nameOfAccountHolder: '',
+        validated: false,
       });
     } catch (error) {
       console.log(error, 'err');
@@ -79,18 +118,31 @@ class Settings extends Component {
       validated,
     } = this.state;
 
-    console.log(this.state);
     return (
-      <Form noValidate validated={validated} className="profile-settings" onSubmit={this.handleSubmit}>
+      <Form
+        noValidate
+        validated={validated}
+        className="profile-settings"
+        onSubmit={this.handleSubmit}
+      >
         <h3>Settings</h3>
         <br />
         <h3>Profile</h3>
-        <a>
-          <img className="upload-picture" src={require('../../assets/user.png')} alt="picture" />
-          <div>Choose/Edit profile pic</div>
-        </a>
+        <span className="upload-picture">
+          <CustomUploadButton
+            accept="image/*"
+            storageRef={firebase.storage().ref('images')}
+            onUploadStart={this.handleUploadStart}
+            onUploadError={this.handleUploadError}
+            onUploadSuccess={this.handleUploadSuccess}
+            onProgress={this.handleProgress}
+          >
+            <img src={this.state.avatarURL || require('../../assets/user.png')} alt="avatar URL" />
+            <div>Choose/Edit profile pic</div>
+          </CustomUploadButton>
+        </span>
         <br />
-            
+
         <h3>Public Profile</h3>
         <br />
         <Form.Control
@@ -158,7 +210,7 @@ class Settings extends Component {
 
         <h3>Change password</h3>
         <br />
-        <Form.Control 
+        <Form.Control
           type="password"
           name="currentPassword"
           placeholder="Current Password"
@@ -168,10 +220,10 @@ class Settings extends Component {
         />
         <br />
 
-        <Form.Control 
+        <Form.Control
           type="password"
           name="newPassword"
-          placeholder="New Password" 
+          placeholder="New Password"
           value={newPassword}
           onChange={this.handleChange}
           required
@@ -191,7 +243,6 @@ class Settings extends Component {
         <h3>Payment Details</h3>
         <br />
         <Form.Control
-          type="password"
           name="bankName"
           placeholder="Bank Name"
           value={bankName}
@@ -200,7 +251,6 @@ class Settings extends Component {
         />
         <br />
         <Form.Control
-          type="password"
           name="bankAccountNumber"
           placeholder="Bank Accout Number"
           value={bankAccountNumber}
@@ -209,7 +259,6 @@ class Settings extends Component {
         />
         <br />
         <Form.Control
-          type="password"
           name="nameOfAccountHolder"
           placeholder="Name of Account Holder"
           onChange={this.handleChange}
@@ -236,4 +285,12 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  saveProfileData: (data) => dispatch(saveProfileData(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

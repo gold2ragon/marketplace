@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -14,10 +14,16 @@ import './app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+    };
+  }
+
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    console.log('componentDidMount');
     const { setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -30,13 +36,16 @@ class App extends Component {
             ...snapShot.data(),
           });
         });
+        this.setState({ isLoggedIn: true });
+      } else {
+        this.setState({ isLoggedIn: false });
       }
-
       setCurrentUser(userAuth);
     });
   }
 
   render() {
+    const { isLoggedIn } = this.state;
     return (
       <div>
         <Header />
@@ -44,7 +53,11 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/linkedin" component={LinkedInPopUp} />
-            <Route exact path="/profile" component={Profile} />
+            {isLoggedIn && (
+              <Fragment>
+                <Route exact path="/profile" component={Profile} />
+              </Fragment>
+            )}
           </Switch>
         </Router>
       </div>
