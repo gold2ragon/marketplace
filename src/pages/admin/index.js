@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
-import Settings from './settings';
-import ReferBusiness from './refer-business';
+import PostListing from './post-listing';
+import BusinessReferral from './business-referral';
 import Messages from '../messages';
 
-class Profile extends Component {
+class AdminPage extends Component {
 
   render() {
     return (
@@ -17,21 +17,21 @@ class Profile extends Component {
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/mypage/settings"
+                  to="/admin/post-listing"
                 >
-                  Settings
+                  Post Listing
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/mypage/business"
+                  to="/admin/business"
                 >
-                  Refer a Business
+                  Business Referral
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/mypage/messages"
+                  to="/admin/messages"
                 >
                   Messages
                 </NavLink>
@@ -39,9 +39,9 @@ class Profile extends Component {
             </Col>
             <Col sm={9}>
               <Tab.Content>
-                <Route path="/mypage/settings" exact component={Settings} />
-                <Route path="/mypage/business" component={ReferBusiness} />
-                <Route path="/mypage/messages" component={Messages} />
+                <Route path="/admin/post-listing" exact component={PostListing} />
+                <Route path="/admin/business" component={BusinessReferral} />
+                <Route path="/admin/messages" component={Messages} />
               </Tab.Content>
             </Col>
           </Row>
@@ -51,4 +51,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default AdminPage;

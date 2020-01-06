@@ -83,7 +83,6 @@ class ReferBusiness extends Component {
       contactPersonEmail,
       contactPersonNumber,
     } = this.state;
-    const { business } = this.props;
     return (
       <div>
         <h3>List/Refer a Business</h3>
