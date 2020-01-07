@@ -4,6 +4,8 @@ import { auth, createUserProfileDocument } from '../../firebase';
 import { Modal, Button, Form, InputGroup, FormGroup } from 'react-bootstrap';
 import firebase from 'firebase/app';
 
+import { validE164 } from '../../utils';
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -21,14 +23,11 @@ class SignUp extends Component {
       showModal: true,
       showCodeInput: false,
       validated: false,
+      verificationId: '',
     };
   }
 
   componentDidMount() {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('invisible-recapture', {
-      size: 'invisible',
-      callback: function(response) {},
-    });
     this.clearFormValues();
   }
 
@@ -56,7 +55,7 @@ class SignUp extends Component {
       showModal: true,
       showCodeInput: false,
       validated: false,
-      signupErrorMessage: '',
+      verified: false,
     });
   };
 
@@ -67,70 +66,54 @@ class SignUp extends Component {
 
   submitPhoneNumber = async (event) => {
     event.preventDefault();
-    const { mobileNumber } = this.state;
-    this.setState({
-      invalidMobileNumber: false,
+    const { mobile_number } = this.state;
+    let applicationVerifier = new firebase.auth.RecaptchaVerifier('invisible-recapture', {
+      size: 'invisible',
     });
+    let provider = new firebase.auth.PhoneAuthProvider();
 
-    let appVerifier = window.recaptchaVerifier;
-    let self = this;
-    auth
-      .signInWithPhoneNumber(mobileNumber, appVerifier)
-      .then(function(confirmationResult) {
-        window.confirmationResult = confirmationResult;
-        self.setState({
-          showCodeInput: true,
-          invalidMobileNumber: false,
-        });
-      })
-      .catch(function(err) {
-        if (err.code === 'auth/invalid-phone-number') {
-          self.setState({
-            invalidMobileNumber: true,
-            validated: false,
-            invalidMessage: 'This mobile number is not valid',
-          });
-          return;
-        } else if (err.code === 400) {
-          if (err.message === "TOO_MANY_ATTEMPTS_TRY_LATER") {
-            self.setState({
-              invalidMobileNumber: true,
-              validated: false,
-              invalidMessage: 'Too many attempts. Try later',
-            });
-            return;
-          }
-        }
-        self.setState({
-          invalidMobileNumber: true,
-          validated: false,
-          invalidMessage: 'Some Error happend',
-        });
-        console.log(err);
+    try {
+      const verificationId = await provider.verifyPhoneNumber(mobile_number, applicationVerifier);
+      this.setState({
+        showCodeInput: true,
+        verificationId,
       });
+    } catch (error) {
+      if (error.code === 'auth/invalid-phone-number') {
+        this.setState({
+          validated: false,
+          invalid_mobile_number: true,
+          invalid_message: 'Please enter a valid mobile number',
+        });
+      } else if (error.code === 'auth/missing-phone-number') {
+        this.setState({
+          validated: false,
+          invalid_mobile_number: true,
+          invalid_message: 'Please enter mobile number',
+        });
+      } else {
+        this.setState({
+          validated: false,
+          invalid_mobile_number: true,
+          invalid_message: 'An error occured',
+        });
+      }
+    }
   };
 
   verifyCode = async () => {
-    const { mobileNumber, code } = this.state;
-    if (!mobileNumber) {
+    const { mobile_number, code, verificationId } = this.state;
+    if (!validE164(mobile_number)) {
       this.setState({
-        invalidMobileNumber: false,
-        invalidMessage: 'Please enter a mobile number.',
-      });
-      return false;
-    }
-    if (!window.confirmationResult) {
-      this.setState({
-        validated: false,
-        invalidMobileNumber: true,
-        invalidMessage: 'Please verify mobile number',
+        invalid_mobile_number: false,
+        invalid_message: 'Please enter a valid mobile number.',
       });
       return false;
     }
 
     try {
-      const isVerifed = await window.confirmationResult.confirm(code);
-      if (isVerifed) return true;
+      const { providerId } = await firebase.auth.PhoneAuthProvider.credential(verificationId, code);
+      if (providerId) return true;
     } catch (err) {
       console.log(err);
     }
@@ -155,7 +138,9 @@ class SignUp extends Component {
         event.stopPropagation();
         return;
       }
-      const { firstName, lastName, email, password, mobileNumber } = this.state;
+      console.log(this.state);
+      const { first_name, last_name, email, password, mobile_number } = this.state;
+      console.log(first_name, last_name, email, password, mobile_number);
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await createUserProfileDocument(user, {
         firstName,
