@@ -84,7 +84,7 @@ class ReferBusiness extends Component {
       contactPersonNumber,
     } = this.state;
     return (
-      <div>
+      <div className="profile-settings">
         <h3>List/Refer a Business</h3>
         <br />
         <div>
