@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
+import { NavLink, Route } from 'react-router-dom';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
 import Settings from './settings';
+import ReferBusiness from './refer-business';
+import Messages from './messages';
 
 class Profile extends Component {
-
   constructor(props) {
     super(props);
     this.defaultTab = React.createRef();
-  }
-  
-  componentDidMount() {
-    this.defaultTab.current.click();
   }
 
   render() {
@@ -20,28 +18,34 @@ class Profile extends Component {
           <Row>
             <Col sm={3} className="sidebar">
               <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link ref={this.defaultTab} eventKey="settings">Settings</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="refer-a-business">Refer a Business</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="ndas">NDAs</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="messages">Messages</Nav.Link>
-                </Nav.Item>
+                <NavLink
+                  activeClassName="nav-link active"
+                  className="nav-link"
+                  to="/mypage/settings"
+                >
+                  Settings
+                </NavLink>
+                <NavLink
+                  activeClassName="nav-link active"
+                  className="nav-link"
+                  to="/mypage/business"
+                >
+                  Refer a Business
+                </NavLink>
+                <NavLink
+                  activeClassName="nav-link active"
+                  className="nav-link"
+                  to="/mypage/messages"
+                >
+                  Messages
+                </NavLink>
               </Nav>
             </Col>
             <Col sm={9}>
               <Tab.Content>
-                <Tab.Pane eventKey="settings">
-                  <Settings />
-                </Tab.Pane>
-                <Tab.Pane eventKey="refer-a-business">Refer a Business</Tab.Pane>
-                <Tab.Pane eventKey="ndas">NDAs</Tab.Pane>
-                <Tab.Pane eventKey="messages">Messages</Tab.Pane>
+                <Route path="/mypage/settings" exact component={Settings} />
+                <Route path="/mypage/business" component={ReferBusiness} />
+                <Route path="/mypage/messages" component={Messages} />
               </Tab.Content>
             </Col>
           </Row>

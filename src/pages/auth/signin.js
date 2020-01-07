@@ -12,10 +12,17 @@ class SignIn extends Component {
       email: '',
       password: '',
       showModal: true,
+      validated: false,
     };
   }
 
   handleSubmit = async (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    this.setState({ validated: true });
     event.preventDefault();
 
     const { email, password } = this.state;
@@ -50,22 +57,23 @@ class SignIn extends Component {
   };
 
   render() {
-    const { showModal } = this.state;
+    const { showModal, validated} = this.state;
     if (this.state.showModal) {
       return (
         <Modal
           key={this.state.key}
-          size="lg"
           centered
           show={showModal}
           animation={true}
           onHide={this.hideModal}
         >
           <Modal.Body className="auth-modal">
-            <h1 className="sign">Log in with</h1>
-            <SocialOAuth hideModal={this.hideModal} />
-            <h1 className="sign">or Log in</h1>
-            <form onSubmit={this.handleSubmit}>
+            <div>
+              <h3 className="sign">Log in with</h3>
+              <SocialOAuth hideModal={this.hideModal} />
+              <br />
+            </div>
+            <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
               <Form.Control
                 name="email"
                 value={this.state.email}
@@ -73,6 +81,7 @@ class SignIn extends Component {
                 placeholder="Email"
                 required
               />
+              <br />
 
               <Form.Control
                 name="password"
@@ -82,10 +91,12 @@ class SignIn extends Component {
                 placeholder="Password"
                 required
               />
+              <br />
+
               <div className="buttons">
                 <Button variant="secondary" className="form-control" type="submit">Log in</Button>
               </div>
-            </form>
+            </Form>
           </Modal.Body>
         </Modal>
       );

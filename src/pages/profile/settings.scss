@@ -3,3 +3,14 @@
     width: 345px !important;
   }
 }
+
+.upload-picture {
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+  label {
+    cursor: pointer;
+  }
+}

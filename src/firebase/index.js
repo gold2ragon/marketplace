@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
 
 const config = {
@@ -28,14 +29,27 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         displayName,
         email,
         createAt,
-        ...additionalData
-      })
+        ...additionalData,
+      });
     } catch (error) {
       console.log('error creating user', error.message);
     }
   }
 
   return userRef;
+};
+
+export const updateUserProfileDocument = async (user, data) => {
+  if (!user) return;
+  const userRef = firestore.doc(`users/${user.uid}`);
+
+  try {
+    await userRef.set({
+      ...data,
+    });
+  } catch (error) {
+    console.log('error updating user', error);
+  }
 };
 
 firebase.initializeApp(config);
@@ -50,5 +64,6 @@ export const signInWithGoogle = () => auth.signInWithPopup(googleAuthProvider);
 const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 facebookAuthProvider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithFacebook = () => auth.signInWithPopup(facebookAuthProvider);
+
 
 export default firebase;
