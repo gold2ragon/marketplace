@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { addListing } from '../../redux/actions/listing';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import generateRandomID from 'uuid/v4';
@@ -26,11 +28,12 @@ class PostListing extends Component {
       cuisineType: -1,
       cuisineDescription: '',
       franchiseFee: '',
-      images: [],
-      imageLinks: [],
+      photos: [],
+      files: [],
       uploadComplete: false,
       description: '',
       details: '',
+      invalidCusinType: false,
     };
 
     this.modules = {
@@ -70,48 +73,50 @@ class PostListing extends Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+    if (name === 'cuisineType') {
+      this.setState({ invalidCusinType: false });
+    }
   };
 
   onFilesDrop = (files) => {
-    const images = [];
+    const photos = [];
     for (const file of files) {
-      images.push({
-        file,
-        url: URL.createObjectURL(file),
-      });
+      photos.push(URL.createObjectURL(file));
     }
-    this.setState({
-      images: this.state.images.concat(images),
-    });
+    this.setState({ photos, files });
   };
 
   uploadPhotos = async () => {
-    const storageRef = firebase
-    .storage()
-    .ref("listings");
+    const storageRef = firebase.storage().ref('listings');
     const uploadFileRefs = [];
     const uploadTasks = [];
-    const { images } = this.state;
-    for (const image of images) {
-      const ext = extractExtension(image.file.name);
+    const { files } = this.state;
+    for (const file of files) {
+      const ext = extractExtension(file.name);
       const filename = `${generateRandomFilename()}${ext}`;
       const fileRef = storageRef.child(filename);
       uploadFileRefs.push(fileRef);
-      uploadTasks.push(fileRef.put(image.file));
+      uploadTasks.push(fileRef.put(file));
     }
 
     await Promise.all(uploadTasks);
-    const imageUrls = [];
+    const photos = [];
     for (const snapshot of uploadFileRefs) {
       const url = await snapshot.getDownloadURL();
-      imageUrls.push(url);
+      photos.push(url);
     }
-    this.setState({ imageLinks: imageUrls });
-  }
+    this.setState({ photos });
+  };
 
   handleSubmit = async (event) => {
+    let valid = true;
+    if (this.state.cuisineType ===  -1) {
+      this.setState({ invalidCusinType: true });
+      valid = false;
+    }
+
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() === false || !valid) {
       event.preventDefault();
       event.stopPropagation();
       this.setState({ validated: true });
@@ -120,14 +125,27 @@ class PostListing extends Component {
     event.preventDefault();
 
     await this.uploadPhotos();
+    this.props.addListing({
+      public: {
+        cuisineType: this.state.cuisineType,
+        cuisineDescription: this.state.cuisineDescription,
+        franchiseFee: this.state.franchiseFee,
+        photos: this.state.photos,
+        description: this.state.description,
+      },
+      private: {
+        details: this.state.details,
+      }
+    });
   };
 
   deletePhoto = (event) => {
     event.stopPropagation();
     const index = parseInt(event.target.name);
-    let { images } = this.state;
-    images.splice(index, 1);
-    this.setState({ images });
+    let { photos, files } = this.state;
+    photos.splice(index, 1);
+    if (files.length > 0) files.splice(index, 1);
+    this.setState({ photos, files });
   };
 
   handleChangeDescription = (html) => {
@@ -146,6 +164,7 @@ class PostListing extends Component {
       franchiseFee,
       description,
       details,
+      invalidCusinType,
     } = this.state;
     return (
       <Form id="post-listing" noValidate validated={validated} onSubmit={this.handleSubmit}>
@@ -156,9 +175,11 @@ class PostListing extends Component {
           <Col sm={5}>
             <Form.Control
               as="select"
+              className={invalidCusinType ? 'invalid-control' : ''}
               name="cuisineType"
               value={cuisineType}
               onChange={this.handleChange}
+              required
             >
               <option disabled value={-1} hidden>
                 Make a selection
@@ -167,6 +188,9 @@ class PostListing extends Component {
               <option>Chinese</option>
               <option>Street Food</option>
             </Form.Control>
+            {invalidCusinType && (
+              <div className="invalid-field">Please select cuisine type</div>
+            )}
           </Col>
         </Form.Group>
 
@@ -181,6 +205,7 @@ class PostListing extends Component {
               value={cuisineDescription}
               placeholder="Conveyor Belt Sushi"
               onChange={this.handleChange}
+              required
             />
           </Col>
         </Form.Group>
@@ -196,6 +221,7 @@ class PostListing extends Component {
               value={franchiseFee}
               placeholder="US$25,000"
               onChange={this.handleChange}
+              required
             />
           </Col>
         </Form.Group>
@@ -210,20 +236,14 @@ class PostListing extends Component {
                 <section>
                   <div className="drag-drop-files" {...getRootProps()}>
                     <input {...getInputProps()} />
-                    {this.state.images.length > 0 ? (
+                    {this.state.photos.length > 0 ? (
                       <Fragment>
-                        {this.state.images.map((image, index) => (
+                        {this.state.photos.map((url, index) => (
                           <div key={index} className="remove-photo">
-                            {/* <img alt="Preview" key={index} src={image.url} />
+                            <img alt="Preview" key={index} src={url} />
                             <button onClick={this.deletePhoto} name={index}>
                               &times;
-                            </button> */}
-                            <span>
-                              {image.file.name}
-                              <button onClick={this.deletePhoto} name={index}>
-                                &times;
-                              </button>
-                            </span>
+                            </button>
                           </div>
                         ))}
                       </Fragment>
@@ -276,4 +296,12 @@ class PostListing extends Component {
   }
 }
 
-export default PostListing;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addListing: (data) => dispatch(addListing(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostListing);

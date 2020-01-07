@@ -1,2 +1,3 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const SET_USER_BUSINESS = 'SET_USER_BUSINESS';
+export const SET_LISTINGS = 'SET_LISTINGS';
