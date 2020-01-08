@@ -290,6 +290,10 @@ class SignUp extends Component {
               <Button variant="secondary" type="submit">
                 Sign up
               </Button>
+              <div className="tos">
+                By signing up you agree to our &nbsp;
+                  <a href="#">{`Terms & Conditions`}</a>
+              </div>
               <div className="hidden" id="invisible-recapture" />
             </Form>
           </Modal.Body>
