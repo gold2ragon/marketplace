@@ -1,4 +1,4 @@
-import { firestore } from '../../firebase';
+import firebase, { firestore } from '../../firebase';
 import { SET_LISTINGS } from './action-types';
 
 export const setListings = (listings) => ({
@@ -26,10 +26,22 @@ export const getListings = () => {
 export const deleteListing = (id) => {
   return async (dispatch) => {
     try {
-      await firestore.doc(`listings/${id}`).delete();
-      dispatch(getListings());
+      const docData = await firestore.doc(`listings/${id}`).get();
+      const doc = docData.data();
+      const images = doc.public.photos;
+      for (const image of images) {
+        const filename = image.match(/%2F(.*?)\?alt/)[1];
+        await firebase.storage().ref(`listings/${filename}`).delete();
+      }
     } catch (error) {
+      console.log(error);
     }
+    try {
+      await firestore.doc(`listings/${id}`).delete();
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch(getListings());
   }
 }
 

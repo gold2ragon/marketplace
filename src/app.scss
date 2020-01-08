@@ -56,6 +56,9 @@ button {
 .btn-main {
   width: 200px;
   font-size: 1.2rem !important;
+  span {
+    font-size: 1rem !important;
+  }
 }
 
 .btn-addon {
@@ -132,6 +135,7 @@ button {
     margin: 0;
     line-height: 16px;
     opacity: 0.4;
+    text-align: center;
     &:hover {
       opacity: 0.8;
     }
@@ -144,4 +148,8 @@ button {
 
 .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
   outline: none;
+}
+
+.spinner-border {
+  margin-left: 5px;
 }

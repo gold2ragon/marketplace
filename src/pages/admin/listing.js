@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { saveListing, getListings } from '../../redux/actions/listing';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import generateRandomID from 'uuid/v4';
 import ReactQuill from 'react-quill';
@@ -37,6 +37,7 @@ class Listing extends Component {
       details: '',
       invalidCusinType: false,
       deletedPhotos: [],
+      isSaving: false,
     };
 
     this.modules = {
@@ -86,10 +87,10 @@ class Listing extends Component {
         photos: listing.public.photos,
         description: listing.public.description,
         details: listing.private.details,
-      })
+      });
     }
   }
- 
+
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -104,7 +105,7 @@ class Listing extends Component {
       photos.push(URL.createObjectURL(file));
     }
     this.setState({
-      photos: this.state.photos.concat(photos), 
+      photos: this.state.photos.concat(photos),
       files: this.state.files.concat(files),
     });
   };
@@ -139,7 +140,7 @@ class Listing extends Component {
 
   handleSubmit = async (event) => {
     let valid = true;
-    if (this.state.cuisineType ===  -1) {
+    if (this.state.cuisineType === -1) {
       this.setState({ invalidCusinType: true });
       valid = false;
     }
@@ -152,6 +153,16 @@ class Listing extends Component {
       return;
     }
     event.preventDefault();
+
+    this.setState({
+      isSaving: true,
+    });
+
+    for (const photo of this.state.deletedPhotos) {
+      if (photo.includes('blob')) continue;
+      const filename = photo.match(/%2F(.*?)\?alt/)[1];
+      await firebase.storage().ref(`listings/${filename}`).delete();
+    }
 
     await this.uploadPhotos();
     await this.props.saveListing(this.state.id, {
@@ -166,19 +177,23 @@ class Listing extends Component {
         details: this.state.details,
       }
     });
+    this.setState({ isSaving: false });
     history.goBack();
   };
 
   deletePhoto = (event) => {
     event.stopPropagation();
+    event.preventDefault();
     const index = parseInt(event.target.name);
-    let { photos, files } = this.state;
-    const deletedPhoto = photos.splice(index, 1);
+    let { photos, files, deletedPhotos } = this.state;
+    const deletedPhoto = photos[index];
+    deletedPhotos.push(deletedPhoto);
+    photos.splice(index, 1);
     if (files.length > 0) files.splice(index, 1);
     this.setState({
-      photos, 
+      photos,
       files,
-      deletedPhotos: this.state.deletedPhotos.push(deletedPhoto),
+      deletedPhotos,
     });
   };
 
@@ -199,6 +214,7 @@ class Listing extends Component {
       description,
       details,
       invalidCusinType,
+      isSaving,
     } = this.state;
 
     return (
@@ -221,11 +237,9 @@ class Listing extends Component {
               </option>
               <option>Singaporean</option>
               <option>Chinese</option>
-              <option>Street Food</option>
+              <option>Halal/Vegetarian</option>
             </Form.Control>
-            {invalidCusinType && (
-              <div className="invalid-field">Please select cuisine type</div>
-            )}
+            {invalidCusinType && <div className="invalid-field">Please select cuisine type</div>}
           </Col>
         </Form.Group>
 
@@ -322,8 +336,11 @@ class Listing extends Component {
           </Col>
         </Form.Group>
         <div>
-          <Button variant="secondary" className="btn-main" type="submit">
+          <Button variant="secondary" className="btn-main" type="submit" disabled={isSaving}>
             Publish
+            {isSaving && (
+              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+            )}
           </Button>
         </div>
       </Form>

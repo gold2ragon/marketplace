@@ -26,7 +26,7 @@ class Profile extends Component {
                   className="nav-link"
                   to="/mypage/business"
                 >
-                  Refer a Business
+                  Refer Someone
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"

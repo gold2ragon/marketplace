@@ -38,8 +38,6 @@ class ReferBusiness extends Component {
 
     const {
       business,
-      businessName,
-      websiteUrl,
       contactPersonName,
       contactPersonEmail,
       contactPersonNumber,
@@ -47,8 +45,6 @@ class ReferBusiness extends Component {
 
     business.push({
       date: new Date().toDateString(),
-      businessName,
-      websiteUrl,
       contactPersonName,
       contactPersonEmail,
       contactPersonNumber,
@@ -62,11 +58,9 @@ class ReferBusiness extends Component {
     const trs = business.map((busin, index) =>
       <tr key={index}>
         <td>{busin.date}</td>
-        <td>{busin.businessName}</td>
-        <td>{busin.websiteUrl}</td>
         <td>{busin.contactPersonName}</td>
-        <td>{busin.contactPersonEmail}</td>
         <td>{busin.contactPersonNumber}</td>
+        <td>{busin.contactPersonEmail}</td>
       </tr>
     );
     return (
@@ -77,48 +71,28 @@ class ReferBusiness extends Component {
   render() {
     const {
       validated,
-      businessName,
-      websiteUrl,
       contactPersonName,
       contactPersonEmail,
       contactPersonNumber,
     } = this.state;
     return (
       <div className="profile-settings">
-        <h3>List/Refer a Business</h3>
+        <h3>Refer Someone</h3>
         <br />
         <div>
-          List your business or refer a business that may be interested in franchising and let us do all the rest.<br />
-          Receive a referral fee when the business is successfully onboarded.
+          Refer a Franchisee to us!<br />
+          Know someone that might be interested in buying a franchise?<br />
+          Send us their contact details and we will do all the rest!<br />
+          Receive a referral fee when they open a franchise.
         </div>
         <br />
         <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
           <FormGroup>
             <Form.Control
               type="text"
-              name="businessName"
-              value={businessName}
-              placeholder="Business Name"
-              onChange={this.handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Control
-              type="text"
-              name="websiteUrl"
-              value={websiteUrl}
-              placeholder="Website*"
-              onChange={this.handleChange}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Control
-              type="text"
               name="contactPersonName"
               value={contactPersonName}
-              placeholder="Business Contact Person Name"
+              placeholder="Contact Person Name"
               onChange={this.handleChange}
               required
             />
@@ -154,8 +128,6 @@ class ReferBusiness extends Component {
           <thead className="thead-light">
             <tr>
               <th scope="col">Date</th>
-              <th scope="col">Business Name</th>
-              <th scope="col">Website</th>
               <th scope="col">Contact Person Name</th>
               <th scope="col">Contact Person Number</th>
               <th scope="col">Contact Person Email</th>

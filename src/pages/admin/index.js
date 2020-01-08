@@ -27,7 +27,7 @@ class AdminPage extends Component {
                   className="nav-link"
                   to="/admin/business"
                 >
-                  Business Referral
+                  Referrals
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"
