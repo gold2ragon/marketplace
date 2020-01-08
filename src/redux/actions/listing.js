@@ -10,12 +10,12 @@ export const getListings = () => {
   return async (dispatch) => {
     const listingsRef = firestore.collection('listings');
     try {
-      const docs = await listingsRef.get();
-      const listings = [];
+      const { docs } = await listingsRef.get();
+      const listings = {};
       for (const doc of docs) {
-        listings.push(await doc.data());
+        const listing = await doc.data();
+        listings[[doc.id]] = listing;
       }
-      console.log('listings: ', listings);
       dispatch(setListings(listings));
     } catch (error) {
       console.log('error getting listings', error);
@@ -23,12 +23,28 @@ export const getListings = () => {
   }
 }
 
-export const addListing = (listing) => {
+export const deleteListing = (id) => {
   return async (dispatch) => {
     try {
-      await firestore.collection('listings').add({
-        ...listing,
-      });
+      await firestore.doc(`listings/${id}`).delete();
+      dispatch(getListings());
+    } catch (error) {
+    }
+  }
+}
+
+export const saveListing = (id, listing) => {
+  return async (dispatch) => {
+    try {
+      if (id === 'new') {
+        await firestore.collection('listings').add({
+          ...listing,
+        });
+      } else {
+        await firestore.doc(`listings/${id}`).set({
+          ...listing,
+        })
+      }
       dispatch(getListings());
     } catch (error) {
       console.log('error adding listing', error);

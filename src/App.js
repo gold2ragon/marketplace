@@ -62,8 +62,11 @@ class App extends Component {
             {isLoggedIn && (
               <Fragment>
                 <Route exact path="/mypage/:id" component={Profile} />
-                {currentUser.admin && (
-                  <Route exact path="/admin/:page" component={AdminPage} />
+                {currentUser && currentUser.admin && (
+                  <Fragment>
+                    <Route exact path="/admin/listing/:id" component={AdminPage} />
+                    <Route exact path="/admin/:page" component={AdminPage} />
+                  </Fragment>
                 )}
               </Fragment>
             )}

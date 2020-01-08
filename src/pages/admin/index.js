@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
-import PostListing from './post-listing';
+import Listings from './listings';
+import Listing from './listing';
 import BusinessReferral from './business-referral';
 import Messages from '../messages';
 
@@ -17,9 +18,9 @@ class AdminPage extends Component {
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/admin/post-listing"
+                  to="/admin/listings"
                 >
-                  Post Listing
+                  Listings
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"
@@ -39,7 +40,8 @@ class AdminPage extends Component {
             </Col>
             <Col sm={9}>
               <Tab.Content>
-                <Route path="/admin/post-listing" exact component={PostListing} />
+                <Route path="/admin/listings" exact component={Listings} />
+                <Route path="/admin/listing/:id" exact component={Listing} />
                 <Route path="/admin/business" component={BusinessReferral} />
                 <Route path="/admin/messages" component={Messages} />
               </Tab.Content>
