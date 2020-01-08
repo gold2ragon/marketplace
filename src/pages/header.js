@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { auth } from '../firebase';
 import SignIn from './auth/signin';
 import SignUp from './auth/signup';
 import { selectCurrentUser } from '../redux/actions/auth';
-
-import './header.scss';
 import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
+import './header.scss';
 
 class Header extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Header extends Component {
     this.state = {
       showSignInModal: false,
       showSignUpModal: false,
+      isAdminUser: false,
     };
 
     this.signInRef = React.createRef();
@@ -60,7 +61,9 @@ class Header extends Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="#features">Features</Nav.Link>
+                {currentUser && currentUser.admin && (
+                  <Nav.Link as={Link} to="/admin/listings">Admin Page</Nav.Link>
+                )}
                 <Nav.Link href="#pricing">Pricing</Nav.Link>
                 <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -72,7 +75,7 @@ class Header extends Component {
               </Nav>
               {currentUser ? (
                 <NavDropdown title={displayName || ''} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/mypage/settings">My Page</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/mypage/settings">My Page</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/" onClick={() => auth.signOut()}>
                     Logout

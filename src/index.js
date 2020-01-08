@@ -10,9 +10,9 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <PersistGate persistor={persistor}>
+      {/* <PersistGate persistor={persistor}> */}
         <App />
-      </PersistGate>
+      {/* </PersistGate> */}
     </Router>
   </Provider>,
   document.getElementById('root'),

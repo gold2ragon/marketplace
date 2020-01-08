@@ -18,7 +18,6 @@ class Settings extends Component {
       avatarURL: "",
       firstName: '',
       lastName: '',
-      bio: '',
       email: '',
       mobileNumber: '',
       bankName: '',
@@ -108,7 +107,6 @@ class Settings extends Component {
         username,
         firstName,
         lastName,
-        bio,
         email,
         mobileNumber,
         bankName,
@@ -124,7 +122,6 @@ class Settings extends Component {
         username,
         firstName,
         lastName,
-        bio,
         email,
         mobileNumber,
         bankName,
@@ -146,7 +143,6 @@ class Settings extends Component {
       username,
       firstName,
       lastName,
-      bio,
       email,
       mobileNumber,
       bankName,
@@ -161,8 +157,6 @@ class Settings extends Component {
       errorMessageForPassword,
     } = this.state;
 
-    console.log('auth provider : ', authProviderId);
-
     return (
       <Form
         noValidate
@@ -170,8 +164,6 @@ class Settings extends Component {
         className="profile-settings"
         onSubmit={this.handleSubmit}
       >
-        <h3>Settings</h3>
-        <br />
         <h3>Profile</h3>
         <span className="upload-picture">
           <CustomUploadButton
@@ -188,8 +180,6 @@ class Settings extends Component {
         </span>
         <br />
 
-        <h3>Public Profile</h3>
-        <br />
         <Form.Control
           type="text"
           name="username"
@@ -217,23 +207,6 @@ class Settings extends Component {
           required
         />
         <br />
-        <Form.Control
-          as="textarea"
-          name="bio"
-          rows="3"
-          placeholder="bio"
-          value={bio}
-          onChange={this.handleChange}
-          required
-        />
-        <br />
-        <br />
-        <h3>Private Information</h3>
-        <br />
-        <div>
-          We do not share these information with other users unless explicit permission is given by
-          you.
-        </div>
         <Form.Control
           type="email"
           name="email"
@@ -307,7 +280,6 @@ class Settings extends Component {
           placeholder="Bank Name"
           value={bankName}
           onChange={this.handleChange}
-          required
         />
         <br />
         <Form.Control
@@ -315,7 +287,6 @@ class Settings extends Component {
           placeholder="Bank Accout Number"
           value={bankAccountNumber}
           onChange={this.handleChange}
-          required
         />
         <br />
         <Form.Control
@@ -323,7 +294,6 @@ class Settings extends Component {
           placeholder="Name of Account Holder"
           onChange={this.handleChange}
           value={nameOfAccountHolder}
-          required
         />
         <br />
         <Button variant="secondary" className="btn-main" type="submit">
@@ -333,8 +303,10 @@ class Settings extends Component {
         <br />
 
         <div>
-          Refer a business to us and let us do all the rest. <br />
-          Receive 3% of the transaction value when the deal concludes successfully concludes.
+          Refer a Franchisee to us!<br />
+          Know someone that might be interested in buying a franchise?<br />
+          Send us their contact details and we will do all the rest!<br />
+          Receive a referral fee when they open a franchise.
         </div>
         <br />
         <Button variant="secondary" className="btn-main">

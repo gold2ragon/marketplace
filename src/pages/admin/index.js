@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
-import Settings from './settings';
-import ReferContacts from './refer';
+import Listings from './listings';
+import Listing from './listing';
+import ContactsReferral from './contacts';
 import Messages from '../messages';
 
-class Profile extends Component {
+class AdminPage extends Component {
 
   render() {
     return (
@@ -17,21 +18,21 @@ class Profile extends Component {
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/mypage/settings"
+                  to="/admin/listings"
                 >
-                  Settings
+                  Listings
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/mypage/contacts"
+                  to="/admin/contacts"
                 >
-                  Refer Someone
+                  Referrals
                 </NavLink>
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/mypage/messages"
+                  to="/admin/messages"
                 >
                   Messages
                 </NavLink>
@@ -39,9 +40,10 @@ class Profile extends Component {
             </Col>
             <Col sm={9}>
               <Tab.Content>
-                <Route path="/mypage/settings" exact component={Settings} />
-                <Route path="/mypage/contacts" component={ReferContacts} />
-                <Route path="/mypage/messages" component={Messages} />
+                <Route path="/admin/listings" exact component={Listings} />
+                <Route path="/admin/listing/:id" exact component={Listing} />
+                <Route path="/admin/contacts" component={ContactsReferral} />
+                <Route path="/admin/messages" component={Messages} />
               </Tab.Content>
             </Col>
           </Row>
@@ -51,4 +53,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default AdminPage;

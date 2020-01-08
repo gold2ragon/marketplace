@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { auth, createUserProfileDocument } from './firebase';
@@ -8,10 +9,13 @@ import { selectCurrentUser } from './redux/actions/auth';
 import Header from './pages/header';
 import Homepage from './pages/homepage';
 import Profile from './pages/profile';
+import AdminPage from './pages/admin';
 import LinkedInPopUp from './pages/auth/linkedin/LinkedInPopUp';
 
 import './app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+export const history = createBrowserHistory();
 
 class App extends Component {
   constructor(props) {
@@ -46,16 +50,23 @@ class App extends Component {
 
   render() {
     const { isLoggedIn } = this.state;
+    const { currentUser } = this.props;
     return (
       <div>
-        <Header />
-        <Router>
+        <Router history={history}>
+          <Header />
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/linkedin" component={LinkedInPopUp} />
             {isLoggedIn && (
               <Fragment>
                 <Route exact path="/mypage/:id" component={Profile} />
+                {currentUser && currentUser.admin && (
+                  <Fragment>
+                    <Route exact path="/admin/listing/:id" component={AdminPage} />
+                    <Route exact path="/admin/:page" component={AdminPage} />
+                  </Fragment>
+                )}
               </Fragment>
             )}
           </Switch>
