@@ -157,8 +157,6 @@ class Settings extends Component {
       errorMessageForPassword,
     } = this.state;
 
-    console.log('auth provider : ', authProviderId);
-
     return (
       <Form
         noValidate

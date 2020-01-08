@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, FormGroup, Table } from 'react-bootstrap';
-import { getUserBusiness, submitUserBusiness } from '../../redux/actions/business';
+import { getUserContacts, submitUserContacts } from '../../redux/actions/contacts';
+import generateRandomID from 'uuid/v4';
+import _ from 'lodash';
 
-class ReferBusiness extends Component {
+class ReferContacts extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       validated: false,
-      businessName: '',
-      websiteUrl: '',
       contactPersonName: '',
       contactPersonNumber: '',
       contactPersonEmail: '',
-      business: [],
+      contacts: {},
     };
   }
 
   componentDidMount() {
-    this.props.getUserBusiness();
+    this.props.getUserContacts();
   }
 
   handleChange = (event) => {
@@ -37,30 +37,41 @@ class ReferBusiness extends Component {
     event.preventDefault();
 
     const {
-      business,
       contactPersonName,
       contactPersonEmail,
       contactPersonNumber,
     } = this.state;
 
-    business.push({
+    const { contacts } = this.props;
+
+    const id = generateRandomID();
+
+    contacts[id] = {
+      id,
+      userId: this.props.currentUser.id,
       date: new Date().toDateString(),
       contactPersonName,
       contactPersonEmail,
       contactPersonNumber,
-    });
-    this.props.submitUserBusiness(business);
+    };
+    await this.props.submitUserContacts(contacts);
+    this.setState({
+      contactPersonName: '',
+      contactPersonEmail: '',
+      contactPersonNumber: '',
+      validated: false,
+    })
   }
 
-  renderBusiness = () => {
-    const { business } = this.props;
-    if (!business || business.length === 0) return null;
-    const trs = business.map((busin, index) =>
-      <tr key={index}>
-        <td>{busin.date}</td>
-        <td>{busin.contactPersonName}</td>
-        <td>{busin.contactPersonNumber}</td>
-        <td>{busin.contactPersonEmail}</td>
+  renderContacts = () => {
+    const { contacts } = this.props;
+    if (!contacts || contacts.length === 0) return null;
+    const trs = _.map(contacts, (contact, id) =>
+      <tr key={id}>
+        <td>{contact.date}</td>
+        <td>{contact.contactPersonName}</td>
+        <td>{contact.contactPersonNumber}</td>
+        <td>{contact.contactPersonEmail}</td>
       </tr>
     );
     return (
@@ -133,7 +144,7 @@ class ReferBusiness extends Component {
               <th scope="col">Contact Person Email</th>
             </tr>
           </thead>
-          {this.renderBusiness()}
+          {this.renderContacts()}
         </Table>
       </div>
     );
@@ -141,12 +152,13 @@ class ReferBusiness extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  business: state.user.business,
+  currentUser: state.user.currentUser,
+  contacts: state.user.contacts,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserBusiness: () => dispatch(getUserBusiness()),
-  submitUserBusiness: (business) => dispatch(submitUserBusiness(business)),
+  getUserContacts: () => dispatch(getUserContacts()),
+  submitUserContacts: (contacts) => dispatch(submitUserContacts(contacts)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReferBusiness);
+export default connect(mapStateToProps, mapDispatchToProps)(ReferContacts);

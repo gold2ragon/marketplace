@@ -47,6 +47,8 @@ class Listing extends Component {
         // [{ 'font': [] }],
         // [{ 'size': ['small', false, 'large', 'huge'] }],
         // [{ 'size': [ '10px', '12px', '14px', '16px', '18px', '20px', '22px', '24px'] }],
+        // [{ size: ['small', false, 'large', 'huge'] }],
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ list: 'ordered' }, { list: 'bullet' }],
         [{ align: [] }],
@@ -57,7 +59,7 @@ class Listing extends Component {
     };
 
     this.formats = [
-      // 'header', 'font', 'size',
+      'header', 'font', 'size',
       'bold',
       'italic',
       'underline',

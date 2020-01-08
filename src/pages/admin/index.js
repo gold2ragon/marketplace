@@ -3,7 +3,7 @@ import { NavLink, Route } from 'react-router-dom';
 import { Container, Row, Col, Tab, Nav } from 'react-bootstrap';
 import Listings from './listings';
 import Listing from './listing';
-import BusinessReferral from './business-referral';
+import ContactsReferral from './contacts';
 import Messages from '../messages';
 
 class AdminPage extends Component {
@@ -25,7 +25,7 @@ class AdminPage extends Component {
                 <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
-                  to="/admin/business"
+                  to="/admin/contacts"
                 >
                   Referrals
                 </NavLink>
@@ -42,7 +42,7 @@ class AdminPage extends Component {
               <Tab.Content>
                 <Route path="/admin/listings" exact component={Listings} />
                 <Route path="/admin/listing/:id" exact component={Listing} />
-                <Route path="/admin/business" component={BusinessReferral} />
+                <Route path="/admin/contacts" component={ContactsReferral} />
                 <Route path="/admin/messages" component={Messages} />
               </Tab.Content>
             </Col>

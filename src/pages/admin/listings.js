@@ -26,7 +26,7 @@ class Listings extends Component {
     this.setState({ isLoading });
   }
 
-  renderBusiness = () => {
+  renderContacts = () => {
     const { listings } = this.props;
     if (!listings) return null;
     const { isLoading } = this.state;
@@ -59,8 +59,6 @@ class Listings extends Component {
   };
 
   render() {
-    const { listings } = this.props;
-    console.log(listings);
     return (
       <div>
         <p>
@@ -78,7 +76,7 @@ class Listings extends Component {
               <th></th>
             </tr>
           </thead>
-          {this.renderBusiness()}
+          {this.renderContacts()}
         </Table>
       </div>
     );
