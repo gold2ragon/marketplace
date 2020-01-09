@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,500,700|Lora:700,400');
+
+.header {
+  background-color: #ffffff;
+  z-index: 10;
+  .navbar {
+    margin: 0 80px;
+  }
+  .btn {
+    color: white !important;
+    margin-right: 20px;
+    width: 180px;
+  }
+  hr {
+    width: 100vw;
+    margin: 0;
+  }
+  .navbar {
+    padding: 0;
+    height: 100px;
+  }
+}
+
+.thebizhunt1 {
+  background-color: rgba(255, 255, 255, 0);
+  height: auto;
+  width: auto;
+  margin: 0;
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  font-family: 'Lora', Helvetica, Arial, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 22px;
+  color: rgba(12, 14, 28, 1);
+  text-align: left;
+  line-height: 28px;
+  .span2 {
+    color: rgba(255, 77, 0, 1);
+  }
+}
+
+.navbar-light .navbar-nav .nav-link {
+  transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  font-family: 'Work Sans', Helvetica, Arial, serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  text-align: center;
+  width: 100px;
+  padding: 0.5rem 1rem;
+
+  &.createanaccount {
+    background-color: rgba(255,255,255,0.0);
+    font-weight: 500;
+    color: rgba(255, 77, 0, 1.0) !important;
+    background-color: rgba(255, 77, 0, 0.1);
+    border-radius: 8px;
+    width: 180px;
+  }
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  z-index: -1;
+  & > div {
+    position: relative;
+  }
+  .food1 {
+    top: 527px;
+    position: absolute;
+    margin: 0;
+    left: 100px;
+  }
+  .food2 {
+    top: 495px;
+    position: absolute;
+    margin: 0;
+    left: 31px;
+  }
+  .food4 {
+    top: 37px;
+    position: absolute;
+    margin: 0;
+    left: 63px;
+  }
+  .food3 {
+    top: 101px;
+    position: absolute;
+    margin: 0;
+    left: 117px;
+  }
+  .food6 {
+    top: -56px;
+    position: absolute;
+    margin: 0;
+    right: 15%;
+  }
+  .food5 {
+    top: 436px;
+    position: absolute;
+    margin: 0;
+    right: -134px;
+  }
+  .food7 {
+    top: 66px;
+    position: absolute;
+    right: -121px;
+  }
+  .food8 {
+    top: 189px;
+    position: absolute;
+    margin: 0;
+    left: -126px;
+  }
+}
+
+.thefinestfoodsfra {
+  margin-top: 137px;
+  text-align: center;
+  font-family: "Lora", Helvetica, Arial, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 42px;
+  color: rgba(12, 14, 28, 1.0);
+  line-height: 54.0px;
+  .span2 {
+    color: rgba(255, 77, 0, 1.0);
+  }
+}
+
+.group4 {
+  width: 80%;
+  max-width: 840px;
+  margin: 80px auto;
+  border: 1px solid rgba(208, 211, 226, 1.0);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+
+  .search-franchise {
+    input {
+      border: none;
+      outline: none;
+      padding: 0 10px;
+      font-family: 'Work Sans', Helvetica, Arial, serif;
+      font-size: 16px;
+    }
+    padding: 10px 0;
+    border-right: 2px solid rgba(208, 211, 226, 1.0);
+  }
+  .dropdown {
+    border-right: 2px solid rgba(208, 211, 226, 1.0) !important;
+    .dropdown-toggle {
+      background-color: transparent !important;
+      border: none;
+      color: #000000;
+      width: 180px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:focus {
+        color: #000000;
+        box-shadow: none !important;
+      }
+      &::after {
+        border: none !important;
+        margin-top: 0.255em;
+        content: url('../../assets/img/arrow-down.svg');
+      }
+    }
+  }
+  .dropdown-menu {
+    // top: 10px !important;
+    right: 0 !important;
+  }
+}

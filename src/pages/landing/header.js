@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { auth } from '../firebase';
-import SignIn from './auth/signin';
-import SignUp from './auth/signup';
-import { selectCurrentUser } from '../redux/actions/auth';
+import { auth } from '../../firebase';
+import SignIn from '../auth/signin';
+import SignUp from '../auth/signup';
+import { selectCurrentUser } from '../../redux/actions/auth';
 import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
-import './header.scss';
+import './landing.scss';
 
 class Header extends Component {
   constructor(props) {
@@ -56,26 +56,35 @@ class Header extends Component {
         <Container>
           <Navbar collapseOnSelect expand="lg">
             <Navbar.Brand href="/" className="logo-container">
-              <img src={require('../assets/logo.png')} className="logo" alt="logo" />
+              <div className="thebizhunt1">
+                <span className="span1">TheBiz</span>
+                <span className="span2">Hunt.</span>
+              </div>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
                 {currentUser && currentUser.admin && (
-                  <Nav.Link as={Link} to="/admin/listings">Admin Page</Nav.Link>
+                  <Nav.Link as={Link} to="/admin/listings">
+                    Admin Page
+                  </Nav.Link>
                 )}
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
-                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                <Nav.Link href="#pricing">Home</Nav.Link>
+                <Nav.Link href="#pricing">Franchise</Nav.Link>
+                <Nav.Link href="#pricing">About us</Nav.Link>
+                {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
               </Nav>
               {currentUser ? (
                 <NavDropdown title={displayName || ''} id="basic-nav-dropdown">
-                  <NavDropdown.Item as={Link} to="/mypage/settings">My Page</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/mypage/settings">
+                    My Page
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/" onClick={() => auth.signOut()}>
                     Logout
@@ -83,12 +92,8 @@ class Header extends Component {
                 </NavDropdown>
               ) : (
                 <Nav>
-                  <Nav.Link onClick={this.signUp}>
-                    New User? Register
-                  </Nav.Link>
-                  <Nav.Link onClick={this.signIn}>
-                    Login
-                  </Nav.Link>
+                  <Nav.Link onClick={this.signIn}>Log in</Nav.Link>
+                  <Nav.Link className="createanaccount" onClick={this.signUp}>Create an account</Nav.Link>
                 </Nav>
               )}
             </Navbar.Collapse>
