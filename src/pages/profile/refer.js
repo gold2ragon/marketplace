@@ -42,9 +42,11 @@ class ReferContacts extends Component {
       contactPersonNumber,
     } = this.state;
 
-    const { contacts } = this.props;
+    let { contacts } = this.props;
 
     const id = generateRandomID();
+
+    if (!contacts) contacts = {};
 
     contacts[id] = {
       id,
