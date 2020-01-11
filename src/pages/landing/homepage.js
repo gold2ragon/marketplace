@@ -186,7 +186,7 @@ class Homepage extends Component {
               </Dropdown.Menu>
             </Dropdown>
             <div className="btn-search-franchise">
-              <button>Search</button>
+              <button className="btn-main">Search</button>
             </div>
           </div>
         </Container>

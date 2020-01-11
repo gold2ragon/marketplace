@@ -243,11 +243,13 @@
   padding-left: 9px;
   button {
     width: 100%;
-    padding: 18px;
-    background-color: rgba(255, 77, 0, 1.0);
+    padding: 18px 0;
     color: #ffffff;
     outline: none;
     border: none;
     border-radius: 5px;
   }
+}
+.btn-main {
+  background-color: rgba(255, 77, 0, 1.0);
 }
