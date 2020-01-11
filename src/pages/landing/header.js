@@ -55,7 +55,7 @@ class Header extends Component {
       <div className="header">
         <Container>
           <Navbar collapseOnSelect expand="lg">
-            <Navbar.Brand href="/" className="logo-container">
+            <Navbar.Brand as={Link} to="/" className="logo-container">
               <div className="thebizhunt1">
                 <span className="span1">TheBiz</span>
                 <span className="span2">Hunt.</span>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getListings, deleteListing } from '../../redux/actions/listing';
-import { Form, Button, FormGroup, Table, Spinner } from 'react-bootstrap';
+import { Button, Table, Spinner } from 'react-bootstrap';
 import _ from 'lodash';
 
 class Listings extends Component {
