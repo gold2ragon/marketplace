@@ -63,6 +63,12 @@ button {
 }
 
 .btn-main {
+  background-color: $mainColor;
+  color: #ffffff;
+  padding: 18px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
   span {
     font-size: 1rem !important;
   }
@@ -166,6 +172,11 @@ button {
 .link-main {
   color: $mainColor !important;
   cursor: pointer;
+}
+.learn-more {
+  font-family: "Work Sans", Helvetica, Arial, serif;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 @media (min-width: 1600px) {

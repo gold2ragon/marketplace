@@ -1,10 +1,33 @@
 import firebase, { firestore } from '../../firebase';
-import { SET_LISTINGS } from './action-types';
+import { SET_LISTINGS , SET_CUISINE_TYPES} from './action-types';
+import _ from 'lodash';
 
 export const setListings = (listings) => ({
   type: SET_LISTINGS,
   payload: listings,
 });
+
+export const setCuisineTypes = (cuisineTypes) => ({
+  type: SET_CUISINE_TYPES,
+  payload: cuisineTypes,
+});
+
+export const getCuisineTypes = (listings) => {
+  return async (dispatch) => {
+    const cuisineTypes = {};
+    _.map(listings, (listing) => {
+      const type = listing.public.cuisineType;
+      if (!cuisineTypes[type]) {
+        cuisineTypes[type] = {}
+        cuisineTypes[type].url = listing.public.photos[0];
+        cuisineTypes[type].count = 1;
+      } else {
+        cuisineTypes[type].count ++;
+      }
+    });
+    dispatch(setCuisineTypes(cuisineTypes));
+  }
+}
 
 export const getListings = () => {
   return async (dispatch) => {
@@ -17,6 +40,7 @@ export const getListings = () => {
         listings[[doc.id]] = listing;
       }
       dispatch(setListings(listings));
+      dispatch(getCuisineTypes(listings));
     } catch (error) {
       console.log('error getting listings', error);
     }

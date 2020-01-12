@@ -1,14 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Container, Dropdown, Row, Col } from 'react-bootstrap';
+import { Container, Dropdown, Row, Col, Button } from 'react-bootstrap';
 import { getListings } from '../../redux/actions/listing';
 import { ReactComponent as SearchIcon } from '../../assets/img/search-icon.svg';
 import Listing from './listing';
+import CuisineType from './cuisin-type';
+import HowThisWorks from './how-this-works';
+import { Link } from 'react-router-dom';
 
 const prices = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
 
 class Homepage extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +73,7 @@ class Homepage extends Component {
     if (selectedInput === 'maxprice') {
       const list = [];
       list.push(<li key="no-max" onClick={this.handleChangePriceLimit}>No Max</li>);
-      list.push(<hr key="max-hr"/>);
+      list.push(<hr key="max-hr" />);
       for (const price of prices) {
         if (minprice && price < minprice) {
           list.push(
@@ -124,11 +127,7 @@ class Homepage extends Component {
 
     const { listings } = this.props;
     const listingKeys = Object.keys(listings);
-    if (listingKeys.length > 0) {
-      console.log(listings[listingKeys[0]]);
-      console.log(listings[listingKeys[1]]);
-    }
-    
+
     return (
       <Fragment>
         <div className="background">
@@ -173,7 +172,7 @@ class Homepage extends Component {
                 {priceRangeInfo}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu 
+              <Dropdown.Menu
                 className="dropdown-input-range"
               >
                 <div className="input-range">
@@ -204,7 +203,9 @@ class Homepage extends Component {
               <button className="btn-main">Search</button>
             </div>
           </div>
-          <section id="featured">
+        </Container>
+        <section id="featured">
+          <Container>
             <Row>
               <Col md={4}>
                 <div className="featured-fanchise">
@@ -221,19 +222,112 @@ class Homepage extends Component {
                 {(listingKeys && listingKeys.length > 1) && <Listing listing={listings[listingKeys[1]]} />}
               </Col>
             </Row>
-          </section>
+          </Container>
+        </section>
+        <Container>
           <section id="explore-cuisine-types">
             <div className="title">
               Explore TheBizHunt Cuisine Types
-            </div>
+              </div>
             <div className="info">
               <span>Best franchise you can discover in here!</span>
               <a className="link-main">
                 See all franchises
-              </a>
+                </a>
             </div>
+            <Row>
+              <Col md={3}>
+                <CuisineType type="Singaporean" />
+              </Col>
+              <Col md={3}>
+                <CuisineType type="Chinese" />
+              </Col>
+              <Col md={3}>
+                <CuisineType type="Japanese" />
+              </Col>
+              <Col md={3}>
+                <CuisineType type="Halal/Vegetarian" />
+              </Col>
+            </Row>
+            <hr />
+          </section>
+          <section id="how-this-works">
+            <div className="title">
+              How This Works
+              </div>
+            <Row>
+              <Col md="4">
+                <HowThisWorks
+                  img="🙋‍♂️"
+                  title={<span>Interested in setting up<br />a franchise?</span>}
+                  description="All franchises are handpicked by our team and we will guide you through the process of buying and setting up the franchise."
+                />
+              </Col>
+              <Col md="4">
+                <HowThisWorks
+                  img="👔"
+                  title={`For F&B Business Owners`}
+                  description={`
+                      Interested in franchising your business? 
+                      We guide first-time franchisors through the process. 
+                      Sign up for an account or contact us at hello@thebizhunt.com
+                    `}
+                />
+              </Col>
+              <Col md="4">
+                <HowThisWorks
+                  img="🤝"
+                  title="Refer a Franchise to us"
+                  description={`
+                      Know someone that might be interested in buying a franchise? 
+                      Sign up for an account and send us their contact details. 
+                      Receive a referral fee when they open a franchise
+                    `}
+                />
+              </Col>
+            </Row>
           </section>
         </Container>
+        <section id="intersted">
+          <Container>
+            <Row>
+              <Col md={6}>
+                <img src={require('../../assets/img/food9.png')}></img>
+              </Col>
+              <Col md={6}>
+                <div className="title">Interested to Work<br />With Us?</div>
+                <div className="description">
+                  Sign up with us to buy your franchise or list your business
+                </div>
+                <button className="btn-main">Create your account</button>
+              </Col>
+            </Row>
+            <Row  id="footer">
+              <Col md={7}>
+                <Link className="home-link" to="/">TheBizHunt.</Link>
+                <Link to="/terms-and-conditions">{`Terms & Conditions`}</Link>
+                <Link to="/privacy-policy">Privacy Policy</Link>
+                <Link to="/blog">Blog</Link>
+                <Link to="/career">Career</Link>
+              </Col>
+              <Col md={5}>
+                <Link className="company-info">
+                  &copy;The BizHunt Pte Ltd<br />
+                  Singapore UEN 201934410G
+                </Link>
+                <Link>
+                  <i className="fa fa-facebook-square"></i>
+                </Link>
+                <Link>
+                  <i className="fa fa-instagram"></i>
+                </Link>
+                <Link>
+                  <i className="fa fa-twitter"></i>
+                </Link>
+              </Col>
+            </Row>
+          </Container>
+        </section>
       </Fragment>
     );
   }

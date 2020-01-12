@@ -253,9 +253,6 @@
     border-radius: 5px;
   }
 }
-.btn-main {
-  background-color: $mainColor;
-}
 
 // Featured Section CSS
 #featured {
@@ -298,7 +295,6 @@
       margin-top: 20px;
     }
     .link-main {
-      transform: rotate(0deg);
       font-family: "Work Sans", Helvetica, Arial, serif;
       font-weight: 600;
       font-size: 16px;
@@ -309,6 +305,7 @@
 
 #explore-cuisine-types {
   margin: 150px 100px;
+  margin-bottom: 80px;
   .title {
     font-family: "Lora", Helvetica, Arial, serif;
     font-weight: 400;
@@ -319,13 +316,155 @@
   .info {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 20px 0;
     span {
       font-family: "Work Sans", Helvetica, Arial, serif;
       font-weight: 400;
       font-size: 18px;
       color: rgba(12, 14, 28, 0.8);
       line-height: 28px;
+    }
+  }
+  .cuisine-type {
+    box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+    img {
+      width: 278px;
+      height: 320px;
+      object-fit: cover;
+    }
+    & > div {
+      padding: 30px 25px;
+      .type {
+        font-family: "Lora", Helvetica, Arial, serif;
+        font-weight: 700;
+        font-style: normal;
+        line-height: 25.0px;
+        font-size: 20.0px;
+        color: rgba(12, 14, 28, 1.0);
+      }
+      .count {
+        margin-top: 10px;
+        margin-bottom: 35px;
+        font-family: "Work Sans", Helvetica, Arial, serif;
+        font-weight: 400;
+        font-size: 16px;
+        color: rgba(12, 14, 28, 0.8);
+        line-height: 24px;
+      }
+    }
+  }
+  hr {
+    margin-top: 150px;
+  }
+}
+
+#how-this-works {
+  margin: 100px;
+  & > .title {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 42px;
+    color: rgba(12, 14, 28, 1.0);
+    line-height: 54px;
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  .row {
+    background-color: rgba(244, 244, 244, 1.0);
+  }
+  .how-this-works {
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 80px;
+    .row {
+      padding: 20px;
+    }
+    .img {
+      text-align: center;
+      font-family: "AppleColorEmoji", Helvetica, Arial, serif;
+      font-size: 48px;
+      color: rgba(12, 14, 28, 0.8);
+    }
+    .title {
+      font-family: "Lora", Helvetica, Arial, serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: rgba(12, 14, 28, 1.0);
+      text-align: center;
+      margin: 25px 0;
+    }
+    .description {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: rgba(12, 14, 28, 0.8);
+      text-align: center;
+      line-height: 22px;
+    }
+  }
+}
+
+#intersted {
+  background-color: rgba(244, 244, 244, 1.0);
+  padding: 100px 0;
+  .title {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: rgba(12, 14, 28, 1.0);
+    margin-top: 30px;
+  }
+  .description {
+    font-family: "Work Sans", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(12, 14, 28, 0.8);
+    line-height: 28px;
+    margin: 30px 0;
+  }
+  button {
+    font-size: 18px;
+    padding: 15px 30px;
+  }
+}
+
+#footer {
+  margin-top: 80px;
+  
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  & > div:first-child {
+    justify-content: flex-start;
+    a {
+      margin: 0 20px;
+    }
+  }
+  & > div:last-child {
+    justify-content: flex-end;
+    a {
+      margin: 0 15px;
+    }
+  }
+  a {
+    font-family: "Work Sans", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(12, 14, 28, 1.0);
+    line-height: 16px;
+    &:hover {
+      text-decoration: none;
+    }
+    &.home-link {
+      font-family: "Lora", Helvetica, Arial, serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    i {
+      font-size: 18px;
     }
   }
 }
