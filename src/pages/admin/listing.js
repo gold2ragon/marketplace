@@ -28,6 +28,7 @@ class Listing extends Component {
       id: 'new',
       validated: false,
       cuisineType: -1,
+      restaurantName: '',
       cuisineDescription: '',
       franchiseFee: '',
       photos: [],
@@ -170,6 +171,7 @@ class Listing extends Component {
     await this.props.saveListing(this.state.id, {
       public: {
         cuisineType: this.state.cuisineType,
+        restaurantName: this.state.restaurantName,
         cuisineDescription: this.state.cuisineDescription,
         franchiseFee: this.state.franchiseFee,
         photos: this.state.photos,
@@ -211,6 +213,7 @@ class Listing extends Component {
     const {
       validated,
       cuisineType,
+      restaurantName,
       cuisineDescription,
       franchiseFee,
       description,
@@ -239,6 +242,7 @@ class Listing extends Component {
               </option>
               <option>Singaporean</option>
               <option>Chinese</option>
+              <option>Japanese</option>
               <option>Halal/Vegetarian</option>
             </Form.Control>
             {invalidCusinType && <div className="invalid-field">Please select cuisine type</div>}
@@ -247,14 +251,14 @@ class Listing extends Component {
 
         <Form.Group as={Row}>
           <Form.Label column sm={3}>
-            Cuisine Description
+            Restaurant Name
           </Form.Label>
           <Col sm={5}>
             <Form.Control
               type="text"
-              name="cuisineDescription"
-              value={cuisineDescription}
-              placeholder="Conveyor Belt Sushi"
+              name="restaurantName"
+              value={restaurantName}
+              placeholder="Restaurant Name"
               onChange={this.handleChange}
               required
             />
@@ -271,6 +275,22 @@ class Listing extends Component {
               name="franchiseFee"
               value={franchiseFee}
               placeholder="US$25,000"
+              onChange={this.handleChange}
+              required
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Form.Label column sm={3}>
+            Cuisine Description
+          </Form.Label>
+          <Col sm={9}>
+            <Form.Control
+              type="text"
+              name="cuisineDescription"
+              value={cuisineDescription}
+              placeholder="Conveyor Belt Sushi"
               onChange={this.handleChange}
               required
             />

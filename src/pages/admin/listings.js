@@ -33,15 +33,16 @@ class Listings extends Component {
     const trs = _.map(listings, (listing, id, index) => (
       <tr key={id}>
         <td>{listing.public.cuisineType}</td>
-        <td>{listing.public.cuisineDescription}</td>
+        <td>{listing.public.restaurantName}</td>
         <td>{listing.public.franchiseFee}</td>
+        <td>{listing.public.cuisineDescription}</td>
         <td>
           <Link to={`/admin/listing/${id}`} className="btn btn-primary">
-            Edit
+            <i className="fa fa-pencil" />
           </Link>
           &nbsp;
           <Button variant="danger" onClick={() => this.deleteListing(id)} disabled={isLoading[id]}>
-            Delete
+            <i className="fa fa-trash" />
             {isLoading[id] && (
               <Spinner
                 as="span"
@@ -67,10 +68,11 @@ class Listings extends Component {
           </Link>
         </p>
 
-        <Table bordered hover>
+        <Table bordered hover style={{fontSize: '0.9rem'}}>
           <thead className="thead-light">
             <tr>
               <th scope="col">Cuisine Type</th>
+              <th scope="col">Restaurant Name</th>
               <th scope="col">Cuisine Description</th>
               <th scope="col">Franchise Fee</th>
               <th></th>

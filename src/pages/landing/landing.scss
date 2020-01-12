@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,500,700|Lora:700,400');
+@import '../../app.scss';
 
 .header {
   background-color: #ffffff;
@@ -73,13 +74,13 @@
     position: relative;
   }
   .food1 {
-    top: 527px;
+    top: 472px;
     position: absolute;
     margin: 0;
     left: 100px;
   }
   .food2 {
-    top: 495px;
+    top: 420px;
     position: absolute;
     margin: 0;
     left: 31px;
@@ -103,18 +104,19 @@
     right: 15%;
   }
   .food5 {
-    top: 436px;
+    top: 336px;
     position: absolute;
     margin: 0;
     right: -134px;
   }
   .food7 {
+    width: 220px;
     top: 66px;
     position: absolute;
     right: -121px;
   }
   .food8 {
-    top: 189px;
+    top: 155px;
     position: absolute;
     margin: 0;
     left: -126px;
@@ -139,7 +141,8 @@
 .search-box {
   width: 80%;
   max-width: 922px;
-  margin: 80px auto;
+  margin: 100px auto;
+  margin-bottom: 150px;
   border: 1px solid rgba(208, 211, 226, 1.0);
   border-radius: 12px;
   padding: 9px;
@@ -251,5 +254,78 @@
   }
 }
 .btn-main {
-  background-color: rgba(255, 77, 0, 1.0);
+  background-color: $mainColor;
+}
+
+// Featured Section CSS
+#featured {
+  background-color: rgba(244, 244, 244, 1.0);
+  .featured-fanchise {
+    font-size: 42px;
+    font-family: $baseFontHeaderFamily;
+  }
+  .row {
+    padding: 150px 100px;
+  }
+}
+
+// listing css
+.listing {
+  box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+  img {
+    width: 100%;
+  }
+  & > div {
+    background-color: #ffffff;
+    padding: 30px 25px;
+    .title {
+      font-family: "Lora", Helvetica, Arial, serif;
+      font-weight: 700;
+      font-size: 20.0px;
+      color: rgba(12, 14, 28, 1.0);
+      line-height: 25.0px;
+      margin-bottom: 25px;
+    }
+    .franchiseFee {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: rgba(51, 52, 64, 1.0);
+      line-height: 24px;
+      margin-top: 10px;
+    }
+    .learn-more {
+      margin-top: 20px;
+    }
+    .link-main {
+      transform: rotate(0deg);
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }  
+}
+
+#explore-cuisine-types {
+  margin: 150px 100px;
+  .title {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: rgba(12, 14, 28, 1.0);
+    line-height: 39px;
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    span {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 400;
+      font-size: 18px;
+      color: rgba(12, 14, 28, 0.8);
+      line-height: 28px;
+    }
+  }
 }

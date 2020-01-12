@@ -1,5 +1,7 @@
 $baseColor: #000000;
 $baseFontSize: 16px;
+$baseFontHeaderFamily: "Lora", Helvetica, Arial, serif;
+$mainColor: rgba(255, 77, 0, 1.0);
 
 body {
   overflow-x: hidden;
@@ -161,6 +163,11 @@ button {
   margin-left: 5px;
 }
 
+.link-main {
+  color: $mainColor !important;
+  cursor: pointer;
+}
+
 @media (min-width: 1600px) {
   .container,
   .container-lg,
@@ -170,53 +177,3 @@ button {
     max-width: 1440px !important;
   }
 }
-// @media (min-width: 1200px) {
-//   .container,
-//   .container-lg,
-//   .container-md,
-//   .container-sm,
-//   .container-xl {
-//     min-width: 1140px;
-//   }
-// }
-// @media (min-width: 992px) {
-//   .container,
-//   .container-lg,
-//   .container-md,
-//   .container-sm {
-//     min-width: 960px;
-//   }
-// }
-// @media (min-width: 768px) {
-//   .container,
-//   .container-md,
-//   .container-sm {
-//     min-width: 720px;
-//   }
-// }
-// @media (min-width: 576px) {
-//   .container,
-//   .container-sm {
-//     min-width: 540px !important;
-//   }
-// }
-// @media (min-width: 1200px) {
-//   .container {
-//     min-width: 1140px !important;
-//   }
-// }
-// @media (min-width: 992px) {
-//   .container {
-//     min-width: 960px !important;
-//   }
-// }
-// @media (min-width: 768px) {
-//   .container {
-//     max-width: 720px !important;
-//   }
-// }
-// @media (min-width: 576px) {
-//   .container {
-//     min-width: 540px !important;
-//   }
-// }

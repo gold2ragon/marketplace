@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Dropdown } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Container, Dropdown, Row, Col } from 'react-bootstrap';
+import { getListings } from '../../redux/actions/listing';
 import { ReactComponent as SearchIcon } from '../../assets/img/search-icon.svg';
+import Listing from './listing';
 
 const prices = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
 
@@ -18,6 +21,10 @@ class Homepage extends Component {
     this.minpriceRef = React.createRef();
     this.maxpriceRef = React.createRef();
     this.priceRangeRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.props.getListings();
   }
 
   handleChangeCuisineType = (eventKey, event) => {
@@ -114,6 +121,13 @@ class Homepage extends Component {
     } else if (!maxprice) {
       priceRangeInfo = `Min S$ ${minprice}`;
     }
+
+    const { listings } = this.props;
+    const listingKeys = Object.keys(listings);
+    if (listingKeys.length > 0) {
+      console.log(listings[listingKeys[0]]);
+      console.log(listings[listingKeys[1]]);
+    }
     
     return (
       <Fragment>
@@ -137,6 +151,7 @@ class Homepage extends Component {
           </span>
         </div>
         <Container>
+          {/* Search Bar */}
           <div className="search-box">
             <span className="search-franchise">
               <SearchIcon />
@@ -189,10 +204,48 @@ class Homepage extends Component {
               <button className="btn-main">Search</button>
             </div>
           </div>
+          <section id="featured">
+            <Row>
+              <Col md={4}>
+                <div className="featured-fanchise">
+                  🌟<div>Featured</div><div>Franchise</div>
+                </div>
+                <a className="link-main">
+                  See all franchises
+                </a>
+              </Col>
+              <Col md={4}>
+                {(listingKeys && listingKeys.length > 0) && <Listing listing={listings[listingKeys[0]]} />}
+              </Col>
+              <Col md={4}>
+                {(listingKeys && listingKeys.length > 1) && <Listing listing={listings[listingKeys[1]]} />}
+              </Col>
+            </Row>
+          </section>
+          <section id="explore-cuisine-types">
+            <div className="title">
+              Explore TheBizHunt Cuisine Types
+            </div>
+            <div className="info">
+              <span>Best franchise you can discover in here!</span>
+              <a className="link-main">
+                See all franchises
+              </a>
+            </div>
+          </section>
         </Container>
       </Fragment>
     );
   }
 }
 
-export default Homepage;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+  listings: state.admin.listings,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getListings: () => dispatch(getListings()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
