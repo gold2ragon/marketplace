@@ -1,4 +1,4 @@
-import { SET_LISTINGS, SET_ALL_CONTACTS } from '../actions/action-types';
+import { SET_LISTINGS, SET_ALL_CONTACTS, SET_CUISINE_TYPES } from '../actions/action-types';
 
 // initial state is the default state
 const INITIAL_STATE = {
@@ -12,6 +12,11 @@ const adminReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         listings: action.payload
+      }
+    case SET_CUISINE_TYPES:
+      return {
+        ...state,
+        cuisineTypes: action.payload,
       }
     case SET_ALL_CONTACTS:
       return {

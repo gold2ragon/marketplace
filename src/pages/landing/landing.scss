@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,500,700|Lora:700,400');
+@import '../../app.scss';
+
+.header {
+  background-color: #ffffff;
+  z-index: 10;
+  .btn {
+    // color: white !important;
+    margin-right: 20px;
+    width: 180px;
+  }
+  hr {
+    width: 100vw;
+    margin: 0;
+  }
+  .navbar {
+    padding: 0;
+    height: 100px;
+  }
+  .navbar-nav {
+    align-items: center;
+  }
+}
+
+.thebizhunt1 {
+  background-color: rgba(255, 255, 255, 0);
+  height: auto;
+  width: auto;
+  margin: 0;
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  font-family: 'Lora', Helvetica, Arial, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 22px;
+  color: rgba(12, 14, 28, 1);
+  text-align: left;
+  line-height: 28px;
+  .span2 {
+    color: rgba(255, 77, 0, 1);
+  }
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-family: 'Work Sans', Helvetica, Arial, serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  text-align: center;
+  width: 110px;
+
+  &.createanaccount {
+    background-color: rgba(255,255,255,0.0);
+    font-weight: 500;
+    color: rgba(255, 77, 0, 1.0) !important;
+    background-color: rgba(255, 77, 0, 0.1);
+    border-radius: 8px;
+    width: 180px;
+  }
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  z-index: -1;
+  & > div {
+    position: relative;
+  }
+  .food1 {
+    top: 472px;
+    position: absolute;
+    margin: 0;
+    left: 100px;
+  }
+  .food2 {
+    top: 420px;
+    position: absolute;
+    margin: 0;
+    left: 31px;
+  }
+  .food4 {
+    top: 37px;
+    position: absolute;
+    margin: 0;
+    left: 63px;
+  }
+  .food3 {
+    top: 101px;
+    position: absolute;
+    margin: 0;
+    left: 117px;
+  }
+  .food6 {
+    top: -56px;
+    position: absolute;
+    margin: 0;
+    right: 15%;
+  }
+  .food5 {
+    top: 336px;
+    position: absolute;
+    margin: 0;
+    right: -134px;
+  }
+  .food7 {
+    width: 220px;
+    top: 66px;
+    position: absolute;
+    right: -121px;
+  }
+  .food8 {
+    top: 155px;
+    position: absolute;
+    margin: 0;
+    left: -126px;
+  }
+}
+
+.thefinestfoodsfra {
+  margin-top: 137px;
+  text-align: center;
+  font-family: "Lora", Helvetica, Arial, serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 42px;
+  color: rgba(12, 14, 28, 1.0);
+  line-height: 54.0px;
+  .span2 {
+    color: rgba(255, 77, 0, 1.0);
+  }
+}
+
+/***** Search box css *****/
+.search-box {
+  border: 1px solid rgba(208, 211, 226, 1.0);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+
+  .landing-search & {
+    width: 80%;
+    max-width: 922px;
+    margin: 100px auto;
+    margin-bottom: 150px;
+    padding: 9px;
+  }
+
+  .header & {
+    width: 922px;
+    padding: 0 9px;
+    margin-left: 10px;
+    .btn-main {
+      margin: 9px 0;
+      padding: 9px 0;
+    }
+  }
+
+  .dropdown {
+    margin: 5px;
+    &.show {
+      & > button {
+        border: solid 1px #d0d3e3;
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  .search-franchise {
+    width: 30%;
+    input {
+      border: none;
+      outline: none;
+      padding: 0 10px;
+      font-family: 'Work Sans', Helvetica, Arial, serif;
+      font-size: 16px;
+      width: 230px;
+    }
+    padding: 10px 0;
+  }
+  .show>.btn-primary.dropdown-toggle {
+    color: #000000;
+  }
+  .dropdown {
+    width: 25%;
+    // border-right: 2px solid rgba(208, 211, 226, 1.0) !important;
+    .dropdown-toggle {
+      background-color: transparent !important;
+      border: none;
+      color: #000000;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:focus {
+        color: #000000;
+        box-shadow: none !important;
+      }
+      &::after {
+        border: none !important;
+        margin-top: 0.255em;
+        content: url('../../assets/img/arrow-down.svg');
+      }
+    }
+    &.show {
+      .dropdown-toggle::after {
+        content: url('../../assets/img/arrow-up.svg');
+      }
+      & > div {
+        border-top: none;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    right: 0 !important;
+    &.show {
+      .landing-search & {
+        top: -5px !important;
+      }
+      .header & {
+        top: 40px !important;
+      }
+      box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+  .dropdown-input-range {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+    font-size: 14px;
+    .input-range {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 4px;
+      input {
+        width: 40%;
+        border: 1px solid #ccc;
+        outline: none;
+        text-align: center;
+        height: 46px;
+        line-height: 22.4px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+    .maxprice-list {
+      text-align: right;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      hr {
+        margin: 10px 0;
+      }
+
+      li {
+        line-height: 36px;
+        padding: 0 40px;
+        &:hover {
+          background-color: #f2f2f2;
+        }
+        &.disabled {
+          pointer-events:none; //This makes it not clickable
+          opacity:0.6;         //This grays it out to look disabled
+        }
+      }
+    }
+  }
+  .select-price-range {
+    width: 30%;
+  }
+  .vertical-bar {
+    margin: 0 5px;
+    height: 45px;
+    border-right: 2px solid rgba(208, 211, 226, 1.0);
+  }
+}
+
+.btn-search-franchise {
+  width: 15%;
+  padding-left: 9px;
+  button {
+    width: 100%;
+    padding: 18px 0;
+    color: #ffffff;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+  }
+}
+
+// Featured Section CSS
+#featured {
+  background-color: rgba(244, 244, 244, 1.0);
+  .featured-fanchise {
+    font-size: 42px;
+    font-family: $baseFontHeaderFamily;
+  }
+  .row {
+    padding: 100px 0;
+  }
+}
+
+// listing css
+.listing {
+  box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+  max-width: 380px;
+  margin: 0 auto;
+  margin-top: 50px;
+  img {
+    width: 100%;
+  }
+  & > div {
+    background-color: #ffffff;
+    padding: 30px 25px;
+    .title {
+      font-family: "Lora", Helvetica, Arial, serif;
+      font-weight: 700;
+      font-size: 20.0px;
+      color: rgba(12, 14, 28, 1.0);
+      line-height: 25.0px;
+      margin-bottom: 25px;
+    }
+    .franchiseFee {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: rgba(51, 52, 64, 1.0);
+      line-height: 24px;
+      margin-top: 10px;
+    }
+    .learn-more {
+      margin-top: 20px;
+    }
+    .link-main {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }  
+}
+
+#explore-cuisine-types {
+  margin: 150px 0;
+  margin-bottom: 80px;
+  .title {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: rgba(12, 14, 28, 1.0);
+    line-height: 39px;
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    span {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 400;
+      font-size: 18px;
+      color: rgba(12, 14, 28, 0.8);
+      line-height: 28px;
+    }
+  }
+  .cuisine-type {
+    box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+    margin-top: 20px;
+    img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+    & > div {
+      padding: 30px 25px;
+      .type {
+        font-family: "Lora", Helvetica, Arial, serif;
+        font-weight: 700;
+        font-style: normal;
+        line-height: 25.0px;
+        font-size: 20.0px;
+        color: rgba(12, 14, 28, 1.0);
+      }
+      .count {
+        margin-top: 10px;
+        margin-bottom: 35px;
+        font-family: "Work Sans", Helvetica, Arial, serif;
+        font-weight: 400;
+        font-size: 16px;
+        color: rgba(12, 14, 28, 0.8);
+        line-height: 24px;
+      }
+    }
+  }
+  hr {
+    margin-top: 150px;
+  }
+}
+
+#how-this-works {
+  margin: 100px auto;
+  & > .title {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 42px;
+    color: rgba(12, 14, 28, 1.0);
+    line-height: 54px;
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  .row {
+    background-color: rgba(244, 244, 244, 1.0);
+  }
+  .how-this-works {
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 80px;
+    max-width: 340px;
+    margin: 0 auto;
+    .row {
+      padding: 20px;
+    }
+    .img {
+      text-align: center;
+      font-family: "AppleColorEmoji", Helvetica, Arial, serif;
+      font-size: 48px;
+      color: rgba(12, 14, 28, 0.8);
+    }
+    .title {
+      font-family: "Lora", Helvetica, Arial, serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: rgba(12, 14, 28, 1.0);
+      text-align: center;
+      margin: 25px 0;
+    }
+    .description {
+      font-family: "Work Sans", Helvetica, Arial, serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: rgba(12, 14, 28, 0.8);
+      text-align: center;
+      line-height: 22px;
+    }
+  }
+}
+
+#intersted {
+  background-color: rgba(244, 244, 244, 1.0);
+  padding: 100px 0;
+  .title {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: rgba(12, 14, 28, 1.0);
+    margin-top: 30px;
+  }
+  .description {
+    font-family: "Work Sans", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(12, 14, 28, 0.8);
+    line-height: 28px;
+    margin: 30px 0;
+  }
+  button {
+    font-size: 18px;
+    padding: 15px 30px;
+  }
+}
+
+#footer {
+  margin-top: 50px;
+  
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    &:last-child {
+      @media (min-width: 992px) {
+        justify-content: flex-end;
+      }
+    }
+  }
+  a {
+    margin: 0 2%;
+    margin-top: 30px;
+    font-family: "Work Sans", Helvetica, Arial, serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(12, 14, 28, 1.0);
+    line-height: 16px;
+    &:hover {
+      text-decoration: none;
+    }
+    i {
+      font-size: 18px;
+    }
+  }
+  .company-info {
+    margin-left: 0;
+  }
+  .home-link {
+    font-family: "Lora", Helvetica, Arial, serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 0;
+  }
+}
