@@ -19,7 +19,7 @@ class CuisinType extends Component {
         <img src={cuisineType.url} alt="cuisine type image" />
         <div>
           <div className="type">
-            {flags[type]} {type}
+            {type}
           </div>
           <div className="count">{cuisineType.count} Franchise</div>
           <div className="learn-more">

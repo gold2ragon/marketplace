@@ -5,7 +5,7 @@
   background-color: #ffffff;
   z-index: 10;
   .btn {
-    color: white !important;
+    // color: white !important;
     margin-right: 20px;
     width: 180px;
   }
@@ -16,6 +16,9 @@
   .navbar {
     padding: 0;
     height: 100px;
+  }
+  .navbar-nav {
+    align-items: center;
   }
 }
 
@@ -132,15 +135,28 @@
 
 /***** Search box css *****/
 .search-box {
-  width: 80%;
-  max-width: 922px;
-  margin: 100px auto;
-  margin-bottom: 150px;
   border: 1px solid rgba(208, 211, 226, 1.0);
   border-radius: 12px;
-  padding: 9px;
   display: flex;
   align-items: center;
+
+  .landing-search & {
+    width: 80%;
+    max-width: 922px;
+    margin: 100px auto;
+    margin-bottom: 150px;
+    padding: 9px;
+  }
+
+  .header & {
+    width: 922px;
+    padding: 0 9px;
+    margin-left: 10px;
+    .btn-main {
+      margin: 9px 0;
+      padding: 9px 0;
+    }
+  }
 
   .dropdown {
     margin: 5px;
@@ -148,6 +164,8 @@
       & > button {
         border: solid 1px #d0d3e3;
         border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
       }
     }
   }
@@ -160,6 +178,7 @@
       padding: 0 10px;
       font-family: 'Work Sans', Helvetica, Arial, serif;
       font-size: 16px;
+      width: 230px;
     }
     padding: 10px 0;
   }
@@ -200,8 +219,15 @@
   .dropdown-menu {
     right: 0 !important;
     &.show {
-      top: -5px !important;
+      .landing-search & {
+        top: -5px !important;
+      }
+      .header & {
+        top: 40px !important;
+      }
       box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
   }
   .dropdown-input-range {
