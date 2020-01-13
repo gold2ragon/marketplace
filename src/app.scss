@@ -68,13 +68,6 @@ button {
 #basic-nav-dropdown::after {
   display: none !important;
 }
-.dropdown-menu.show {
-  border-top: none;
-}
-.dropdown-toggle[aria-expanded="true"] {
-  border: 1px solid rgba(0,0,0,.15);
-}
-
 .sidebar {
   font-size: $baseFontSize !important;
 }

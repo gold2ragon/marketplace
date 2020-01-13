@@ -156,6 +156,7 @@ class Homepage extends Component {
               <SearchIcon />
               <input placeholder="Search for a franchise" />
             </span>
+            <div className="vertical-bar"></div>
             <Dropdown id="search-cuisine-types" onSelect={this.handleChangeCuisineType}>
               <Dropdown.Toggle>{cuisineType}</Dropdown.Toggle>
 

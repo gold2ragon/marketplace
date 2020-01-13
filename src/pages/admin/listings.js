@@ -75,7 +75,7 @@ class Listings extends Component {
               <th scope="col">Restaurant Name</th>
               <th scope="col">Cuisine Description</th>
               <th scope="col">Franchise Fee</th>
-              <th></th>
+              <th style={{width: '110px'}}></th>
             </tr>
           </thead>
           {this.renderContacts()}
