@@ -53,6 +53,22 @@ button {
   }
 }
 
+.navbar-light .navbar-nav .nav-link, #basic-nav-dropdown, .dropdown-menu {
+  font-family: "Work Sans", Helvetica, Arial, serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(12, 14, 28, 1.0) !important;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+}
+.dropdown-toggle::after {
+  display: none !important;
+}
+
 .sidebar {
   font-size: $baseFontSize !important;
 }
@@ -177,6 +193,9 @@ button {
   font-family: "Work Sans", Helvetica, Arial, serif;
   font-weight: 600;
   font-size: 16px;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 @media (min-width: 1600px) {

@@ -207,7 +207,7 @@ class Homepage extends Component {
         <section id="featured">
           <Container>
             <Row>
-              <Col md={4}>
+              <Col lg={4} md={12} sm={12}>
                 <div className="featured-fanchise">
                   🌟<div>Featured</div><div>Franchise</div>
                 </div>
@@ -215,10 +215,10 @@ class Homepage extends Component {
                   See all franchises
                 </a>
               </Col>
-              <Col md={4}>
+              <Col lg={4} md={6} sm={6}>
                 {(listingKeys && listingKeys.length > 0) && <Listing listing={listings[listingKeys[0]]} />}
               </Col>
-              <Col md={4}>
+              <Col lg={4} md={6} sm={6}>
                 {(listingKeys && listingKeys.length > 1) && <Listing listing={listings[listingKeys[1]]} />}
               </Col>
             </Row>
@@ -236,16 +236,16 @@ class Homepage extends Component {
                 </a>
             </div>
             <Row>
-              <Col md={3}>
+              <Col lg={3} md={6}>
                 <CuisineType type="Singaporean" />
               </Col>
-              <Col md={3}>
+              <Col lg={3} md={6}>
                 <CuisineType type="Chinese" />
               </Col>
-              <Col md={3}>
+              <Col lg={3} md={6}>
                 <CuisineType type="Japanese" />
               </Col>
-              <Col md={3}>
+              <Col lg={3} md={6}>
                 <CuisineType type="Halal/Vegetarian" />
               </Col>
             </Row>
@@ -256,14 +256,14 @@ class Homepage extends Component {
               How This Works
               </div>
             <Row>
-              <Col md="4">
+              <Col lg={4} md={12}>
                 <HowThisWorks
                   img="🙋‍♂️"
                   title={<span>Interested in setting up<br />a franchise?</span>}
                   description="All franchises are handpicked by our team and we will guide you through the process of buying and setting up the franchise."
                 />
               </Col>
-              <Col md="4">
+              <Col lg={4} md={12}>
                 <HowThisWorks
                   img="👔"
                   title={`For F&B Business Owners`}
@@ -274,7 +274,7 @@ class Homepage extends Component {
                     `}
                 />
               </Col>
-              <Col md="4">
+              <Col lg={4} md={12}>
                 <HowThisWorks
                   img="🤝"
                   title="Refer a Franchise to us"
@@ -303,14 +303,13 @@ class Homepage extends Component {
               </Col>
             </Row>
             <Row  id="footer">
-              <Col md={7}>
+              <Col lg={6} md={12} >
                 <Link className="home-link" to="/">TheBizHunt.</Link>
                 <Link to="/terms-and-conditions">{`Terms & Conditions`}</Link>
                 <Link to="/privacy-policy">Privacy Policy</Link>
                 <Link to="/blog">Blog</Link>
-                <Link to="/career">Career</Link>
               </Col>
-              <Col md={5}>
+              <Col lg={6} md={12} >
                 <Link className="company-info">
                   &copy;The BizHunt Pte Ltd<br />
                   Singapore UEN 201934410G

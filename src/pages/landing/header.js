@@ -9,6 +9,17 @@ import { selectCurrentUser } from '../../redux/actions/auth';
 import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 import './landing.scss';
 
+const User = (currentUser) => {
+  let { firstName, displayName, avatarURL } = currentUser.user;
+  if (!firstName) firstName = displayName.split(' ')[0];
+  return (
+    <span>
+      Hi, {firstName} &nbsp;
+      <img src={avatarURL ? avatarURL : require('../../assets/user.png')} />
+    </span>
+  )
+};
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -46,10 +57,10 @@ class Header extends Component {
     const { currentUser } = this.props;
     let displayName = '';
     if (currentUser) {
-      displayName = currentUser.displayName;
-      if (!displayName && currentUser.firstName) {
-        displayName = currentUser.firstName + ' ' + currentUser.lastName;
-      }
+      displayName = currentUser.firstName;
+      // if (!displayName && currentUser.firstName) {
+      //   displayName = currentUser.firstName + ' ' + currentUser.lastName;
+      // }
     }
     return (
       <div className="header">
@@ -81,7 +92,7 @@ class Header extends Component {
                 </NavDropdown> */}
               </Nav>
               {currentUser ? (
-                <NavDropdown title={displayName || ''} id="basic-nav-dropdown">
+                <NavDropdown title={<User user={currentUser}/> || ''} id="basic-nav-dropdown">
                   <NavDropdown.Item as={Link} to="/mypage/settings">
                     My Page
                   </NavDropdown.Item>
