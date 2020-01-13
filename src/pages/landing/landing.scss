@@ -146,6 +146,16 @@
   display: flex;
   align-items: center;
 
+  .dropdown {
+    margin: 5px;
+    &.show {
+      & > button {
+        border: solid 1px #d0d3e3;
+        border-bottom: none;
+      }
+    }
+  }
+
   .search-franchise {
     width: 30%;
     input {
@@ -163,7 +173,7 @@
   }
   .dropdown {
     width: 25%;
-    border-right: 2px solid rgba(208, 211, 226, 1.0) !important;
+    // border-right: 2px solid rgba(208, 211, 226, 1.0) !important;
     .dropdown-toggle {
       background-color: transparent !important;
       border: none;
@@ -182,10 +192,19 @@
         content: url('../../assets/img/arrow-down.svg');
       }
     }
+    &.show {
+      .dropdown-toggle::after {
+        content: url('../../assets/img/arrow-up.svg');
+      }  
+    }
   }
 
   .dropdown-menu {
     right: 0 !important;
+    &.show {
+      top: -5px !important;
+      box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+    }
   }
   .dropdown-input-range {
     max-height: 300px;
@@ -235,6 +254,11 @@
   }
   .select-price-range {
     width: 30%;
+  }
+  .vertical-bar {
+    margin: 0 5px;
+    height: 45px;
+    border-right: 2px solid rgba(208, 211, 226, 1.0);
   }
 }
 

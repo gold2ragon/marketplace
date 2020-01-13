@@ -156,7 +156,7 @@ class Homepage extends Component {
               <SearchIcon />
               <input placeholder="Search for a franchise" />
             </span>
-            <Dropdown onSelect={this.handleChangeCuisineType}>
+            <Dropdown id="search-cuisine-types" onSelect={this.handleChangeCuisineType}>
               <Dropdown.Toggle>{cuisineType}</Dropdown.Toggle>
 
               <Dropdown.Menu>
@@ -166,7 +166,7 @@ class Homepage extends Component {
                 <Dropdown.Item href="#/Halal/Vegan">Halal/Vegan</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-
+            <div className="vertical-bar"></div>
             <Dropdown className="select-price-range" onSelect={this.handleChangeCuisineType}>
               <Dropdown.Toggle ref={this.priceRangeRef} >
                 {priceRangeInfo}
