@@ -3,7 +3,7 @@ $baseFontSize: 16px;
 $baseFontHeaderFamily: "Lora", Helvetica, Arial, serif;
 $mainColor: rgba(255, 77, 0, 1.0);
 
-body {
+html, body {
   overflow-x: hidden;
 }
 
@@ -15,22 +15,18 @@ textarea {
   color: $baseColor !important;
 }
 
+#root {
+  position: relative;
+}
+
 button {
   font-family: 'Lato', sans-serif !important;
   outline: none !important;
   cursor: pointer !important;
-  // padding: 0.5rem .75rem !important;
 }
 
 .table td {
   vertical-align: middle !important;
-}
-
-.modal-content {
-  & > div {
-    margin: 0 auto;
-    border: none;
-  }
 }
 
 .body {
@@ -80,7 +76,7 @@ button {
 .btn-main {
   background-color: $mainColor;
   color: #ffffff;
-  padding: 18px;
+  padding: 11px;
   outline: none;
   border: none;
   border-radius: 5px;

@@ -6,7 +6,7 @@ import { auth } from '../../firebase';
 import SignIn from '../auth/signin';
 import SignUp from '../auth/signup';
 import { selectCurrentUser } from '../../redux/actions/auth';
-import { Navbar, NavDropdown, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 import SearchFranchises from './search-franchise';
 import './landing.scss';
 
@@ -66,11 +66,6 @@ class Header extends Component {
 
   renderSearchHeader = () => {
     return (
-      // <Form inline>
-      //   {/* <SearchFranchises className="nav-link"/> */}
-      //   <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      //   <Button variant="outline-success">Search</Button>
-      // </Form>
       <SearchFranchises />
     )
   }

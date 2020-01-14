@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SocialOAuth from './social-oauth';
 import { auth, createUserProfileDocument } from '../../firebase';
 import { Modal, Button, Form, InputGroup, FormGroup } from 'react-bootstrap';
+import ReactPhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import firebase from 'firebase/app';
 
 class SignUp extends Component {
@@ -25,10 +27,6 @@ class SignUp extends Component {
   }
 
   componentDidMount() {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('invisible-recapture', {
-      size: 'invisible',
-      callback: function(response) {},
-    });
     this.clearFormValues();
   }
 
@@ -65,49 +63,18 @@ class SignUp extends Component {
     this.setState({ [name]: value });
   };
 
+  handlePhoneNumberChange = (value) => {
+    this.setState({ mobileNumber: value }, () => {
+      console.log(this.state.mobileNumber);
+    });
+  };
+
   submitPhoneNumber = async (event) => {
     event.preventDefault();
     const { mobileNumber } = this.state;
     this.setState({
       invalidMobileNumber: false,
     });
-
-    let appVerifier = window.recaptchaVerifier;
-    let self = this;
-    auth
-      .signInWithPhoneNumber(mobileNumber, appVerifier)
-      .then(function(confirmationResult) {
-        window.confirmationResult = confirmationResult;
-        self.setState({
-          showCodeInput: true,
-          invalidMobileNumber: false,
-        });
-      })
-      .catch(function(err) {
-        if (err.code === 'auth/invalid-phone-number') {
-          self.setState({
-            invalidMobileNumber: true,
-            validated: false,
-            invalidMessage: 'This mobile number is not valid',
-          });
-          return;
-        } else if (err.code === 400) {
-          if (err.message === "TOO_MANY_ATTEMPTS_TRY_LATER") {
-            self.setState({
-              invalidMobileNumber: true,
-              validated: false,
-              invalidMessage: 'Too many attempts. Try later',
-            });
-            return;
-          }
-        }
-        self.setState({
-          invalidMobileNumber: true,
-          validated: false,
-          invalidMessage: 'Some Error happend',
-        });
-        console.log(err);
-      });
   };
 
   verifyCode = async () => {
@@ -174,7 +141,7 @@ class SignUp extends Component {
     this.setState({
       signupErrorMessage: error.errorMessage,
     });
-  }
+  };
 
   render() {
     const { showModal } = this.state;
@@ -184,7 +151,7 @@ class SignUp extends Component {
         lastName,
         email,
         password,
-        phoneNumber,
+        mobileNumber,
         code,
         showCodeInput,
         validated,
@@ -192,9 +159,9 @@ class SignUp extends Component {
         invalidMobileNumber,
         invalidMessage,
       } = this.state;
-      console.log(invalidCode, invalidMobileNumber, invalidMessage, validated);
       return (
         <Modal
+          size="lg"
           key={this.state.key}
           centered
           show={showModal}
@@ -203,9 +170,10 @@ class SignUp extends Component {
         >
           <Modal.Body className="auth-modal">
             <div>
-              <h3 className="sign">Sign in with</h3>
-              <SocialOAuth hideModal={this.hideModal} onFailure={this.handleFailure}/>
+              <h3 className="sign">Sign up with</h3>
+              <SocialOAuth hideModal={this.hideModal} onFailure={this.handleFailure} />
               <br />
+              <h3 className="sign">or with your E-mail</h3>
             </div>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
               <FormGroup>
@@ -250,13 +218,17 @@ class SignUp extends Component {
               </FormGroup>
               <Form.Group className="form-input-mobile">
                 <InputGroup>
-                  <Form.Control
-                    type="tel"
-                    name="mobileNumber"
-                    value={phoneNumber}
-                    onChange={this.handleChange}
+                  <ReactPhoneInput
+                    containerClass="react-tel-input phone-number-input input-group-append"
+                    inputExtraProps={{
+                      name: 'phone',
+                      required: true,
+                      autoFocus: true,
+                    }}
+                    country={'sg'}
                     placeholder="Mobile Number"
-                    required
+                    value={mobileNumber}
+                    onChange={this.handlePhoneNumberChange}
                   />
                   <InputGroup.Append>
                     <InputGroup.Text>
@@ -287,10 +259,9 @@ class SignUp extends Component {
                   )}
                 </FormGroup>
               )}
-              <Button variant="secondary" type="submit">
+              <button className="btn-main" type="submit">
                 Sign up
-              </Button>
-              <div className="hidden" id="invisible-recapture" />
+              </button>
             </Form>
           </Modal.Body>
         </Modal>

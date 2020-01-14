@@ -31,12 +31,15 @@ class SocialOAuth extends Component {
   render() {
     const clientId = process.env.REACT_APP_LINKEDIN_CLIENT_ID;
     return (
-      <div>
-        <button className="oauth-button" onClick={this.signInWithFacebook}>
+      <div className="social-oauth-div">
+        <button className="oauth-button google" onClick={this.signInWithGoogle}>
+          <img src={require('../../assets/google.png')} alt="google icon" />
+        </button>
+        <button className="oauth-button facebook" onClick={this.signInWithFacebook}>
           <img src={require('../../assets/facebook.png')} alt="facebook icon" />
         </button>
         <LinkedIn
-          className="oauth-button"
+          className="oauth-button linkedin"
           clientId={clientId}
           onFailure={this.handleFailure}
           onSuccess={this.handleSuccess}
@@ -45,9 +48,6 @@ class SocialOAuth extends Component {
         >
           <img src={require('../../assets/linkedin.png')} alt="Log in with Linked In" />
         </LinkedIn>
-        <button className="oauth-button" onClick={this.signInWithGoogle}>
-          <img src={require('../../assets/google.png')} alt="google icon" />
-        </button>
       </div>
     );
   }
