@@ -99,7 +99,7 @@ class Header extends Component {
                     Admin Page
                   </Nav.Link>
                 )}
-                { (isSearch && !isMobile) ? this.renderSearchHeader() : this.renderDefaultHeader() }
+                {this.renderDefaultHeader()}
               </Nav>
               {currentUser ? (
                 <NavDropdown title={<User user={currentUser}/> || ''} id="basic-nav-dropdown">

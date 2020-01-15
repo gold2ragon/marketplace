@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import SearchFranchise from './search-franchise';
 
 class Franchises extends Component {
   render() {
     return (
-      <div>
-        
-      </div>
+      <Container>
+        <div className="landing-search is-search">
+          <SearchFranchise />
+        </div>
+      </Container>
     );
   }
 }

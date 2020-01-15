@@ -9,8 +9,8 @@
     width: 180px;
   }
   .navbar {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 22px;
+    padding-bottom: 22px;
   }
   .navbar-nav {
     align-items: center;
@@ -100,7 +100,7 @@
     top: 336px;
     position: absolute;
     margin: 0;
-    right: -134px;
+    right: -240px;
   }
   .food7 {
     width: 220px;
@@ -136,9 +136,10 @@
   border-radius: 12px;
   display: flex;
   align-items: center;
+  background: #ffffff;
 
   .landing-search & {
-    width: 80%;
+    width: 90%;
     max-width: 922px;
     margin: 100px auto;
     margin-bottom: 150px;
@@ -146,6 +147,10 @@
     .dropdown {
       min-width: 25%;
     }
+  }
+  .is-search & {
+    margin: 0 auto;
+    margin-top: 20px;
   }
 
   .header & {
@@ -597,9 +602,9 @@
     }
   }
   .btn-search-franchise {
-    margin: 0 auto;
     padding: 0;
-    width: calc(100% - 36px);
+    width: 90%;
+    margin: 0 auto;
     .btn-main {
       padding: 14px 0;
       border-radius: 10px;

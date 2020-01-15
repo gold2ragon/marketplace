@@ -219,7 +219,7 @@ class SearchFranchise extends Component {
         <span className="search-franchise">
           <SearchIcon />
           <input
-            placeholder={`Search${isSearch ? '' : ' by franchise name'}`}
+            placeholder="Search by franchise name"
             value={keyword}
             onChange={(event) => this.setState({ keyword: event.target.value })}
           />

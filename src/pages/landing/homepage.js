@@ -52,10 +52,9 @@ class Homepage extends Component {
           <span className="span2">food franchises </span>
           <span className="span3">
             are <br /> ready to work with you
-          </span>
+        </span>
         </div>
         <Container className="landing-search">
-          {/* Search Bar */}
           <SearchFranchise />
         </Container>
         <section id="featured">
@@ -159,7 +158,7 @@ class Homepage extends Component {
                 <button className="btn-main">Create your account</button>
               </Col>
             </Row>
-            <Row  id="footer">
+            <Row id="footer">
               <Col lg={6} md={12} >
                 <Link className="home-link" to="/">TheBizHunt.</Link>
                 <Link to="/terms-and-conditions">{`Terms & Conditions`}</Link>
