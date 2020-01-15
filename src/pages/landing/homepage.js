@@ -63,11 +63,13 @@ class Homepage extends Component {
             <Row>
               <Col lg={4} md={12} sm={12}>
                 <div className="featured-fanchise">
-                  🌟<div>Featured</div><div>Franchise</div>
+                  <span role="img" aria-labelledby="star">🌟</span>
+                  <div>Featured</div>
+                  <div>Franchise</div>
                 </div>
-                <a className="link-main">
+                <button className="link-main">
                   See all franchises
-                </a>
+                </button>
               </Col>
               <Col lg={4} md={6} sm={6}>
                 {(listingKeys && listingKeys.length > 0) && <Listing listing={listings[listingKeys[0]]} />}
@@ -85,9 +87,9 @@ class Homepage extends Component {
               </div>
             <div className="info">
               <span>Discover the best franchises available</span>
-              <a className="link-main">
+              <button className="link-main">
                 See all franchises
-                </a>
+              </button>
             </div>
             <Row>
               <Col lg={3} md={6}>
@@ -146,7 +148,7 @@ class Homepage extends Component {
           <Container>
             <Row>
               <Col md={6}>
-                <img src={require('../../assets/img/food9.png')}></img>
+                <img src={require('../../assets/img/food9.png')} alt="pic"></img>
               </Col>
               <Col md={6}>
                 <div className="title">Interested to Work<br />With Us?</div>
@@ -165,16 +167,16 @@ class Homepage extends Component {
                 <Link to="/blog">Blog</Link>
               </Col>
               <Col lg={6} md={12} >
-                <Link className="company-info">
+                <button className="company-info">
                   &copy;TheBizHunt Pte Ltd<br />
                   Singapore UEN 201934410G
-                </Link>
-                <Link>
+                </button>
+                <button>
                   <i className="fa fa-facebook-square"></i>
-                </Link>
-                <Link>
+                </button>
+                <button>
                   <i className="fa fa-instagram"></i>
-                </Link>
+                </button>
               </Col>
             </Row>
           </Container>

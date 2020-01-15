@@ -15,6 +15,13 @@ textarea {
   color: $baseColor !important;
 }
 
+button {
+  background-color: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 #root {
   position: relative;
 }
@@ -124,6 +131,13 @@ button {
   padding-right: 0.75rem !important;
 }
 
+.error {
+  margin-top: 10px;
+  text-align: center;
+  color: #dc3545;
+  font-size: 80%;
+}
+
 .drag-drop-files {
   outline: none;
   border: 1px solid #ced4da;
@@ -183,7 +197,15 @@ button {
 .link-main {
   color: $mainColor !important;
   cursor: pointer;
+  font-family: "Work Sans", Helvetica, Arial, serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  background-color: none;
+  border: none;
+  outline: none;
 }
+
 .learn-more {
   font-family: "Work Sans", Helvetica, Arial, serif;
   font-weight: 600;

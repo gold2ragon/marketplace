@@ -18,7 +18,7 @@ const User = ({ user }) => {
   return (
     <span>
       Hi, {firstName} &nbsp;
-      <img src={avatarURL ? avatarURL : require('../../assets/user.png')} />
+      <img src={avatarURL ? avatarURL : require('../../assets/user.png')} alt="user avatar" />
     </span>
   )
 };
@@ -74,10 +74,6 @@ class Header extends Component {
 
   render() {
     const { currentUser, isSearch } = this.props;
-    let displayName = '';
-    if (currentUser) {
-      displayName = currentUser.firstName;
-    }
     return (
       <div className="header">
         <Container>

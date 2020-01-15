@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SocialOAuth from './social-oauth';
 import { auth } from '../../firebase';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Form } from 'react-bootstrap';
 
 class SignIn extends Component {
   constructor(props) {

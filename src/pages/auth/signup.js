@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import SocialOAuth from './social-oauth';
 import { auth, createUserProfileDocument } from '../../firebase';
-import { Modal, Button, Form, InputGroup, FormGroup } from 'react-bootstrap';
+import { Modal, Form, InputGroup, FormGroup } from 'react-bootstrap';
 import ReactPhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import firebase from 'firebase/app';
 import request from 'request';
-
-const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
 
 class SignUp extends Component {
   constructor(props) {
@@ -26,6 +23,7 @@ class SignUp extends Component {
       showModal: true,
       showCodeInput: false,
       validated: false,
+      signupErrorMessage: '',
     };
   }
 
@@ -77,6 +75,12 @@ class SignUp extends Component {
       code += parseInt(Math.random() * 10);
     }
     return code;
+  }
+
+  doSendEmailVerification = () => {
+    auth.currentUser.sendEmailVerification({
+      url: `${window.location.origin}/email-verified`,
+    });
   }
 
   submitPhoneNumber = async (event) => {
@@ -157,6 +161,7 @@ class SignUp extends Component {
         mobileNumber,
       });
       this.setState({ showModal: false });
+      this.doSendEmailVerification();
     } catch (error) {
       this.setState({
         signupErrorMessage: error.message,
@@ -185,6 +190,7 @@ class SignUp extends Component {
         invalidCode,
         invalidMobileNumber,
         invalidMessage,
+        signupErrorMessage,
       } = this.state;
       return (
         <Modal
@@ -247,10 +253,9 @@ class SignUp extends Component {
                 <InputGroup>
                   <ReactPhoneInput
                     containerClass="react-tel-input phone-number-input input-group-append"
-                    inputExtraProps={{
-                      name: 'phone',
+                    inputProps={{
+                      name: 'mobileNumber',
                       required: true,
-                      autoFocus: true,
                     }}
                     country={'sg'}
                     placeholder="Mobile Number"
@@ -289,6 +294,7 @@ class SignUp extends Component {
               <button className="btn-main" type="submit">
                 Sign up
               </button>
+              {signupErrorMessage && <div className="error">{signupErrorMessage}</div>}
             </Form>
           </Modal.Body>
         </Modal>

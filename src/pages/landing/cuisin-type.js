@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-const flags = {
-  Singaporean: '🇸🇬',
-  Chinese: '🇨🇳',
-  Japanese: '🇯🇵',
-  'Halal/Vegetarian': '🥘',
-}
-
 class CuisinType extends Component {
   render() {
     const { cuisineTypes, type } = this.props;
@@ -16,14 +9,14 @@ class CuisinType extends Component {
     if (!cuisineType) return null;
     return (
       <div className="cuisine-type">
-        <img src={cuisineType.url} alt="cuisine type image" />
+        <img src={cuisineType.url} alt="cuisine type" />
         <div>
           <div className="type">
             {type}
           </div>
           <div className="count">{cuisineType.count} Franchise</div>
           <div className="learn-more">
-            <a href="#" className="link-main">Learn more > </a>
+            <button className="link-main">Learn more > </button>
           </div>
         </div>
       </div>

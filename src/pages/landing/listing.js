@@ -12,7 +12,7 @@ class Listing extends Component {
           <div className="description">{content.cuisineDescription}</div>
           <div className="franchiseFee">$ {parseFloat(content.franchiseFee)/1000}K</div>
           <div className="learn-more">
-            <a href="#" className="link-main">Learn more > </a>
+            <button className="link-main">Learn more > </button>
           </div>
         </div>
       </div>
