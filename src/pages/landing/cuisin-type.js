@@ -16,7 +16,7 @@ class CuisinType extends Component {
           </div>
           <div className="count">{cuisineType.count} Franchise</div>
           <div className="learn-more">
-            <button className="link-main">Learn more > </button>
+            <span className="link link-main">Learn more > </span>
           </div>
         </div>
       </div>

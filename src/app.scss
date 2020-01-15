@@ -1,11 +1,8 @@
 $baseColor: #000000;
 $baseFontSize: 16px;
 $baseFontHeaderFamily: "Lora", Helvetica, Arial, serif;
+$baseFontColor: #0c0e1c;
 $mainColor: rgba(255, 77, 0, 1.0);
-
-html, body {
-  overflow-x: hidden;
-}
 
 body,
 p,
@@ -15,21 +12,18 @@ textarea {
   color: $baseColor !important;
 }
 
-button {
-  background-color: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
 #root {
   position: relative;
 }
+
 
 button {
   font-family: 'Lato', sans-serif !important;
   outline: none !important;
   cursor: pointer !important;
+}
+.link {
+  cursor: pointer;
 }
 
 .table td {

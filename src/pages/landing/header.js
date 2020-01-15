@@ -30,10 +30,16 @@ class Header extends Component {
       showSignInModal: false,
       showSignUpModal: false,
       isAdminUser: false,
+      isMobile: false,
     };
 
     this.signInRef = React.createRef();
     this.signUpRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const windowWidth = window.innerWidth;
+    this.setState({ isMobile: windowWidth < (this.props.isSearch ? 1024: 992) });
   }
 
   signUp = () => {
@@ -74,8 +80,9 @@ class Header extends Component {
 
   render() {
     const { currentUser, isSearch } = this.props;
+    const { isMobile } = this.state;
     return (
-      <div className="header">
+      <div className={`header${isSearch ? 'search': ''}`}>
         <Container>
           <Navbar collapseOnSelect expand="lg">
             <Navbar.Brand as={Link} to="/" className="logo-container">
@@ -92,7 +99,7 @@ class Header extends Component {
                     Admin Page
                   </Nav.Link>
                 )}
-                { isSearch ? this.renderSearchHeader() : this.renderDefaultHeader() }
+                { (isSearch && !isMobile) ? this.renderSearchHeader() : this.renderDefaultHeader() }
               </Nav>
               {currentUser ? (
                 <NavDropdown title={<User user={currentUser}/> || ''} id="basic-nav-dropdown">
@@ -113,7 +120,6 @@ class Header extends Component {
             </Navbar.Collapse>
           </Navbar>
         </Container>
-        <hr />
         {this.state.showSignInModal && <SignIn ref={this.signInRef} />}
         {this.state.showSignUpModal && <SignUp ref={this.signUpRef} />}
       </div>

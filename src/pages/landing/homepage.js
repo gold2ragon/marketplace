@@ -67,9 +67,9 @@ class Homepage extends Component {
                   <div>Featured</div>
                   <div>Franchise</div>
                 </div>
-                <button className="link-main">
+                <span className="link link-main">
                   See all franchises
-                </button>
+                </span>
               </Col>
               <Col lg={4} md={6} sm={6}>
                 {(listingKeys && listingKeys.length > 0) && <Listing listing={listings[listingKeys[0]]} />}
@@ -87,9 +87,9 @@ class Homepage extends Component {
               </div>
             <div className="info">
               <span>Discover the best franchises available</span>
-              <button className="link-main">
+              <span className="link link-main">
                 See all franchises
-              </button>
+              </span>
             </div>
             <Row>
               <Col lg={3} md={6}>
@@ -167,16 +167,16 @@ class Homepage extends Component {
                 <Link to="/blog">Blog</Link>
               </Col>
               <Col lg={6} md={12} >
-                <button className="company-info">
+                <span className="link company-info">
                   &copy;TheBizHunt Pte Ltd<br />
                   Singapore UEN 201934410G
-                </button>
-                <button>
+                </span>
+                <span className="link">
                   <i className="fa fa-facebook-square"></i>
-                </button>
-                <button>
+                </span>
+                <span className="link">
                   <i className="fa fa-instagram"></i>
-                </button>
+                </span>
               </Col>
             </Row>
           </Container>

@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import { history } from '../../App';
 
 const prices = [5000, 10000, 15000, 20000, 25000, 30000];
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop - 20)
 
 class SearchFranchise extends Component {
   constructor(props) {
@@ -16,10 +17,13 @@ class SearchFranchise extends Component {
       maxprice: '',
       selectedInput: 'minprice',
       priceRangeInfo: 'Franchise Fee',
+      isMobile: false,
+      isSearch: false, // Check if search url
     };
     this.minpriceRef = React.createRef();
     this.maxpriceRef = React.createRef();
     this.priceRangeRef = React.createRef();
+    this.myRef = React.createRef();
   }
 
   componentDidMount() {
@@ -28,47 +32,58 @@ class SearchFranchise extends Component {
       const values = queryString.parse(location.search);
       this.setState({
         ...values,
-      })
+        isSearch: true,
+      });
     }
+    const windowWidth = window.innerWidth;
+    this.setState({ isMobile: windowWidth < 992 });
   }
 
   renderPriceList = () => {
     const { selectedInput, minprice, maxprice } = this.state;
     if (selectedInput === 'maxprice') {
       const list = [];
-      list.push(<li key="no-max" onClick={this.handleChangePriceLimit}>No Max</li>);
+      list.push(
+        <li key="no-max" onClick={this.handleChangePriceLimit}>
+          No Max
+        </li>,
+      );
       list.push(<hr key="max-hr" />);
       for (const price of prices) {
         if (minprice && price < minprice) {
           list.push(
             <li key={price} className="disabled" onClick={this.handleChangePriceLimit}>
               S$ {price}
-            </li>
+            </li>,
           );
         } else
           list.push(
             <li key={price} onClick={this.handleChangePriceLimit}>
               S$ {price}
-            </li>
+            </li>,
           );
       }
       return <ul className="maxprice-list">{list}</ul>;
     } else {
       const list = [];
-      list.push(<li key="no-min" onClick={this.handleChangePriceLimit}>No Min</li>);
+      list.push(
+        <li key="no-min" onClick={this.handleChangePriceLimit}>
+          No Min
+        </li>,
+      );
       list.push(<hr key="min-hr" />);
       for (const price of prices) {
         if (maxprice && price > maxprice)
           list.push(
             <li key={price} className="disabled" onClick={this.handleChangePriceLimit}>
               S$ {price}
-            </li>
+            </li>,
           );
         else
           list.push(
             <li key={price} onClick={this.handleChangePriceLimit}>
               S$ {price}
-            </li>
+            </li>,
           );
       }
       return <ul className="minprice-list">{list}</ul>;
@@ -115,17 +130,22 @@ class SearchFranchise extends Component {
 
   handleSearchFranchise = () => {
     let { keyword, cuisineType, minprice, maxprice } = this.state;
-    console.log(keyword, cuisineType, minprice, maxprice);
-    history.push(`/search?keyword=${keyword}&cuisineType=${cuisineType}&minprice=${minprice}&maxprice=${maxprice}`);
+    history.push(
+      `/search?keyword=${keyword}&cuisineType=${cuisineType}&minprice=${minprice}&maxprice=${maxprice}`,
+    );
+  };
+
+  handleScrollTop = (event) => {
+    scrollToRef(this.myRef);
+    this.priceRangeRef.current.click();
   }
 
   render() {
-    const { keyword, cuisineType, minprice, maxprice } = this.state;
+    const { isMobile, isSearch, keyword, cuisineType, minprice, maxprice } = this.state;
     let priceRangeInfo;
     if (!minprice && !maxprice) {
       priceRangeInfo = 'Franchise Fee';
-    }
-    else if (minprice && maxprice) {
+    } else if (minprice && maxprice) {
       priceRangeInfo = `S$ ${minprice} - ${maxprice}`;
     } else if (!minprice) {
       priceRangeInfo = `Max S$ ${maxprice}`;
@@ -133,12 +153,73 @@ class SearchFranchise extends Component {
       priceRangeInfo = `Min S$ ${minprice}`;
     }
 
+    if (isMobile) {
+      return (
+        <div className="mobile">
+          <div className="search-franchise">
+            <SearchIcon />
+            <input
+              ref={this.myRef}
+              className="text-search"
+              placeholder="Search by franchise name"
+              value={keyword}
+              onChange={(event) => this.setState({ keyword: event.target.value })}
+            />
+          </div>
+          <Dropdown className="search-franchise" onSelect={this.handleChangeCuisineType}>
+            <Dropdown.Toggle>{cuisineType}</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/Singaporean">Singaporean</Dropdown.Item>
+              <Dropdown.Item href="#/Chinese">Chinese</Dropdown.Item>
+              <Dropdown.Item href="#/Japanese">Japanese</Dropdown.Item>
+              <Dropdown.Item href="#/Halal/Vegan">Halal/Vegan</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <Dropdown className="search-franchise select-price-range" onSelect={this.handleChangeCuisineType}>
+            <Dropdown.Toggle ref={this.priceRangeRef} onClickCapture={this.handleScrollTop}>{priceRangeInfo}</Dropdown.Toggle>
+
+            <Dropdown.Menu className="dropdown-input-range">
+              <div className="input-range">
+                <input
+                  ref={this.minpriceRef}
+                  type="text"
+                  name="minprice"
+                  placeholder="Min"
+                  value={minprice}
+                  onFocus={this.handleInputFocus}
+                  onChange={this.handleChangePriceLimit}
+                />
+                <span>-</span>
+                <input
+                  ref={this.maxpriceRef}
+                  type="text"
+                  name="maxprice"
+                  placeholder="Max"
+                  value={maxprice}
+                  onFocus={this.handleInputFocus}
+                  onChange={this.handleChangePriceLimit}
+                />
+              </div>
+              {this.renderPriceList()}
+            </Dropdown.Menu>
+          </Dropdown>
+          <div className="btn-search-franchise">
+            <button className="btn-main" onClick={this.handleSearchFranchise}>
+              Search
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div className={`search-box`}>
+      <div className="search-box">
         <span className="search-franchise">
           <SearchIcon />
           <input
-            placeholder="Search by franchise name"
+            placeholder={`Search${isSearch ? '' : ' by franchise name'}`}
             value={keyword}
             onChange={(event) => this.setState({ keyword: event.target.value })}
           />
@@ -156,13 +237,9 @@ class SearchFranchise extends Component {
         </Dropdown>
         <div className="vertical-bar"></div>
         <Dropdown className="select-price-range" onSelect={this.handleChangeCuisineType}>
-          <Dropdown.Toggle ref={this.priceRangeRef} >
-            {priceRangeInfo}
-          </Dropdown.Toggle>
+          <Dropdown.Toggle ref={this.priceRangeRef}>{priceRangeInfo}</Dropdown.Toggle>
 
-          <Dropdown.Menu
-            className="dropdown-input-range"
-          >
+          <Dropdown.Menu className="dropdown-input-range">
             <div className="input-range">
               <input
                 ref={this.minpriceRef}
@@ -188,7 +265,9 @@ class SearchFranchise extends Component {
           </Dropdown.Menu>
         </Dropdown>
         <div className="btn-search-franchise">
-          <button className="btn-main" onClick={this.handleSearchFranchise}>Search</button>
+          <button className="btn-main" onClick={this.handleSearchFranchise}>
+            Search
+          </button>
         </div>
       </div>
     );

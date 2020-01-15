@@ -11,9 +11,9 @@ class Listing extends Component {
           <div className="title">{content.restaurantName}</div>
           <div className="description">{content.cuisineDescription}</div>
           <div className="franchiseFee">$ {parseFloat(content.franchiseFee)/1000}K</div>
-          <div className="learn-more">
-            <button className="link-main">Learn more > </button>
-          </div>
+          <span className="learn-more">
+            <span className="link link-main">Learn more > </span>
+          </span>
         </div>
       </div>
     );
