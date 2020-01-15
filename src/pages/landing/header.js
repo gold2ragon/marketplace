@@ -1,17 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
+// import { createStructuredSelector } from 'reselect';
 import { auth } from '../../firebase';
 import SignIn from '../auth/signin';
 import SignUp from '../auth/signup';
-import { selectCurrentUser } from '../../redux/actions/auth';
+// import { selectCurrentUser } from '../../redux/actions/auth';
 import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 import SearchFranchises from './search-franchise';
 import './landing.scss';
 
-const User = (currentUser) => {
-  let { firstName, displayName, avatarURL } = currentUser.user;
+const User = ({ user }) => {
+  if (!user) return null;
+  let { firstName, displayName, avatarURL } = user;
+  if (!displayName) return null;
   if (!firstName) firstName = displayName.split(' ')[0];
   return (
     <span>
@@ -123,8 +125,11 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+// const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser,
+// });
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
 });
 
 export default connect(mapStateToProps)(Header);

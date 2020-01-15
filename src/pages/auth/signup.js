@@ -5,6 +5,9 @@ import { Modal, Button, Form, InputGroup, FormGroup } from 'react-bootstrap';
 import ReactPhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import firebase from 'firebase/app';
+import request from 'request';
+
+const CORS_URL = 'https://cors-anywhere.herokuapp.com/';
 
 class SignUp extends Component {
   constructor(props) {
@@ -64,49 +67,70 @@ class SignUp extends Component {
   };
 
   handlePhoneNumberChange = (value) => {
-    this.setState({ mobileNumber: value }, () => {
-      console.log(this.state.mobileNumber);
+    this.setState({ mobileNumber: value, invalidCode: false }, () => {
     });
   };
+
+  generateCode = () => {
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += parseInt(Math.random() * 10);
+    }
+    return code;
+  }
 
   submitPhoneNumber = async (event) => {
     event.preventDefault();
     const { mobileNumber } = this.state;
-    this.setState({
-      invalidMobileNumber: false,
-    });
+    const code = this.generateCode();
+    const self = this;
+    request.post('https://textbelt.com/text', {
+      form: {
+        phone: mobileNumber,
+        message: `Your verification code for ${window.location.hostname} is ${code}`,
+        key: process.env.REACT_APP_TEXTBELT_KEY,
+      },
+    }, function(err, httpResponse, body) {
+      if (err) {
+        console.error('Error:', err);
+        return;
+      }
+      self.setState({ showCodeInput: true, savedCode: code });
+    })
+    // try {
+    //   const projectID = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN.split('.')[0];
+    //   await fetch(CORS_URL + `https://us-central1-${projectID}.cloudfunctions.net/sendCode`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ mobileNumber }),
+    //   });
+    //   this.setState({ showCodeInput: true });
+    // } catch ({ error }) {
+    //   console.log(error);
+    // }
   };
 
-  verifyCode = async () => {
-    const { mobileNumber, code } = this.state;
-    if (!mobileNumber) {
-      this.setState({
-        invalidMobileNumber: false,
-        invalidMessage: 'Please enter a mobile number.',
-      });
-      return false;
-    }
-    if (!window.confirmationResult) {
-      this.setState({
-        validated: false,
-        invalidMobileNumber: true,
-        invalidMessage: 'Please verify mobile number',
-      });
-      return false;
-    }
-
+  verifyCode = () => {
+    
     try {
-      const isVerifed = await window.confirmationResult.confirm(code);
-      if (isVerifed) return true;
-    } catch (err) {
-      console.log(err);
+      const { savedCode, code } = this.state;
+      return code === savedCode;
+
+      // const projectID = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN.split('.')[0];
+      // const { result } = await fetch(CORS_URL + `https://us-central1-${projectID}.cloudfunctions.net/verifyCode`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ mobileNumber, code }),
+      // });
+      // console.log('isVerified: ' + result);
+      // return result;
+    } catch ({ error }) {
+      console.log(error);
     }
-    this.setState({
-      code: '',
-      invalidCode: true,
-      validated: false,
-    });
-    return false;
   };
 
   handleSubmit = async (event) => {
@@ -120,11 +144,14 @@ class SignUp extends Component {
     try {
       if (!this.verifyCode()) {
         event.stopPropagation();
+        this.setState({ invalidCode: true, validated: true });
         return;
       }
+      this.setState({ invalidCode: false, validated: false });
       const { firstName, lastName, email, password, mobileNumber } = this.state;
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await createUserProfileDocument(user, {
+        displayName: firstName + ' ' + lastName,
         firstName,
         lastName,
         mobileNumber,
