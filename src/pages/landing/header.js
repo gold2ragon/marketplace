@@ -82,7 +82,7 @@ class Header extends Component {
     const { currentUser, isSearch } = this.props;
     const { isMobile } = this.state;
     return (
-      <div className={`header${isSearch ? 'search': ''}`}>
+      <div className="header">
         <Container>
           <Navbar collapseOnSelect expand="lg">
             <Navbar.Brand as={Link} to="/" className="logo-container">
