@@ -99,8 +99,8 @@ export const getSearchResults = (keyword, cuisineType, minprice, maxprice) => {
       const listingsRef = firestore.collection('listings');
       let query = listingsRef;
       if (cuisineType !== 'Cuisine Type') query = query.where('public.cuisineType', '==', cuisineType);
-      if (minprice) query = query.where('public.franchiseFee', '>=', minprice);
-      if (maxprice) query = query.where('public.franchiseFee', '<=', maxprice);
+      if (minprice) query = query.where('public.franchiseFee', '>=', parseInt(minprice));
+      if (maxprice) query = query.where('public.franchiseFee', '<=', parseInt(maxprice));
 
       const { docs } = await query.get();
       const listings = [];
