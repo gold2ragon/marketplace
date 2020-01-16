@@ -1,5 +1,5 @@
 import firebase, { firestore } from '../../firebase';
-import { SET_LISTINGS , SET_CUISINE_TYPES} from './action-types';
+import { SET_LISTINGS , SET_CUISINE_TYPES, SET_SEARCH_RESULTS, } from './action-types';
 import _ from 'lodash';
 
 export const setListings = (listings) => ({
@@ -87,3 +87,42 @@ export const saveListing = (id, listing) => {
     }
   }
 };
+
+export const setSearchResults = (results) => ({
+  type: SET_SEARCH_RESULTS,
+  payload: results,
+});
+
+export const getSearchResults = (keyword, cuisineType, minprice, maxprice) => {
+  return async (dispatch) => {
+    try {
+      const listingsRef = firestore.collection('listings');
+      let query = listingsRef;
+      if (cuisineType !== 'Cuisine Type') query = query.where('public.cuisineType', '==', cuisineType);
+      if (minprice) query = query.where('public.franchiseFee', '>=', minprice);
+      if (maxprice) query = query.where('public.franchiseFee', '<=', maxprice);
+
+      const { docs } = await query.get();
+      const listings = [];
+      for (const doc of docs) {
+        const listing = await doc.data();
+        listings.push({
+          id: doc.id,
+          ...listing,
+        });
+      }
+      let results = listings;
+      if (keyword) {
+        results = [];
+        for (const listing of listings) {
+          if (listing.public.restaurantName.toLowerCase().includes(keyword.toLowerCase())) {
+            results.push(listing);
+          }
+        }
+      }
+      dispatch(setSearchResults(results));
+    } catch (error) {
+      console.log('error adding listing', error);
+    }
+  }
+}

@@ -6,6 +6,7 @@ import SearchFranchise from './search-franchise';
 import Listing from './listing';
 import CuisineType from './cuisin-type';
 import HowThisWorks from './how-this-works';
+import Footer from './footer';
 import { Link } from 'react-router-dom';
 
 class Homepage extends Component {
@@ -158,26 +159,7 @@ class Homepage extends Component {
                 <button className="btn-main">Create your account</button>
               </Col>
             </Row>
-            <Row id="footer">
-              <Col lg={6} md={12} >
-                <Link className="home-link" to="/">TheBizHunt.</Link>
-                <Link to="/terms-and-conditions">{`Terms & Conditions`}</Link>
-                <Link to="/privacy-policy">Privacy Policy</Link>
-                <Link to="/blog">Blog</Link>
-              </Col>
-              <Col lg={6} md={12} >
-                <span className="link company-info">
-                  &copy;TheBizHunt Pte Ltd<br />
-                  Singapore UEN 201934410G
-                </span>
-                <span className="link">
-                  <i className="fa fa-facebook-square"></i>
-                </span>
-                <span className="link">
-                  <i className="fa fa-instagram"></i>
-                </span>
-              </Col>
-            </Row>
+            <Footer />
           </Container>
         </section>
       </Fragment>

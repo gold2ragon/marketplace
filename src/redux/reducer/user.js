@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, SET_USER_CONTACTS } from '../actions/action-types';
+import { SET_CURRENT_USER, SET_USER_CONTACTS, SET_SEARCH_RESULTS } from '../actions/action-types';
 
 // initial state is the default state
 const INITIAL_STATE = {
@@ -18,6 +18,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         contacts: action.payload
+      }
+    case SET_SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.payload
       }
     default:
       return state;
