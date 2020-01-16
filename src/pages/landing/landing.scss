@@ -510,7 +510,9 @@
       content: url('../../assets/img/arrow-up.svg');
     }
     & > div {
-      border-top: none;
+      .landing-search & {
+        border-top: none;
+      }
     }
     .btn, .btn:focus {
       color: $baseFontColor !important;
@@ -526,12 +528,6 @@
       right: 18px !important;
     }
     &.show {
-      .landing-search & {
-        top: -5px !important;
-      }
-      .header & {
-        top: 40px !important;
-      }
       box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
       border-top-left-radius: 0;
       border-top-right-radius: 0;

@@ -93,9 +93,13 @@ class SignUp extends Component {
 
   submitPhoneNumber = async (event) => {
     event.preventDefault();
-    const { mobileNumber } = this.state;
+    let { mobileNumber } = this.state;
     const code = this.generateCode();
     const self = this;
+
+    const numberPattern = /\d+/g;
+    mobileNumber = '+' + mobileNumber.match( numberPattern ).join('');
+
     request.post('https://textbelt.com/text', {
       form: {
         phone: mobileNumber,
@@ -110,7 +114,7 @@ class SignUp extends Component {
         })
         return;
       }
-      this.setState({ invalidMobileNumber: false });
+      self.setState({ invalidMobileNumber: false });
       self.setState({ showCodeInput: true, savedCode: code });
     })
     // try {
