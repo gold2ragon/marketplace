@@ -6,15 +6,16 @@ import { createStructuredSelector } from 'reselect';
 import { auth, createUserProfileDocument } from './firebase';
 import { setCurrentUser, selectCurrentUser } from './redux/actions/auth';
 import { getSearchResults } from './redux/actions/listing';
-import queryString from 'query-string';
 import Header from './pages/landing/header';
 import Homepage from './pages/landing/homepage';
 import Profile from './pages/profile';
 import AdminPage from './pages/admin';
 import LinkedInPopUp from './pages/auth/linkedin/LinkedInPopUp';
 import Franchises from './pages/landing/franchises';
+import Footer from './pages/landing/footer';
 import './app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from 'react-bootstrap';
 
 export const history = createBrowserHistory();
 
@@ -72,6 +73,9 @@ class App extends Component {
             </Fragment>
           )}
         </Switch>
+        <Container>
+          <Footer />
+        </Container>
       </Router>
     );
   }

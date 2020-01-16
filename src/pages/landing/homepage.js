@@ -7,7 +7,6 @@ import Listing from './listing';
 import CuisineType from './cuisin-type';
 import HowThisWorks from './how-this-works';
 import Footer from './footer';
-import { Link } from 'react-router-dom';
 
 class Homepage extends Component {
 
@@ -159,7 +158,6 @@ class Homepage extends Component {
                 <button className="btn-main">Create your account</button>
               </Col>
             </Row>
-            <Footer />
           </Container>
         </section>
       </Fragment>
