@@ -96,9 +96,13 @@ class SignUp extends Component {
       },
     }, function(err, httpResponse, body) {
       if (err) {
-        console.error('Error:', err);
+        this.setState({
+          invalidMobileNumber: true,
+          invalidMessage: err,
+        })
         return;
       }
+      this.setState({ invalidMobileNumber: false });
       self.setState({ showCodeInput: true, savedCode: code });
     })
     // try {
