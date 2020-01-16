@@ -1,0 +1,63 @@
+.search-results-count {
+  font-family: Lora;
+  font-size: 24px;
+  color: #0c0e1c;
+  margin-top: 50px;
+}
+
+.search-list {
+  margin-top: 40px;
+  box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+  background-color: #f4f4f4;
+
+  .col-md-6:last-child {
+    padding: 30px;
+  }
+
+  img {
+    width: 100%;
+    position: relative;
+    object-fit: cover;
+  }
+  .cuisine-description {
+    font-family: Lora;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0c0e1c;
+  }
+
+  .description {
+    margin-top: 20px;
+    height: 120px;
+    overflow: hidden;
+    p, span, h1, h2, h3, h4, h5, div {
+      text-overflow: ellipsis;
+    }
+  }
+  .label-franchise-fee {
+    font-family: Work Sans;
+    font-size: 14px;
+    color: #333440;
+    margin-top: 25px;
+  }
+  .franchise-fee {
+    font-family: Work Sans;
+    font-size: 18px;
+    font-weight: bold;;
+    line-height: 1.33;
+    color: #333440;
+    margin-top: 10px;
+  }
+  .tag {
+    margin-top: 20px;
+    span {
+      background-color: rgba(0, 109, 255, 0.1);
+      font-family: Work Sans;
+      font-size: 12px;
+      font-weight: 500;
+      color: #227cf7;
+      margin-right: 12px;
+      padding: 7px 15px;
+    }
+  }
+}

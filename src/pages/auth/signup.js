@@ -116,20 +116,7 @@ class SignUp extends Component {
       }
       self.setState({ invalidMobileNumber: false });
       self.setState({ showCodeInput: true, savedCode: code });
-    })
-    // try {
-    //   const projectID = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN.split('.')[0];
-    //   await fetch(CORS_URL + `https://us-central1-${projectID}.cloudfunctions.net/sendCode`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ mobileNumber }),
-    //   });
-    //   this.setState({ showCodeInput: true });
-    // } catch ({ error }) {
-    //   console.log(error);
-    // }
+    });
   };
 
   verifyCode = () => {
@@ -137,17 +124,6 @@ class SignUp extends Component {
     try {
       const { savedCode, code } = this.state;
       return code === savedCode;
-
-      // const projectID = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN.split('.')[0];
-      // const { result } = await fetch(CORS_URL + `https://us-central1-${projectID}.cloudfunctions.net/verifyCode`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ mobileNumber, code }),
-      // });
-      // console.log('isVerified: ' + result);
-      // return result;
     } catch ({ error }) {
       console.log(error);
     }

@@ -3,10 +3,10 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import queryString from 'query-string';
 import { auth, createUserProfileDocument } from './firebase';
-import { setCurrentUser } from './redux/actions/auth';
-import { selectCurrentUser } from './redux/actions/auth';
+import { setCurrentUser, selectCurrentUser } from './redux/actions/auth';
+import { getSearchResults } from './redux/actions/listing';
+import queryString from 'query-string';
 import Header from './pages/landing/header';
 import Homepage from './pages/landing/homepage';
 import Profile from './pages/profile';
@@ -25,17 +25,6 @@ class App extends Component {
       isLoggedIn: false,
       isSearch: false,
     };
-      
-    //Here ya go
-    history.listen((location, action) => {
-      console.log("on route change", location);
-      if (location.pathname === '/search') {
-        const values = queryString.parse(location.search);
-        this.setState({ isSearch: true, ...values });
-      } else {
-        this.setState({ isSearch: false });
-      }
-    });
   }
 
   unsubscribeFromAuth = null;
@@ -59,14 +48,6 @@ class App extends Component {
       }
       setCurrentUser(userAuth);
     });
-    const { location } = history;
-    if (location.pathname === '/search') {
-      const values = queryString.parse(location.search);
-      this.setState({
-        isSearch: true,
-        ...values,
-      })
-    }
   }
 
   render() {
@@ -101,6 +82,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getSearchResults: (...params) => dispatch(getSearchResults(...params)),
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 

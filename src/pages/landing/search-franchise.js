@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { getSearchResults } from '../../redux/actions/listing';
 import { ReactComponent as SearchIcon } from '../../assets/img/search-icon.svg';
 import queryString from 'query-string';
 import { history } from '../../App';
@@ -24,6 +26,16 @@ class SearchFranchise extends Component {
     this.maxpriceRef = React.createRef();
     this.priceRangeRef = React.createRef();
     this.myRef = React.createRef();
+
+    //Here ya go
+    history.listen((location, action) => {
+      if (location.pathname === '/search') {
+        const values = queryString.parse(location.search);
+        this.setState({ isSearch: true, ...values });
+        const { keyword, cuisineType, minprice, maxprice } = values;
+        this.props.getSearchResults(keyword, cuisineType, minprice, maxprice);
+      }
+    });
   }
 
   componentDidMount() {
@@ -31,9 +43,11 @@ class SearchFranchise extends Component {
     if (location.pathname === '/search') {
       const values = queryString.parse(location.search);
       this.setState({
-        ...values,
         isSearch: true,
+        ...values,
       });
+      const { keyword, cuisineType, minprice, maxprice } = values;
+      this.props.getSearchResults(keyword, cuisineType, minprice, maxprice);
     }
     const windowWidth = window.innerWidth;
     this.setState({ isMobile: windowWidth < 992 });
@@ -141,7 +155,9 @@ class SearchFranchise extends Component {
   }
 
   render() {
-    const { isMobile, keyword, cuisineType, minprice, maxprice } = this.state;
+    const { isMobile } = this.state;
+    const { keyword, cuisineType, minprice, maxprice } = this.state;
+
     let priceRangeInfo;
     if (!minprice && !maxprice) {
       priceRangeInfo = 'Franchise Fee';
@@ -229,6 +245,8 @@ class SearchFranchise extends Component {
           <Dropdown.Toggle>{cuisineType}</Dropdown.Toggle>
 
           <Dropdown.Menu>
+            <Dropdown.Item href="#/Cuisine Type">All Cuisine Types</Dropdown.Item>
+            <Dropdown.Divider />
             <Dropdown.Item href="#/Singaporean">Singaporean</Dropdown.Item>
             <Dropdown.Item href="#/Chinese">Chinese</Dropdown.Item>
             <Dropdown.Item href="#/Japanese">Japanese</Dropdown.Item>
@@ -274,4 +292,12 @@ class SearchFranchise extends Component {
   }
 }
 
-export default SearchFranchise;
+const mapStateToProps = (state) => ({
+  // searchResults: state.user.searchResults,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getSearchResults: (keyword, cuisineType, minprice, maxprice) => dispatch(getSearchResults(keyword, cuisineType, minprice, maxprice)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchFranchise);
