@@ -3,19 +3,14 @@
 
 .header {
   background-color: #ffffff;
-  z-index: 10;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   .btn {
-    // color: white !important;
     margin-right: 20px;
     width: 180px;
   }
-  hr {
-    width: 100vw;
-    margin: 0;
-  }
   .navbar {
-    padding: 0;
-    height: 100px;
+    padding-top: 22px;
+    padding-bottom: 22px;
   }
   .navbar-nav {
     align-items: center;
@@ -66,6 +61,8 @@
   right: 0;
   top: 100px;
   z-index: -1;
+  overflow: hidden;
+  height: 100%;
   & > div {
     position: relative;
   }
@@ -103,7 +100,7 @@
     top: 336px;
     position: absolute;
     margin: 0;
-    right: -134px;
+    right: -240px;
   }
   .food7 {
     width: 220px;
@@ -139,17 +136,24 @@
   border-radius: 12px;
   display: flex;
   align-items: center;
+  background: #ffffff;
 
   .landing-search & {
-    width: 80%;
+    width: 90%;
     max-width: 922px;
     margin: 100px auto;
     margin-bottom: 150px;
     padding: 9px;
+    .dropdown {
+      min-width: 25%;
+    }
+  }
+  .is-search & {
+    margin: 0 auto;
+    margin-top: 20px;
   }
 
   .header & {
-    width: 922px;
     padding: 0 9px;
     margin-left: 10px;
     .btn-main {
@@ -171,64 +175,24 @@
   }
 
   .search-franchise {
-    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .landing-search & {
+      min-width: 250px;
+    }
     input {
       border: none;
       outline: none;
       padding: 0 10px;
       font-family: 'Work Sans', Helvetica, Arial, serif;
       font-size: 16px;
-      width: 230px;
+      width: 100%;
     }
     padding: 10px 0;
   }
   .show>.btn-primary.dropdown-toggle {
     color: #000000;
-  }
-  .dropdown {
-    width: 25%;
-    // border-right: 2px solid rgba(208, 211, 226, 1.0) !important;
-    .dropdown-toggle {
-      background-color: transparent !important;
-      border: none;
-      color: #000000;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &:focus {
-        color: #000000;
-        box-shadow: none !important;
-      }
-      &::after {
-        border: none !important;
-        margin-top: 0.255em;
-        content: url('../../assets/img/arrow-down.svg');
-      }
-    }
-    &.show {
-      .dropdown-toggle::after {
-        content: url('../../assets/img/arrow-up.svg');
-      }
-      & > div {
-        border-top: none;
-      }
-    }
-  }
-
-  .dropdown-menu {
-    right: 0 !important;
-    &.show {
-      .landing-search & {
-        top: -5px !important;
-      }
-      .header & {
-        top: 40px !important;
-      }
-      box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
   }
   .dropdown-input-range {
     max-height: 300px;
@@ -237,7 +201,7 @@
     white-space: nowrap;
     font-size: 14px;
     .input-range {
-      display: flex;
+      display: flex !important;
       justify-content: space-between;
       align-items: center;
       margin: 4px;
@@ -265,7 +229,7 @@
 
       li {
         line-height: 36px;
-        padding: 0 40px;
+        padding: 0 18px;
         &:hover {
           background-color: #f2f2f2;
         }
@@ -280,7 +244,7 @@
     width: 30%;
   }
   .vertical-bar {
-    margin: 0 5px;
+    margin: 0 3px;
     height: 45px;
     border-right: 2px solid rgba(208, 211, 226, 1.0);
   }
@@ -341,12 +305,6 @@
     }
     .learn-more {
       margin-top: 20px;
-    }
-    .link-main {
-      font-family: "Work Sans", Helvetica, Arial, serif;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 19px;
     }
   }  
 }
@@ -474,6 +432,9 @@
     line-height: 28px;
     margin: 30px 0;
   }
+  img {
+    width: 100%;
+  }
   button {
     font-size: 18px;
     padding: 15px 30px;
@@ -494,7 +455,7 @@
       }
     }
   }
-  a {
+  a, span {
     margin: 0 2%;
     margin-top: 30px;
     font-family: "Work Sans", Helvetica, Arial, serif;
@@ -511,11 +472,150 @@
   }
   .company-info {
     margin-left: 0;
+    text-align: left;
   }
   .home-link {
     font-family: "Lora", Helvetica, Arial, serif;
     font-size: 18px;
     font-weight: 700;
     margin-left: 0;
+  }
+}
+/******** Custom dropdown ********/
+.dropdown {
+  .dropdown-toggle {
+    background-color: transparent !important;
+    border: none;
+    color: $baseFontColor !important;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:focus {
+      color: $baseFontColor !important;
+      box-shadow: none !important;
+    }
+    &::after {
+      border: none !important;
+      margin-top: 0.255em;
+      content: url('../../assets/img/arrow-down.svg');
+    }
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &.show {
+    .dropdown-toggle::after {
+      content: url('../../assets/img/arrow-up.svg');
+    }
+    & > div {
+      border-top: none;
+    }
+    .btn, .btn:focus {
+      color: $baseFontColor !important;
+      border: solid 1px #d0d3e3 !important;
+      border-bottom: none !important;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  .dropdown-menu {
+    right: 0 !important;
+    .mobile & {
+      right: 18px !important;
+    }
+    &.show {
+      .landing-search & {
+        top: -5px !important;
+      }
+      .header & {
+        top: 40px !important;
+      }
+      box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
+
+
+/****** Mobile Style *********/
+.mobile {
+  width: 100%;
+  .dropdown-toggle {
+    padding: 0 9px;
+  }
+  .search-franchise {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    height: 52px;
+    border: 1px solid lightgrey;
+    width: 90%;
+    margin: 10px auto;
+    padding: 9px;
+    .text-search {
+      width: 100%;
+      outline: none;
+      border: none;
+    }
+  }
+  .input-range {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px;
+    input {
+      width: 40%;
+      border: 1px solid #ccc;
+      outline: none;
+      text-align: center;
+      height: 46px;
+      line-height: 22.4px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .maxprice-list {
+    text-align: right;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+    hr {
+      margin: 10px 0;
+    }
+
+    li {
+      line-height: 36px;
+      padding: 0 10%;
+      &:hover {
+        background-color: #f2f2f2;
+      }
+      &.disabled {
+        pointer-events:none; //This makes it not clickable
+        opacity:0.6;         //This grays it out to look disabled
+      }
+    }
+  }
+  .btn-search-franchise {
+    padding: 0;
+    width: 90%;
+    margin: 0 auto;
+    .btn-main {
+      padding: 14px 0;
+      border-radius: 10px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .thefinestfoodsfra {
+    font-size: 25px;
+    line-height: 36px;
+    margin-bottom: 20px;
   }
 }

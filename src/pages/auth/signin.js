@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SocialOAuth from './social-oauth';
 import { auth } from '../../firebase';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Form } from 'react-bootstrap';
 
 class SignIn extends Component {
   constructor(props) {
@@ -61,6 +61,7 @@ class SignIn extends Component {
     if (this.state.showModal) {
       return (
         <Modal
+          size="lg"
           key={this.state.key}
           centered
           show={showModal}
@@ -72,6 +73,7 @@ class SignIn extends Component {
               <h3 className="sign">Log in with</h3>
               <SocialOAuth hideModal={this.hideModal} />
               <br />
+              <h3 className="sign">or with your E-mail</h3>
             </div>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
               <Form.Control
@@ -94,7 +96,7 @@ class SignIn extends Component {
               <br />
 
               <div className="buttons">
-                <Button variant="secondary" className="form-control" type="submit">Log in</Button>
+                <button className="btn-main" type="submit">Log in</button>
               </div>
             </Form>
           </Modal.Body>

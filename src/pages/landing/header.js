@@ -1,22 +1,24 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
+// import { createStructuredSelector } from 'reselect';
 import { auth } from '../../firebase';
 import SignIn from '../auth/signin';
 import SignUp from '../auth/signup';
-import { selectCurrentUser } from '../../redux/actions/auth';
-import { Navbar, NavDropdown, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
+// import { selectCurrentUser } from '../../redux/actions/auth';
+import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 import SearchFranchises from './search-franchise';
 import './landing.scss';
 
-const User = (currentUser) => {
-  let { firstName, displayName, avatarURL } = currentUser.user;
+const User = ({ user }) => {
+  if (!user) return null;
+  let { firstName, displayName, avatarURL } = user;
+  if (!displayName) return null;
   if (!firstName) firstName = displayName.split(' ')[0];
   return (
     <span>
       Hi, {firstName} &nbsp;
-      <img src={avatarURL ? avatarURL : require('../../assets/user.png')} />
+      <img src={avatarURL ? avatarURL : require('../../assets/user.png')} alt="user avatar" />
     </span>
   )
 };
@@ -28,10 +30,16 @@ class Header extends Component {
       showSignInModal: false,
       showSignUpModal: false,
       isAdminUser: false,
+      isMobile: false,
     };
 
     this.signInRef = React.createRef();
     this.signUpRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const windowWidth = window.innerWidth;
+    this.setState({ isMobile: windowWidth < (this.props.isSearch ? 1024: 992) });
   }
 
   signUp = () => {
@@ -66,21 +74,13 @@ class Header extends Component {
 
   renderSearchHeader = () => {
     return (
-      // <Form inline>
-      //   {/* <SearchFranchises className="nav-link"/> */}
-      //   <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      //   <Button variant="outline-success">Search</Button>
-      // </Form>
       <SearchFranchises />
     )
   }
 
   render() {
     const { currentUser, isSearch } = this.props;
-    let displayName = '';
-    if (currentUser) {
-      displayName = currentUser.firstName;
-    }
+    const { isMobile } = this.state;
     return (
       <div className="header">
         <Container>
@@ -99,7 +99,7 @@ class Header extends Component {
                     Admin Page
                   </Nav.Link>
                 )}
-                { isSearch ? this.renderSearchHeader() : this.renderDefaultHeader() }
+                {this.renderDefaultHeader()}
               </Nav>
               {currentUser ? (
                 <NavDropdown title={<User user={currentUser}/> || ''} id="basic-nav-dropdown">
@@ -120,7 +120,6 @@ class Header extends Component {
             </Navbar.Collapse>
           </Navbar>
         </Container>
-        <hr />
         {this.state.showSignInModal && <SignIn ref={this.signInRef} />}
         {this.state.showSignUpModal && <SignUp ref={this.signUpRef} />}
       </div>
@@ -128,8 +127,11 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
+// const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser,
+// });
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
 });
 
 export default connect(mapStateToProps)(Header);

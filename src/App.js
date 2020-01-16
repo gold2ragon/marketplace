@@ -73,27 +73,25 @@ class App extends Component {
     const { isLoggedIn } = this.state;
     const { currentUser } = this.props;
     return (
-      <div>
-        <Router history={history}>
-          <Header {...this.state}/>
-          <Switch>
-            <Route exact path="/" component={Homepage} />
-            <Route exact path="/linkedin" component={LinkedInPopUp} />
-            <Route path="/search" component={Franchises} />
-            {isLoggedIn && (
-              <Fragment>
-                <Route exact path="/mypage/:id" component={Profile} />
-                {currentUser && currentUser.admin && (
-                  <Fragment>
-                    <Route exact path="/admin/listing/:id" component={AdminPage} />
-                    <Route exact path="/admin/:page" component={AdminPage} />
-                  </Fragment>
-                )}
-              </Fragment>
-            )}
-          </Switch>
-        </Router>
-      </div>
+      <Router history={history}>
+        <Header {...this.state}/>
+        <Switch>
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/linkedin" component={LinkedInPopUp} />
+          <Route path="/search" component={Franchises} />
+          {isLoggedIn && (
+            <Fragment>
+              <Route exact path="/mypage/:id" component={Profile} />
+              {currentUser && currentUser.admin && (
+                <Fragment>
+                  <Route exact path="/admin/listing/:id" component={AdminPage} />
+                  <Route exact path="/admin/:page" component={AdminPage} />
+                </Fragment>
+              )}
+            </Fragment>
+          )}
+        </Switch>
+      </Router>
     );
   }
 }
