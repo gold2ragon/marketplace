@@ -39,7 +39,15 @@ class SignUp extends Component {
   };
 
   hideModal = () => {
-    this.setState({ showModal: false });
+    this.setState({
+      showModal: false,
+      validated: false,
+      invalidCode: false,
+      invalidMobileNumber: false,
+      invalidMessage: '',
+      showCodeInput: false,
+      signupErrorMessage: '',
+    });
   };
 
   clearFormValues = () => {

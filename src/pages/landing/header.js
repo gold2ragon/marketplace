@@ -79,8 +79,7 @@ class Header extends Component {
   }
 
   render() {
-    const { currentUser, isSearch } = this.props;
-    const { isMobile } = this.state;
+    const { currentUser } = this.props;
     return (
       <div className="header">
         <Container>

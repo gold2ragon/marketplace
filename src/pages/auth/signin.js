@@ -13,6 +13,8 @@ class SignIn extends Component {
       password: '',
       showModal: true,
       validated: false,
+      signinFailed: false,
+      errorMessage: '',
     };
   }
 
@@ -35,12 +37,11 @@ class SignIn extends Component {
         showModal: false,
       });
     } catch (error) {
-      console.log(error);
+      this.setState({ signinFailed: true, errorMessage: error.message });
     }
   };
 
   handleChange = (event) => {
-    console.log(event);
     const { value, name } = event.target;
     this.setState({ [name]: value });
   };
@@ -53,11 +54,22 @@ class SignIn extends Component {
   };
 
   hideModal = () => {
-    this.setState({ showModal: false });
+    this.setState({
+      showModal: false,
+      validated: false,
+      signinFailed: false,
+    });
+  };
+
+  handleFailure = (error) => {
+    this.setState({
+      signinFailed: true,
+      errorMessage: error.errorMessage,
+    });
   };
 
   render() {
-    const { showModal, validated} = this.state;
+    const { showModal, validated, signinFailed, errorMessage} = this.state;
     if (this.state.showModal) {
       return (
         <Modal
@@ -71,7 +83,10 @@ class SignIn extends Component {
           <Modal.Body className="auth-modal">
             <div>
               <h3 className="sign">Log in with</h3>
-              <SocialOAuth hideModal={this.hideModal} />
+              <SocialOAuth 
+                hideModal={this.hideModal} 
+                onFailure={this.handleFailure}
+              />
               <br />
               <h3 className="sign">or with your E-mail</h3>
             </div>
@@ -98,6 +113,7 @@ class SignIn extends Component {
               <div className="buttons">
                 <button className="btn-main" type="submit">Log in</button>
               </div>
+              {signinFailed && <div className="error">{errorMessage}</div>}
             </Form>
           </Modal.Body>
         </Modal>

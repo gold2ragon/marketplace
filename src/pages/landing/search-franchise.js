@@ -141,7 +141,7 @@ class SearchFranchise extends Component {
   }
 
   render() {
-    const { isMobile, isSearch, keyword, cuisineType, minprice, maxprice } = this.state;
+    const { isMobile, keyword, cuisineType, minprice, maxprice } = this.state;
     let priceRangeInfo;
     if (!minprice && !maxprice) {
       priceRangeInfo = 'Franchise Fee';

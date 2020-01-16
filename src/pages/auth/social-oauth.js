@@ -8,7 +8,11 @@ class SocialOAuth extends Component {
 
   handleSuccess = async (data) => {
     const { token } = data;
-    await auth.signInWithCustomToken(token);
+    try {
+      await auth.signInWithCustomToken(token);
+    } catch (error) {
+      this.props.onFailure(error);
+    }
     this.props.hideModal();
   }
 
@@ -17,15 +21,23 @@ class SocialOAuth extends Component {
   }
 
   signInWithFacebook = () => {
-    signInWithFacebook().then(() => {
-      this.props.hideModal();
-    });
+    try {
+      signInWithFacebook().then(() => {
+        this.props.hideModal();
+      });
+    } catch (error) {
+      this.props.onFailure(error);
+    }
   }
 
   signInWithGoogle = () => {
-    signInWithGoogle().then(() => {
-      this.props.hideModal();
-    });
+    try {
+      signInWithGoogle().then(() => {
+        this.props.hideModal();
+      });
+    } catch (error) {
+      this.props.onFailure(error);
+    }
   }
 
   render() {
