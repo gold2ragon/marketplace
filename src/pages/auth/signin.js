@@ -72,6 +72,7 @@ class SignIn extends Component {
       return (
         <Modal
           size="lg"
+          className="signup-modal"
           key={this.state.key}
           centered
           show={this.openModal}

@@ -1,5 +1,7 @@
-.modal-dialog {
-  max-width: 640px !important;
+.signup-modal, .signin-modal {
+  .modal-dialog {
+    max-width: 640px !important;
+  }
 }
 
 .auth-modal {

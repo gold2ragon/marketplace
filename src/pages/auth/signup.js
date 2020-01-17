@@ -193,6 +193,7 @@ class SignUp extends Component {
           show={this.props.showSignUpModal}
           animation={true}
           onHide={this.hideModal}
+          className="signup-modal"
         >
           <Modal.Body className="auth-modal">
             <div>

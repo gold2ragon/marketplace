@@ -1,12 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { createStructuredSelector } from 'reselect';
 import { auth } from '../../firebase';
 import SignIn from '../auth/signin';
 import SignUp from '../auth/signup';
 import { showSignInModal, showSignUpModal } from '../../redux/actions/auth';
-// import { selectCurrentUser } from '../../redux/actions/auth';
 import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 import SearchFranchises from './search-franchise';
 import './landing.scss';
@@ -28,8 +26,6 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // showSignInModal: false,
-      // showSignUpModal: false,
       isAdminUser: false,
       isMobile: false,
     };
@@ -44,10 +40,6 @@ class Header extends Component {
   }
 
   signUp = () => {
-    // this.setState({
-    //   showSignUpModal: true,
-    //   showSignInModal: false,
-    // });
     this.props.showSignUpModal();
     if (this.signUpRef.current) {
       this.signUpRef.current.openModal();
@@ -55,22 +47,13 @@ class Header extends Component {
   };
 
   signIn = () => {
-    // this.setState({
-    //   showSignUpModal: false,
-    //   showSignInModal: true,
-    // });
     this.props.showSignInModal();
-    // if (this.signInRef.current) {
-    //   this.signInRef.current.openModal();
-    // }
   };
 
   renderDefaultHeader = () => {
     return (
       <Fragment>
-        <Nav.Link href="#pricing">Home</Nav.Link>
-        <Nav.Link href="#pricing">Franchise</Nav.Link>
-        <Nav.Link href="#pricing">About us</Nav.Link>
+        <Nav.Link as={Link} to={`/search?keyword=&cuisineType=${'Cuisine Type'}&minprice=&maxprice=`}>All Franchises</Nav.Link>
       </Fragment>
     )
   }

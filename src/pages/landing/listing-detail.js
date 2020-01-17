@@ -5,6 +5,9 @@ import { getListings } from '../../redux/actions/listing';
 import { showSignInModal, showSignUpModal } from '../../redux/actions/auth';
 import './listing-detail.scss';
 import { auth } from '../../firebase';
+import _ from 'lodash';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 
 class ListingDetail extends Component {
   constructor(props) {
@@ -12,6 +15,8 @@ class ListingDetail extends Component {
     const { id } = this.props.match.params;
     this.state = {
       id,
+      showPhotosGallery: false,
+      imageIndex: 0,
     };
     this.galleryRef = React.createRef();
   }
@@ -25,26 +30,39 @@ class ListingDetail extends Component {
 
   renderPhotos = (photos) => {
     const items = [];
-    for (const photo of photos) {
+    _.map(photos, (photo, index) => {
       items.push(
         <div key={Math.random()}>
-          <img src={photo} alt="franchise pic" />
+          <img src={photo} alt="franchise pic" onClick={() => this.openPhotosGallery(index)} />
         </div>,
       );
-    }
+    });
     return (
-      <div ref={this.galleryRef} className="photo-lists">
+      <div className="photo-lists">
         {items}
       </div>
     );
   };
 
+  openPhotosGallery = (index) => {
+    this.setState({
+      showPhotosGallery: true,
+      imageIndex: index,
+    })
+  }
+
+  onHide = () => {
+    this.setState({ showPhotosGallery: false });
+  }
+
   render() {
     const { listings } = this.props;
     if (!listings) return null;
-    const { id } = this.state;
+    const { id, showPhotosGallery, imageIndex } = this.state;
     const listing = listings[id];
     if (!listing) return null;
+    const images = listing.public.photos;
+
     return (
       <div className="listing-detail">
         <img className="img-slider" src={listing.public.photos[0]} alt="cover pic" />
@@ -95,6 +113,24 @@ class ListingDetail extends Component {
             </Col>
           </Row>
         </Container>
+        {showPhotosGallery && (
+          <Lightbox
+            mainSrc={images[imageIndex]}
+            nextSrc={images[(imageIndex + 1) % images.length]}
+            prevSrc={images[(imageIndex + images.length - 1) % images.length]}
+            onCloseRequest={() => this.setState({ showPhotosGallery: false })}
+            onMovePrevRequest={() =>
+              this.setState({
+                imageIndex: (imageIndex + images.length - 1) % images.length,
+              })
+            }
+            onMoveNextRequest={() =>
+              this.setState({
+                imageIndex: (imageIndex + 1) % images.length,
+              })
+            }
+          />
+        )}
       </div>
     );
   }
