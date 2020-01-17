@@ -80,21 +80,12 @@ class ListingDetail extends Component {
                   dangerouslySetInnerHTML={{ __html: listing.public.description }}
                 />
               </div>
-              {!auth.currentUser && (
-                <div className="more-details">
-                  <span className="label">More Details?</span>
-                  <span className="link-main" onClick={this.props.openSigninModal}>
-                    Login
-                  </span>
-                  or
-                  <span className="link-main" onClick={this.props.openSignUpModal}>
-                    Sign Up
-                  </span>
-                  to view full details
-                </div>
-              )}
             </Col>
             <Col lg={5}>
+              <div>
+                <div className="label-photo-gallery">Photo Gallery</div>
+                {this.renderPhotos(listing.public.photos)}
+              </div>
               <div className="franchise-info">
                 <div className="label-franchise-fee">Franchise Fee</div>
                 <div className="franchise-fee">$ {listing.public.franchiseFee}</div>
@@ -106,10 +97,25 @@ class ListingDetail extends Component {
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="label-photo-gallery">Photo Gallery</div>
-                {this.renderPhotos(listing.public.photos)}
-              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={6}>
+              {!auth.currentUser && (
+                <div className="more-details">
+                  <div className="label">More Details?</div>
+                  <div>
+                    <span className="link-main" onClick={this.props.openSigninModal}>
+                      Login
+                    </span>
+                    or 
+                    <span className="link-main" onClick={this.props.openSignUpModal}>
+                      Sign Up
+                    </span>
+                    to view full details
+                  </div>
+                </div>
+              )}
             </Col>
           </Row>
         </Container>
