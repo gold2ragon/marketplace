@@ -94,7 +94,7 @@ class Homepage extends Component {
               </div>
             <div className="info">
               <div>Discover the best franchises available</div>
-              <span className="link link-main">
+              <span className="link link-main" onClick={this.handleSeeAllFranchises}>
                 See all franchises
               </span>
             </div>
