@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SearchFranchise from './search-franchise';
-import Footer from './footer';
 import { history } from '../../App';
 
 import './franchises.scss';
@@ -19,7 +18,7 @@ class Franchises extends Component {
     const listings = [];
     for (const listing of searchResults) {
       listings.push(
-        <div key={Math.random()} className="search-list" onClick={() => this.handleListingDetail(listing.id)}>
+        <div key={Math.random()} className="search-list">
           <Row>
             <Col md="6">
               <img src={listing.public.photos[0]} alt="pic of listing"/>
@@ -34,9 +33,12 @@ class Franchises extends Component {
               <div>
                 <div className="label-franchise-fee">Franchise Fee</div>
                 <div className="franchise-fee">$ {listing.public.franchiseFee}</div>
-                <div className="tag">
-                  <span>{listing.public.cuisineType}</span>
-                  <span>{listing.public.restaurantName}</span>
+                <div className="footer">
+                  <div className="tag">
+                    <span>{listing.public.cuisineType}</span>
+                    <span>{listing.public.restaurantName}</span>
+                  </div>
+                  <span className="link-main" onClick={() => this.handleListingDetail(listing.id)}>Learn more ></span>
                 </div>
               </div>
             </Col>

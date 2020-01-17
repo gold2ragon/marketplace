@@ -1,0 +1,130 @@
+.listing-detail {
+  .img-slider {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
+  .row {
+    margin-top: 30px;
+  }
+  .cuisine-description {
+    font-family: Lora;
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1.29;
+    color: #0c0e1c;
+  }
+  .description {
+    img {
+      width: 100%;
+    }
+  }
+  .tag {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    span {
+      background-color: rgba(0, 109, 255, 0.1);
+      font-family: Work Sans;
+      font-size: 14px;
+      font-weight: 500;
+      color: #227cf7;
+      margin-right: 20px;
+      padding: 7px 15px;
+      text-transform: uppercase;
+    }
+  }
+  .description {
+    @media (min-width: 992px) {
+      max-width: 540px;
+    }
+  }
+  .franchise-info {
+    padding: 30px;
+    border: solid 1px #d0d3e3;
+    border-radius: 10px;
+  }
+  .label-franchise-fee {
+    font-family: Work Sans;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333440;
+  }
+  .franchise-fee {
+    margin-top: 6px;
+    font-family: Work Sans;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.33;
+    color: #333440;
+  }
+  .btn-main {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .info {
+    display: flex;
+    margin-top: 20px;
+
+    .icon-info {
+      width: 30px;
+      height: 18px;
+      text-align: center;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 12px;
+      color: #ff4d00;
+      background-color: rgba(255,77,0, 0.1);
+      border-radius: 10px;
+      margin-right: 12px;
+      margin-top: 2px;
+    }
+    .help {
+      font-family: Work Sans;
+      font-size: 14px;
+      line-height: 1.43;
+      color: #787878;
+    }
+  }
+  .label-photo-gallery {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: Work Sans;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #333440;
+  }
+  .photo-lists {
+    display: flex;
+    flex-wrap: wrap;
+    & > div {
+      width: 33.3333333%;
+      padding-right: 10px;
+      padding-bottom: 10px;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+    }
+  }
+  .more-details {
+    border: solid 1px #d0d3e3;
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    .label {
+      font-family: Lora;
+      font-size: 24px;
+      color: #0c0e1c;
+      margin-right: 20px;
+    }
+    .link-main {
+      font-weight: 600;
+      color: #ff4800;
+      font-size: 18px;
+      margin: 0 10px;
+    }
+  }
+}

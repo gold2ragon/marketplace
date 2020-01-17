@@ -6,7 +6,7 @@ import SearchFranchise from './search-franchise';
 import Listing from './listing';
 import CuisineType from './cuisin-type';
 import HowThisWorks from './how-this-works';
-import Footer from './footer';
+import { history } from '../../App';
 
 class Homepage extends Component {
 
@@ -29,8 +29,15 @@ class Homepage extends Component {
     this.props.getListings();
   }
 
+  handleSeeAllFranchises = () => {
+    history.push(
+      `/search?keyword=&cuisineType=${'Cuisine Type'}&minprice=&maxprice=`,
+    );
+  }
+
   render() {
     const { listings } = this.props;
+    if (!listings) return null;
     const listingKeys = Object.keys(listings);
 
     return (
@@ -66,15 +73,15 @@ class Homepage extends Component {
                   <div>Featured</div>
                   <div>Franchise</div>
                 </div>
-                <span className="link link-main">
+                <span className="link link-main" onClick={this.handleSeeAllFranchises}>
                   See all franchises
                 </span>
               </Col>
               <Col lg={4} md={6} sm={6}>
-                {(listingKeys && listingKeys.length > 0) && <Listing listing={listings[listingKeys[0]]} />}
+                {(listingKeys && listingKeys.length > 0) && <Listing id={listingKeys[0]} listing={listings[listingKeys[0]]} />}
               </Col>
               <Col lg={4} md={6} sm={6}>
-                {(listingKeys && listingKeys.length > 1) && <Listing listing={listings[listingKeys[1]]} />}
+                {(listingKeys && listingKeys.length > 1) && <Listing id={listingKeys[1]} listing={listings[listingKeys[1]]} />}
               </Col>
             </Row>
           </Container>

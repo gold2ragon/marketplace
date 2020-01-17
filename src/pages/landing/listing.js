@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { history } from '../../App';
 
 class Listing extends Component {
+
+  handleListingDetail = () => {
+    history.push(`/listing/${this.props.id}`);
+  }
+
   render() {
     const { listing } = this.props;
     const content = listing.public;
@@ -12,7 +18,7 @@ class Listing extends Component {
           <div className="description">{content.cuisineDescription}</div>
           <div className="franchiseFee">$ {parseFloat(content.franchiseFee)/1000}K</div>
           <span className="learn-more">
-            <span className="link link-main">Learn more > </span>
+            <span className="link link-main" onClick={this.handleListingDetail}>Learn more > </span>
           </span>
         </div>
       </div>

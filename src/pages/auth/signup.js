@@ -5,6 +5,8 @@ import { Modal, Form, InputGroup, FormGroup } from 'react-bootstrap';
 import ReactPhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import request from 'request';
+import { connect } from 'react-redux';
+import { showSignInModal, showSignUpModal, hideModal } from '../../redux/actions/auth';
 
 class SignUp extends Component {
   constructor(props) {
@@ -20,7 +22,6 @@ class SignUp extends Component {
       code: '',
       invalidMobileNumber: false,
       invalidCode: false,
-      showModal: true,
       showCodeInput: false,
       validated: false,
       signupErrorMessage: '',
@@ -32,15 +33,15 @@ class SignUp extends Component {
   }
 
   openModal = () => {
-    this.setState({
-      key: Math.random(),
-      showModal: true,
-    });
+    // this.setState({
+    //   key: Math.random(),
+    //   // showModal: true,
+    // });
+    this.openSignUpModal();
   };
 
   hideModal = () => {
     this.setState({
-      showModal: false,
       validated: false,
       invalidCode: false,
       invalidMobileNumber: false,
@@ -48,6 +49,7 @@ class SignUp extends Component {
       showCodeInput: false,
       signupErrorMessage: '',
     });
+    this.props.hideModal();
   };
 
   clearFormValues = () => {
@@ -60,7 +62,6 @@ class SignUp extends Component {
       code: '',
       codeInvalid: true,
       invalidMessage: 'Please enter a mobile number',
-      showModal: true,
       showCodeInput: false,
       validated: false,
       signupErrorMessage: '',
@@ -152,7 +153,8 @@ class SignUp extends Component {
         lastName,
         mobileNumber,
       });
-      this.setState({ showModal: false });
+      // this.setState({ showModal: false });
+      this.props.hideModal();
       this.doSendEmailVerification();
     } catch (error) {
       this.setState({
@@ -169,7 +171,7 @@ class SignUp extends Component {
 
   render() {
     const { showModal } = this.state;
-    if (this.state.showModal) {
+    if (this.props.showSignUpModal) {
       const {
         firstName,
         lastName,
@@ -189,7 +191,7 @@ class SignUp extends Component {
           size="lg"
           key={this.state.key}
           centered
-          show={showModal}
+          show={this.props.showSignUpModal}
           animation={true}
           onHide={this.hideModal}
         >
@@ -297,4 +299,16 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+  showSignInModal: state.user.showSignInModal,
+  showSignUpModal: state.user.showSignUpModal,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  openSignInModal: () => dispatch(showSignInModal()),
+  openSignUpModal: () => dispatch(showSignUpModal()),
+  hideModal: () => dispatch(hideModal()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

@@ -7,9 +7,7 @@
 
 .search-list {
   margin-top: 40px;
-  // box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
   background-color: #f4f4f4;
-  cursor: pointer;
 
   .col-md-6:last-child {
     padding: 30px;
@@ -54,7 +52,6 @@
     margin-top: 10px;
   }
   .tag {
-    margin-top: 20px;
     span {
       background-color: rgba(0, 109, 255, 0.1);
       font-family: Work Sans;
@@ -63,6 +60,17 @@
       color: #227cf7;
       margin-right: 12px;
       padding: 7px 15px;
+      text-transform: uppercase;
+    }
+  }
+  .footer {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .link-main {
+      padding-right: 10px;
     }
   }
 }

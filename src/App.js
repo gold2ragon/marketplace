@@ -12,6 +12,7 @@ import Profile from './pages/profile';
 import AdminPage from './pages/admin';
 import LinkedInPopUp from './pages/auth/linkedin/LinkedInPopUp';
 import Franchises from './pages/landing/franchises';
+import ListingDetail from './pages/landing/listing-detail';
 import Footer from './pages/landing/footer';
 import './app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -61,6 +62,7 @@ class App extends Component {
           <Route exact path="/" component={Homepage} />
           <Route exact path="/linkedin" component={LinkedInPopUp} />
           <Route path="/search" component={Franchises} />
+          <Route path="/listing/:id" component={ListingDetail} />
           {isLoggedIn && (
             <Fragment>
               <Route exact path="/mypage/:id" component={Profile} />

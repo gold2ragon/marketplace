@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import SignIn from '../auth/signin';
 import SignUp from '../auth/signup';
+import { showSignInModal, showSignUpModal } from '../../redux/actions/auth';
 // import { selectCurrentUser } from '../../redux/actions/auth';
 import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
 import SearchFranchises from './search-franchise';
@@ -27,8 +28,8 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSignInModal: false,
-      showSignUpModal: false,
+      // showSignInModal: false,
+      // showSignUpModal: false,
       isAdminUser: false,
       isMobile: false,
     };
@@ -43,23 +44,25 @@ class Header extends Component {
   }
 
   signUp = () => {
-    this.setState({
-      showSignUpModal: true,
-      showSignInModal: false,
-    });
+    // this.setState({
+    //   showSignUpModal: true,
+    //   showSignInModal: false,
+    // });
+    this.props.showSignUpModal();
     if (this.signUpRef.current) {
       this.signUpRef.current.openModal();
     }
   };
 
   signIn = () => {
-    this.setState({
-      showSignUpModal: false,
-      showSignInModal: true,
-    });
-    if (this.signInRef.current) {
-      this.signInRef.current.openModal();
-    }
+    // this.setState({
+    //   showSignUpModal: false,
+    //   showSignInModal: true,
+    // });
+    this.props.showSignInModal();
+    // if (this.signInRef.current) {
+    //   this.signInRef.current.openModal();
+    // }
   };
 
   renderDefaultHeader = () => {
@@ -119,18 +122,22 @@ class Header extends Component {
             </Navbar.Collapse>
           </Navbar>
         </Container>
-        {this.state.showSignInModal && <SignIn ref={this.signInRef} />}
-        {this.state.showSignUpModal && <SignUp ref={this.signUpRef} />}
+        {this.props.showSignInModal && <SignIn ref={this.signInRef} />}
+        {this.props.showSignUpModal && <SignUp ref={this.signUpRef} />}
       </div>
     );
   }
 }
 
-// const mapStateToProps = createStructuredSelector({
-//   currentUser: selectCurrentUser,
-// });
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
+  showSignInModal: state.user.showSignInModal,
+  showSignUpModal: state.user.showSignUpModal,
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => ({
+  showSignInModal: () => dispatch(showSignInModal()),
+  showSignUpModal: () => dispatch(showSignUpModal()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

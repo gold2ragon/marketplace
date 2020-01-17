@@ -34,8 +34,8 @@ class Listings extends Component {
       <tr key={id}>
         <td>{listing.public.cuisineType}</td>
         <td>{listing.public.restaurantName}</td>
-        <td>{listing.public.franchiseFee}</td>
         <td>{listing.public.cuisineDescription}</td>
+        <td>$ {listing.public.franchiseFee}</td>
         <td>
           <Link to={`/admin/listing/${id}`} className="btn btn-primary">
             <i className="fa fa-pencil" />
