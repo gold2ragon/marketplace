@@ -8,7 +8,7 @@ class Footer extends Component {
       <Row id="footer">
         <Col lg={6} md={12}>
           <Link className="home-link" to="/">
-            TheBizHunt.
+            TheBiz<span>Hunt.</span>
           </Link>
           <Link to="/terms-and-conditions">{`Terms & Conditions`}</Link>
           <Link to="/privacy-policy">Privacy Policy</Link>
@@ -20,12 +20,14 @@ class Footer extends Component {
             <br />
             Singapore UEN 201934410G
           </span>
-          <span className="link">
-            <i className="fa fa-facebook-square"></i>
-          </span>
-          <span className="link">
-            <i className="fa fa-instagram"></i>
-          </span>
+          <div>
+            <span className="link">
+              <i className="fa fa-facebook-square"></i>
+            </span>
+            <span className="link">
+              <i className="fa fa-instagram"></i>
+            </span>
+          </div>
         </Col>
       </Row>
     );

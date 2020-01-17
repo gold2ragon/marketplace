@@ -464,21 +464,33 @@
 #footer {
   margin-top: 50px;
   margin-bottom: 104px;
-  
-  & > div {
+  & > div:last-child {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    &:last-child {
-      @media (min-width: 992px) {
+  }
+  & > div {
+    @media (min-width: 992px) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      &:last-child {
         justify-content: flex-end;
+      }
+    }
+    @media (max-width: 991px) {
+      & > a {
+        display: block;
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      &:last-child {
+        margin-top: 30px;
+        justify-content: space-between;
       }
     }
   }
   a, span {
-    margin: 0 2%;
-    margin-top: 30px;
+    margin: 0 10px;
     font-family: "Work Sans", Helvetica, Arial, serif;
     font-weight: 400;
     font-size: 14px;
@@ -500,6 +512,13 @@
     font-size: 18px;
     font-weight: 700;
     margin-left: 0;
+    span {
+      font-family: "Lora", Helvetica, Arial, serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-left: 0;
+      color: $mainColor;
+    }
   }
 }
 /******** Custom dropdown ********/
