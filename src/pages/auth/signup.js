@@ -170,7 +170,6 @@ class SignUp extends Component {
   };
 
   render() {
-    const { showModal } = this.state;
     if (this.props.showSignUpModal) {
       const {
         firstName,

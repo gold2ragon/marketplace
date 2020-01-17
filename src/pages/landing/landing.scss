@@ -266,9 +266,20 @@
 // Featured Section CSS
 #featured {
   background-color: rgba(244, 244, 244, 1.0);
+  .row {
+    & > div:first-child {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
   .featured-fanchise {
     font-size: 42px;
     font-family: $baseFontHeaderFamily;
+  }
+  .img-star {
+    width: 57px;
+    height: 57px;
   }
   .row {
     padding: 100px 0;
@@ -283,17 +294,22 @@
   margin-top: 50px;
   img {
     width: 100%;
+    height: 240px;
   }
   & > div {
     background-color: #ffffff;
-    padding: 30px 25px;
+    padding: 25px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .title {
       font-family: "Lora", Helvetica, Arial, serif;
       font-weight: 700;
       font-size: 20.0px;
       color: rgba(12, 14, 28, 1.0);
       line-height: 25.0px;
-      margin-bottom: 25px;
+      margin-bottom: 10px;
     }
     .franchiseFee {
       font-family: "Work Sans", Helvetica, Arial, serif;
@@ -310,7 +326,7 @@
 }
 
 #explore-cuisine-types {
-  margin: 150px 0;
+  margin: 120px 0;
   margin-bottom: 80px;
   .title {
     font-family: "Lora", Helvetica, Arial, serif;
@@ -320,9 +336,11 @@
     line-height: 39px;
   }
   .info {
-    display: flex;
-    justify-content: space-between;
     margin-top: 20px;
+    @media (min-width: 992px) {
+      display: flex;
+      justify-content: space-between;
+    }
     span {
       font-family: "Work Sans", Helvetica, Arial, serif;
       font-weight: 400;
@@ -333,6 +351,8 @@
   }
   .cuisine-type {
     box-shadow: 0 16px 24px 0 rgba(22, 25, 46, 0.08);
+    max-width: 400px;
+    margin: 0 auto;
     margin-top: 20px;
     img {
       width: 100%;
@@ -351,7 +371,7 @@
       }
       .count {
         margin-top: 10px;
-        margin-bottom: 35px;
+        margin-bottom: 20px;
         font-family: "Work Sans", Helvetica, Arial, serif;
         font-weight: 400;
         font-size: 16px;

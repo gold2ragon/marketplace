@@ -186,6 +186,8 @@ class SearchFranchise extends Component {
             <Dropdown.Toggle>{cuisineType}</Dropdown.Toggle>
 
             <Dropdown.Menu>
+              <Dropdown.Item href="#/Cuisine Type">All Cuisine Types</Dropdown.Item>
+              <Dropdown.Divider />
               <Dropdown.Item href="#/Singaporean">Singaporean</Dropdown.Item>
               <Dropdown.Item href="#/Chinese">Chinese</Dropdown.Item>
               <Dropdown.Item href="#/Japanese">Japanese</Dropdown.Item>

@@ -69,7 +69,7 @@ class Homepage extends Component {
             <Row>
               <Col lg={4} md={12} sm={12}>
                 <div className="featured-fanchise">
-                  <span role="img" aria-labelledby="star">🌟</span>
+                  <img className="img-star" src={require('../../assets/img/star.png')} alt="Star" />
                   <div>Featured</div>
                   <div>Franchise</div>
                 </div>
@@ -92,22 +92,19 @@ class Homepage extends Component {
               Explore TheBizHunt Cuisine Types
               </div>
             <div className="info">
-              <span>Discover the best franchises available</span>
+              <div>Discover the best franchises available</div>
               <span className="link link-main">
                 See all franchises
               </span>
             </div>
             <Row>
-              <Col lg={3} md={6}>
+              <Col md={4}>
                 <CuisineType type="Singaporean" />
               </Col>
-              <Col lg={3} md={6}>
+              <Col md={4}>
                 <CuisineType type="Chinese" />
               </Col>
-              <Col lg={3} md={6}>
-                <CuisineType type="Japanese" />
-              </Col>
-              <Col lg={3} md={6}>
+              <Col md={4}>
                 <CuisineType type="Halal/Vegetarian" />
               </Col>
             </Row>

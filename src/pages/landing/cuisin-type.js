@@ -22,7 +22,7 @@ class CuisinType extends Component {
           <div className="type">
             {type}
           </div>
-          <div className="count">{cuisineType.count} Franchise</div>
+          <div className="count">{cuisineType.count} {`Franchise${cuisineType.count > 1 ? 's' : ''}`}</div>
           <div className="learn-more">
             <span className="link link-main" onClick={() => this.handleCuisinTypeDetail(type)}>Learn more > </span>
           </div>

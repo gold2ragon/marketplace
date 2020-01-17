@@ -9597,6 +9597,14 @@ react-scripts@3.3.0:
   optionalDependencies:
     fsevents "2.1.2"
 
+react-simple-image-slider@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-simple-image-slider/-/react-simple-image-slider-1.0.2.tgz#691710e857a7aa7e885b4db98161380a810673f7"
+  integrity sha512-fk6nQjCQFx7Pw42kXYInQUlLwdykD1NnHt0whiU8dGe1DvFlJDA3ljR94N0h8iO+/UNl7yD3AdlIC4b/jWnY0w==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    prop-types "^15.6.2"
+
 react-transition-group@^1.0.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
