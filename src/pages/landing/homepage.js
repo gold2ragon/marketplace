@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getListings, getFeaturedFranchises } from '../../redux/actions/listing';
+import { showSignInModal, showSignUpModal } from '../../redux/actions/auth';
 import SearchFranchise from './search-franchise';
 import Listing from './listing';
 import CuisineType from './cuisin-type';
@@ -160,7 +161,7 @@ class Homepage extends Component {
                   Sign up to find out more about the franchises available,<br />
                   or refer someone who may be interested!
                 </div>
-                <button className="btn-main">Create your account</button>
+                <button className="btn-main" onClick={this.props.openSignUpModal}>Create your account</button>
               </Col>
             </Row>
           </Container>
@@ -179,6 +180,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getListings: () => dispatch(getListings()),
   getFeaturedFranchises: () => dispatch(getFeaturedFranchises()),
+  openSigninModal: () => dispatch(showSignInModal()),
+  openSignUpModal: () => dispatch(showSignUpModal()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
