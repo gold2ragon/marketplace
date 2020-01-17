@@ -38,13 +38,12 @@ button {
 /* sidebar & menu styles */
 .nav-pills {
   .nav-link {
-    // color: $baseColor !important;
+    color: #333440 !important;
     outline: none;
     letter-spacing: 1px;
     font-size: 20px;
     &.active {
-      font-weight: 900 !important;
-      text-shadow: 1px 0 $baseColor;
+      color: $mainColor !important;
       background-color: transparent !important;
     }
   }
@@ -207,6 +206,11 @@ button {
   &:hover {
     text-decoration: none;
   }
+}
+
+.admin-is-featured {
+  margin-top: 90px;
+  align-items: center;
 }
 
 @media (min-width: 1600px) {

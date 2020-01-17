@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import { getListings } from '../../redux/actions/listing';
+import { getListings, getFeaturedFranchises } from '../../redux/actions/listing';
 import SearchFranchise from './search-franchise';
 import Listing from './listing';
 import CuisineType from './cuisin-type';
@@ -27,6 +27,7 @@ class Homepage extends Component {
 
   componentDidMount() {
     this.props.getListings();
+    this.props.getFeaturedFranchises();
   }
 
   handleSeeAllFranchises = () => {
@@ -36,9 +37,9 @@ class Homepage extends Component {
   }
 
   render() {
-    const { listings } = this.props;
-    if (!listings) return null;
-    const listingKeys = Object.keys(listings);
+    const { featuredFranchises } = this.props;
+    if (!featuredFranchises) return null;
+    const listingKeys = Object.keys(featuredFranchises);
 
     return (
       <Fragment>
@@ -71,17 +72,17 @@ class Homepage extends Component {
                 <div className="featured-fanchise">
                   <img className="img-star" src={require('../../assets/img/star.png')} alt="Star" />
                   <div>Featured</div>
-                  <div>Franchise</div>
+                  <div>Franchises</div>
                 </div>
                 <span className="link link-main" onClick={this.handleSeeAllFranchises}>
                   See all franchises
                 </span>
               </Col>
               <Col lg={4} md={6} sm={6}>
-                {(listingKeys && listingKeys.length > 0) && <Listing id={listingKeys[0]} listing={listings[listingKeys[0]]} />}
+                {(listingKeys && listingKeys.length > 0) && <Listing id={listingKeys[0]} listing={featuredFranchises[listingKeys[0]]} />}
               </Col>
               <Col lg={4} md={6} sm={6}>
-                {(listingKeys && listingKeys.length > 1) && <Listing id={listingKeys[1]} listing={listings[listingKeys[1]]} />}
+                {(listingKeys && listingKeys.length > 1) && <Listing id={listingKeys[1]} listing={featuredFranchises[listingKeys[1]]} />}
               </Col>
             </Row>
           </Container>
@@ -172,10 +173,12 @@ class Homepage extends Component {
 const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   listings: state.admin.listings,
+  featuredFranchises: state.admin.featuredFranchises,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getListings: () => dispatch(getListings()),
+  getFeaturedFranchises: () => dispatch(getFeaturedFranchises()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Homepage);

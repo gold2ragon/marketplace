@@ -39,16 +39,11 @@ class Listing extends Component {
       invalidCusinType: false,
       deletedPhotos: [],
       isSaving: false,
+      isFeatured: false,
     };
 
     this.modules = {
       toolbar: [
-        // [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
-        // [{size: []}],
-        // [{ 'font': [] }],
-        // [{ 'size': ['small', false, 'large', 'huge'] }],
-        // [{ 'size': [ '10px', '12px', '14px', '16px', '18px', '20px', '22px', '24px'] }],
-        // [{ size: ['small', false, 'large', 'huge'] }],
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ list: 'ordered' }, { list: 'bullet' }],
@@ -91,6 +86,7 @@ class Listing extends Component {
         photos: listing.public.photos,
         description: listing.public.description,
         details: listing.private.details,
+        isFeatured: listing.isFeatured,
       });
     }
   }
@@ -180,7 +176,8 @@ class Listing extends Component {
       },
       private: {
         details: this.state.details,
-      }
+      },
+      isFeatured: this.state.isFeatured,
     });
     this.setState({ isSaving: false });
     history.goBack();
@@ -210,8 +207,15 @@ class Listing extends Component {
     this.setState({ details: html });
   };
 
+  handleFeaturedSelect = () => {
+    this.setState({
+      isFeatured: !this.state.isFeatured,
+    })
+  }
+
   render() {
     const {
+      id,
       validated,
       cuisineType,
       restaurantName,
@@ -221,15 +225,16 @@ class Listing extends Component {
       details,
       invalidCusinType,
       isSaving,
+      isFeatured,
     } = this.state;
 
     return (
       <Form id="post-listing" noValidate validated={validated} onSubmit={this.handleSubmit}>
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Cuisine Type
           </Form.Label>
-          <Col sm={5}>
+          <Col md={5}>
             <Form.Control
               as="select"
               className={invalidCusinType ? 'invalid-control' : ''}
@@ -251,10 +256,10 @@ class Listing extends Component {
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Restaurant Name
           </Form.Label>
-          <Col sm={5}>
+          <Col md={5}>
             <Form.Control
               type="text"
               name="restaurantName"
@@ -267,10 +272,10 @@ class Listing extends Component {
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Franchise Fee
           </Form.Label>
-          <Col sm={5}>
+          <Col md={5}>
             <Form.Control
               type="number"
               name="franchiseFee"
@@ -283,10 +288,10 @@ class Listing extends Component {
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Cuisine Description
           </Form.Label>
-          <Col sm={9}>
+          <Col md={9}>
             <Form.Control
               type="text"
               name="cuisineDescription"
@@ -299,10 +304,10 @@ class Listing extends Component {
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Photos
           </Form.Label>
-          <Col sm={9}>
+          <Col md={9}>
             <Dropzone onDrop={this.onFilesDrop}>
               {({ getRootProps, getInputProps }) => (
                 <section>
@@ -330,10 +335,10 @@ class Listing extends Component {
         </Form.Group>
 
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Description
           </Form.Label>
-          <Col sm={9}>
+          <Col md={9}>
             <ReactQuill
               value={description || ''}
               onChange={this.handleChangeDescription}
@@ -343,18 +348,33 @@ class Listing extends Component {
           </Col>
         </Form.Group>
         <br />
-        <hr />
+        <hr style={{marginTop: '50px'}}/>
         <h3>Non-public Information</h3>
         <Form.Group as={Row}>
-          <Form.Label column sm={3}>
+          <Form.Label column md={3}>
             Details
           </Form.Label>
-          <Col sm={9}>
+          <Col md={9}>
             <ReactQuill
               value={details || ''}
               onChange={this.handleChangeDetails}
               modules={this.modules}
               formats={this.formats}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="admin-is-featured">
+          <Form.Label column xs={3}>
+            Featured
+          </Form.Label>
+          <Col xs={9}>
+            <Form.Check 
+              custom
+              type="checkbox"
+              checked={isFeatured}
+              id={id}
+              label={``}
+              onChange={() => this.handleFeaturedSelect()}
             />
           </Col>
         </Form.Group>
