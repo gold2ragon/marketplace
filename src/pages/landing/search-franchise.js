@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getSearchResults } from '../../redux/actions/listing';
 import { ReactComponent as SearchIcon } from '../../assets/img/search-icon.svg';
+import numeral from 'numeral';
 import queryString from 'query-string';
 import { history } from '../../App';
 
 const prices = [5000, 10000, 15000, 20000, 25000, 30000];
-const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop - 20)
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop - 20);
 
 class SearchFranchise extends Component {
   constructor(props) {
@@ -67,13 +68,13 @@ class SearchFranchise extends Component {
         if (minprice && price < minprice) {
           list.push(
             <li key={price} className="disabled" onClick={this.handleChangePriceLimit}>
-              S$ {price}
+              S${numeral(price).format('0,0')}
             </li>,
           );
         } else
           list.push(
             <li key={price} onClick={this.handleChangePriceLimit}>
-              S$ {price}
+              S${numeral(price).format('0,0')}
             </li>,
           );
       }
@@ -90,13 +91,13 @@ class SearchFranchise extends Component {
         if (maxprice && price > maxprice)
           list.push(
             <li key={price} className="disabled" onClick={this.handleChangePriceLimit}>
-              S$ {price}
+              S${numeral(price).format('0,0')}
             </li>,
           );
         else
           list.push(
             <li key={price} onClick={this.handleChangePriceLimit}>
-              S$ {price}
+              S${numeral(price).format('0,0')}
             </li>,
           );
       }
@@ -124,8 +125,9 @@ class SearchFranchise extends Component {
       text = event.target.value;
     }
     let value = '';
-    if (text.includes('S$')) value = parseInt(text.split(' ')[1]);
+    if (text.includes('S$')) value = text.replace('S$', '');
     else if (!text.includes('No ')) value = parseInt(text);
+    value = numeral(value).value();
     this.setState({
       [selectedInput]: value,
     });
@@ -142,6 +144,35 @@ class SearchFranchise extends Component {
     }
   };
 
+  renderPriceRangeInput = () => {
+    const { minprice, maxprice } = this.state;
+    return (
+      <Fragment>
+        <div className="input-range">
+          <input
+            ref={this.minpriceRef}
+            type="text"
+            name="minprice"
+            placeholder="Min"
+            value={numeral(minprice).format('0,0')}
+            onFocus={this.handleInputFocus}
+            onChange={this.handleChangePriceLimit}
+          />
+          <span>-</span>
+          <input
+            ref={this.maxpriceRef}
+            type="text"
+            name="maxprice"
+            placeholder="Max"
+            value={numeral(maxprice).format('0,0')}
+            onFocus={this.handleInputFocus}
+            onChange={this.handleChangePriceLimit}
+          />
+        </div>
+      </Fragment>
+    );
+  };
+
   handleSearchFranchise = () => {
     let { keyword, cuisineType, minprice, maxprice } = this.state;
     history.push(
@@ -152,7 +183,7 @@ class SearchFranchise extends Component {
   handleScrollTop = (event) => {
     scrollToRef(this.myRef);
     this.priceRangeRef.current.click();
-  }
+  };
 
   render() {
     const { isMobile } = this.state;
@@ -162,11 +193,11 @@ class SearchFranchise extends Component {
     if (!minprice && !maxprice) {
       priceRangeInfo = 'Franchise Fee';
     } else if (minprice && maxprice) {
-      priceRangeInfo = `S$ ${minprice} - ${maxprice}`;
+      priceRangeInfo = `S$${numeral(minprice).format('0,0')} - ${numeral(maxprice).format('0,0')}`;
     } else if (!minprice) {
-      priceRangeInfo = `Max S$ ${maxprice}`;
+      priceRangeInfo = `Max S$${numeral(maxprice).format('0,0')}`;
     } else if (!maxprice) {
-      priceRangeInfo = `Min S$ ${minprice}`;
+      priceRangeInfo = `Min S$${numeral(minprice).format('0,0')}`;
     }
 
     if (isMobile) {
@@ -191,35 +222,20 @@ class SearchFranchise extends Component {
               <Dropdown.Item href="#/Singaporean">Singaporean</Dropdown.Item>
               <Dropdown.Item href="#/Chinese">Chinese</Dropdown.Item>
               <Dropdown.Item href="#/Japanese">Japanese</Dropdown.Item>
-              <Dropdown.Item href="#/Halal/Vegan">Halal/Vegan</Dropdown.Item>
+              <Dropdown.Item href="#/Halal/Vegetarian">Halal/Vegetarian</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
 
-          <Dropdown className="search-franchise select-price-range" onSelect={this.handleChangeCuisineType}>
-            <Dropdown.Toggle ref={this.priceRangeRef} onClickCapture={this.handleScrollTop}>{priceRangeInfo}</Dropdown.Toggle>
+          <Dropdown
+            className="search-franchise select-price-range"
+            onSelect={this.handleChangeCuisineType}
+          >
+            <Dropdown.Toggle ref={this.priceRangeRef} onClickCapture={this.handleScrollTop}>
+              {priceRangeInfo}
+            </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-input-range">
-              <div className="input-range">
-                <input
-                  ref={this.minpriceRef}
-                  type="text"
-                  name="minprice"
-                  placeholder="Min"
-                  value={minprice}
-                  onFocus={this.handleInputFocus}
-                  onChange={this.handleChangePriceLimit}
-                />
-                <span>-</span>
-                <input
-                  ref={this.maxpriceRef}
-                  type="text"
-                  name="maxprice"
-                  placeholder="Max"
-                  value={maxprice}
-                  onFocus={this.handleInputFocus}
-                  onChange={this.handleChangePriceLimit}
-                />
-              </div>
+              {this.renderPriceRangeInput()}
               {this.renderPriceList()}
             </Dropdown.Menu>
           </Dropdown>
@@ -252,7 +268,7 @@ class SearchFranchise extends Component {
             <Dropdown.Item href="#/Singaporean">Singaporean</Dropdown.Item>
             <Dropdown.Item href="#/Chinese">Chinese</Dropdown.Item>
             <Dropdown.Item href="#/Japanese">Japanese</Dropdown.Item>
-            <Dropdown.Item href="#/Halal/Vegan">Halal/Vegan</Dropdown.Item>
+            <Dropdown.Item href="#/Halal/Vegetarian">Halal/Vegetarian</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <div className="vertical-bar"></div>
@@ -260,27 +276,7 @@ class SearchFranchise extends Component {
           <Dropdown.Toggle ref={this.priceRangeRef}>{priceRangeInfo}</Dropdown.Toggle>
 
           <Dropdown.Menu className="dropdown-input-range">
-            <div className="input-range">
-              <input
-                ref={this.minpriceRef}
-                type="text"
-                name="minprice"
-                placeholder="Min"
-                value={minprice}
-                onFocus={this.handleInputFocus}
-                onChange={this.handleChangePriceLimit}
-              />
-              <span>-</span>
-              <input
-                ref={this.maxpriceRef}
-                type="text"
-                name="maxprice"
-                placeholder="Max"
-                value={maxprice}
-                onFocus={this.handleInputFocus}
-                onChange={this.handleChangePriceLimit}
-              />
-            </div>
+            {this.renderPriceRangeInput()}
             {this.renderPriceList()}
           </Dropdown.Menu>
         </Dropdown>
@@ -299,7 +295,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSearchResults: (keyword, cuisineType, minprice, maxprice) => dispatch(getSearchResults(keyword, cuisineType, minprice, maxprice)),
+  getSearchResults: (keyword, cuisineType, minprice, maxprice) =>
+    dispatch(getSearchResults(keyword, cuisineType, minprice, maxprice)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchFranchise);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getListings } from '../../redux/actions/listing';
@@ -6,6 +6,7 @@ import { showSignInModal, showSignUpModal } from '../../redux/actions/auth';
 import './listing-detail.scss';
 import { auth } from '../../firebase';
 import _ from 'lodash';
+import numeral from 'numeral';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 
@@ -26,6 +27,7 @@ class ListingDetail extends Component {
     if (!listings) {
       this.props.getListings();
     }
+    window.scrollTo(0, 0);
   }
 
   renderPhotos = (photos) => {
@@ -79,6 +81,16 @@ class ListingDetail extends Component {
                   className="description"
                   dangerouslySetInnerHTML={{ __html: listing.public.description }}
                 />
+                {auth.currentUser && (
+                  <Fragment>
+                    <br />
+                    <h1>Private Information</h1>
+                    <div
+                      className="description"
+                      dangerouslySetInnerHTML={{ __html: listing.private.details }}
+                    />
+                  </Fragment>
+                )}
               </div>
             </Col>
             <Col lg={5}>
@@ -88,12 +100,12 @@ class ListingDetail extends Component {
               </div>
               <div className="franchise-info">
                 <div className="label-franchise-fee">Franchise Fee</div>
-                <div className="franchise-fee">$ {listing.public.franchiseFee}</div>
-                <button className="btn-main">Ask a Question?</button>
+                <div className="franchise-fee">S${numeral(listing.public.franchiseFee).format('0,0')}</div>
+                <a href="mailto:hello@thebizhunt.com" className="btn-main">Ask a Question?</a>
                 <div className="info">
                   <div className="icon-info">i</div>
                   <div className="help">
-                    By clicking ask a question you will be chatting with us privately.
+                    By clicking Ask a Question you will be chatting with us privately.
                   </div>
                 </div>
               </div>

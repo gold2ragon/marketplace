@@ -29,13 +29,13 @@ class AdminPage extends Component {
                 >
                   Referrals
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
                   to="/admin/messages"
                 >
                   Messages
-                </NavLink>
+                </NavLink> */}
               </Nav>
             </Col>
             <Col sm={9}>

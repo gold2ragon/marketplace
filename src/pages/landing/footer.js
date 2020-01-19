@@ -35,7 +35,7 @@ class Footer extends Component {
             </Link>
             <span className="link" onClick={() => this.showModal('TsCs')}>{`Terms & Conditions`}</span>
             <span className="link" onClick={() => this.showModal('Privacy-Policy')} to="/privacy-policy">Privacy Policy</span>
-            <a href="/blog">Blog</a>
+            <a href="/blog" target="_blank">Blog</a>
           </Col>
           <Col lg={6} md={12}>
             <span className="link company-info">
@@ -44,12 +44,12 @@ class Footer extends Component {
               Singapore UEN 201934410G
             </span>
             <div>
-              <span className="link">
+              <a className="link" href="https://www.facebook.com/thebizhunt/" target="_blank" rel="noopener noreferrer">
                 <i className="fa fa-facebook-square"></i>
-              </span>
-              <span className="link">
+              </a>
+              <a className="link" href="https://www.instagram.com/thebizhunt/" target="_blank" rel="noopener noreferrer">
                 <i className="fa fa-instagram"></i>
-              </span>
+              </a>
             </div>
           </Col>
         </Row>

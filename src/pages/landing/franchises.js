@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SearchFranchise from './search-franchise';
+import numeral from 'numeral';
 import { history } from '../../App';
 
 import './franchises.scss';
@@ -32,7 +33,7 @@ class Franchises extends Component {
               </div>
               <div>
                 <div className="label-franchise-fee">Franchise Fee</div>
-                <div className="franchise-fee">$ {listing.public.franchiseFee}</div>
+                <div className="franchise-fee">S${numeral(listing.public.franchiseFee).format('0,0')}</div>
                 <div className="footer">
                   <div className="tag">
                     <span>{listing.public.cuisineType}</span>

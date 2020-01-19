@@ -37,7 +37,8 @@ export const getUserContacts = () => {
     const contactsRef = firestore.doc(`contacts/${currentUser.uid}`);
     try {
       const doc = await contactsRef.get();
-      const data = doc.data();
+      let data = doc.data();
+      if (!data) data = [];
       dispatch(setUserContacts(data));
     } catch (error) {
       console.log('error getting user contacts', error);

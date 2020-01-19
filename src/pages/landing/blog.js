@@ -12,32 +12,21 @@ class Blog extends Component {
     }
   }
 
-  componentDidMount() {
-    const obj = ReactDOM.findDOMNode(this);
-    this.setState({iFrameHeight:  obj.contentWindow.document.body.scrollHeight + 'px'});
-  }
-  
-  // resizeIframe = (iframe) => {
-  //   console.log('====', iframe.target);
-  //   const obj = iframe.target;
-  //   obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
-  //   // this.iframeRef.current.style.height = this.iframeRef.current.contentWindow.document.documentElement.scrollHeight + 'px';
+  // componentDidMount() {
+  //   const obj = ReactDOM.findDOMNode(this);
+  //   this.setState({iFrameHeight:  obj.contentWindow.document.body.scrollHeight + 'px'});
   // }
 
-  componentDidMount() {
-    console.log('componentDidMount');
+  resizeIframeHeight = (obj) => {
+    console.log(obj.target.contentWindow);
   }
 
   render() {
     return (
       <div className="blog" style={{width:'100%', height:this.state.iFrameHeight, overflow:'auto'}}>
-        <Iframe url="https://thebizhunt.wordpress.com/"
-          position="absolute"
-          width="100%"
-          id="myId"
+        <iframe src="https://thebizhunt.wordpress.com/"
           className="iframe-blog"
-          height="100%"
-          styles={{height: "25px"}}
+          onLoad={this.resizeIframeHeight}
         />
       </div>
     );

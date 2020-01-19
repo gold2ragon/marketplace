@@ -7,6 +7,7 @@ import generateRandomID from 'uuid/v4';
 import ReactQuill from 'react-quill';
 import firebase from '../../firebase';
 import { history } from '../../App';
+import numeral from 'numeral';
 import 'react-quill/dist/quill.snow.css';
 import './post-listing.scss';
 
@@ -92,7 +93,11 @@ class Listing extends Component {
   }
 
   handleChange = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    if (name === 'franchiseFee') {
+      console.log('======', value);
+      value = numeral(value).value();
+    }
     this.setState({ [name]: value });
     if (name === 'cuisineType') {
       this.setState({ invalidCusinType: false });
@@ -277,10 +282,9 @@ class Listing extends Component {
           </Form.Label>
           <Col md={5}>
             <Form.Control
-              type="number"
               name="franchiseFee"
-              value={franchiseFee}
-              placeholder="US$25,000"
+              value={numeral(franchiseFee).format('0,0')}
+              placeholder="SS$25,000"
               onChange={this.handleChange}
               required
             />

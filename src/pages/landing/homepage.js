@@ -7,10 +7,10 @@ import SearchFranchise from './search-franchise';
 import Listing from './listing';
 import CuisineType from './cuisin-type';
 import HowThisWorks from './how-this-works';
+import _ from 'lodash';
 import { history } from '../../App';
 
 class Homepage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -32,16 +32,16 @@ class Homepage extends Component {
   }
 
   handleSeeAllFranchises = () => {
-    history.push(
-      `/search?keyword=&cuisineType=${'Cuisine Type'}&minprice=&maxprice=`,
-    );
-  }
+    history.push(`/search?keyword=&cuisineType=${'Cuisine Type'}&minprice=&maxprice=`);
+  };
 
   render() {
-    const { featuredFranchises } = this.props;
+    const { featuredFranchises, cuisineTypes } = this.props;
     if (!featuredFranchises) return null;
     const listingKeys = Object.keys(featuredFranchises);
-
+    const cuisineTypesKeys = Object.keys(cuisineTypes);
+    let columnWidth = 12 / cuisineTypesKeys.length;
+    if (columnWidth > 5) columnWidth = 4;
     return (
       <Fragment>
         <div className="background">
@@ -61,7 +61,7 @@ class Homepage extends Component {
           <span className="span2">food franchises </span>
           <span className="span3">
             are <br /> ready to work with you
-        </span>
+          </span>
         </div>
         <Container className="landing-search">
           <SearchFranchise />
@@ -71,7 +71,6 @@ class Homepage extends Component {
             <Row>
               <Col lg={4} md={12} sm={12}>
                 <div className="featured-fanchise">
-                  <img className="img-star" src={require('../../assets/img/star.png')} alt="Star" />
                   <div>Featured</div>
                   <div>Franchises</div>
                 </div>
@@ -80,19 +79,21 @@ class Homepage extends Component {
                 </span>
               </Col>
               <Col lg={4} md={6} sm={6}>
-                {(listingKeys && listingKeys.length > 0) && <Listing id={listingKeys[0]} listing={featuredFranchises[listingKeys[0]]} />}
+                {listingKeys && listingKeys.length > 0 && (
+                  <Listing id={listingKeys[0]} listing={featuredFranchises[listingKeys[0]]} />
+                )}
               </Col>
               <Col lg={4} md={6} sm={6}>
-                {(listingKeys && listingKeys.length > 1) && <Listing id={listingKeys[1]} listing={featuredFranchises[listingKeys[1]]} />}
+                {listingKeys && listingKeys.length > 1 && (
+                  <Listing id={listingKeys[1]} listing={featuredFranchises[listingKeys[1]]} />
+                )}
               </Col>
             </Row>
           </Container>
         </section>
         <Container>
           <section id="explore-cuisine-types">
-            <div className="title">
-              Explore TheBizHunt Cuisine Types
-              </div>
+            <div className="title">Explore TheBizHunt Cuisine Types</div>
             <div className="info">
               <div>Discover the best franchises available</div>
               <span className="link link-main" onClick={this.handleSeeAllFranchises}>
@@ -100,27 +101,26 @@ class Homepage extends Component {
               </span>
             </div>
             <Row>
-              <Col md={4}>
-                <CuisineType type="Singaporean" />
-              </Col>
-              <Col md={4}>
-                <CuisineType type="Chinese" />
-              </Col>
-              <Col md={4}>
-                <CuisineType type="Halal/Vegetarian" />
-              </Col>
+              {_.map(cuisineTypesKeys, (key, index) => (
+                <Col key={index} md={columnWidth}>
+                  <CuisineType type={key} />
+                </Col>
+              ))}
             </Row>
             <hr />
           </section>
           <section id="how-this-works">
-            <div className="title">
-              How This Works
-              </div>
+            <div className="title">How This Works</div>
             <Row>
               <Col lg={4} md={12}>
                 <HowThisWorks
                   img="🙋‍♂️"
-                  title={<span>Interested in setting up<br />a franchise?</span>}
+                  title={
+                    <span>
+                      Interested in setting up
+                      <br />a franchise?
+                    </span>
+                  }
                   description="All franchises are handpicked by our team and we will guide you through the process of buying and setting up the franchise."
                 />
               </Col>
@@ -128,11 +128,13 @@ class Homepage extends Component {
                 <HowThisWorks
                   img="👔"
                   title={`For F&B Business Owners`}
-                  description={`
-                      Interested in franchising your business? 
-                      We guide first-time franchisors through the process. 
-                      Sign up for an account or contact us at hello@thebizhunt.com
-                    `}
+                  description={
+                    <span>
+                      Interested in franchising your business? We guide first-time franchisors
+                      through the process. Sign up for an account or contact us at
+                      <b> hello@thebizhunt.com</b>
+                    </span>
+                  }
                 />
               </Col>
               <Col lg={4} md={12}>
@@ -156,12 +158,19 @@ class Homepage extends Component {
                 <img src={require('../../assets/img/food9.png')} alt="pic"></img>
               </Col>
               <Col md={6}>
-                <div className="title">Interested to Work<br />With Us?</div>
+                <div className="title">
+                  Interested to Work
+                  <br />
+                  With Us?
+                </div>
                 <div className="description">
-                  Sign up to find out more about the franchises available,<br />
+                  Sign up to find out more about the franchises available,
+                  <br />
                   or refer someone who may be interested!
                 </div>
-                <button className="btn-main" onClick={this.props.openSignUpModal}>Create your account</button>
+                <a href="mailto:hello@thebizhunt.com" className="btn-main btn-contact-us">
+                  Contact Us
+                </a>
               </Col>
             </Row>
           </Container>
@@ -175,6 +184,7 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   listings: state.admin.listings,
   featuredFranchises: state.admin.featuredFranchises,
+  cuisineTypes: state.admin.cuisineTypes,
 });
 
 const mapDispatchToProps = (dispatch) => ({

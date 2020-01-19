@@ -28,13 +28,13 @@ class Profile extends Component {
                 >
                   Refer Someone
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   activeClassName="nav-link active"
                   className="nav-link"
                   to="/mypage/messages"
                 >
                   Messages
-                </NavLink>
+                </NavLink> */}
               </Nav>
             </Col>
             <Col sm={9}>

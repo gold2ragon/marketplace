@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getListings, deleteListing } from '../../redux/actions/listing';
 import { Button, Table, Spinner } from 'react-bootstrap';
+import numeral from 'numeral';
 import _ from 'lodash';
 
 class Listings extends Component {
@@ -35,8 +36,8 @@ class Listings extends Component {
         <td>{listing.public.cuisineType}</td>
         <td>{listing.public.restaurantName}</td>
         <td>{listing.public.cuisineDescription}</td>
-        <td>$ {listing.public.franchiseFee}</td>
-        <td>
+        <td>S${numeral(listing.public.franchiseFee).format('0,0')}</td>
+        <td align="center">
           <Link to={`/admin/listing/${id}`} className="btn btn-primary">
             <i className="fa fa-pencil" />
           </Link>
@@ -75,7 +76,7 @@ class Listings extends Component {
               <th scope="col">Restaurant Name</th>
               <th scope="col">Cuisine Description</th>
               <th scope="col">Franchise Fee</th>
-              <th style={{width: '110px'}}></th>
+              <th style={{width: '130px'}}></th>
             </tr>
           </thead>
           {this.renderContacts()}

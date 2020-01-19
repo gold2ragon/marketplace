@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, FormGroup } from 'react-bootstrap';
+import { Form, FormGroup } from 'react-bootstrap';
 import { saveProfileData } from '../../redux/actions/profile';
 import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
 import firebase, { auth } from '../../firebase';
+import { Link } from 'react-router-dom';
 import './settings.scss';
 
 class Settings extends Component {
@@ -296,9 +297,9 @@ class Settings extends Component {
           value={nameOfAccountHolder}
         />
         <br />
-        <Button variant="secondary" className="btn-main" type="submit">
+        <button className="btn-main" type="submit">
           Save
-        </Button>
+        </button>
         <br />
         <br />
 
@@ -309,9 +310,9 @@ class Settings extends Component {
           Receive a referral fee when they open a franchise.
         </div>
         <br />
-        <Button variant="secondary" className="btn-main">
+        <Link className="btn-main" to="/mypage/contacts">
           Get Started Now!
-        </Button>
+        </Link>
       </Form>
     );
   }

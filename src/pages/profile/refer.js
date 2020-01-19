@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, FormGroup, Table } from 'react-bootstrap';
+import { Form, FormGroup, Table } from 'react-bootstrap';
 import { getUserContacts, submitUserContacts } from '../../redux/actions/contacts';
 import generateRandomID from 'uuid/v4';
 import _ from 'lodash';
@@ -128,9 +128,9 @@ class ReferContacts extends Component {
               required
             />
           </FormGroup>
-          <Button variant="secondary" className="btn-main" type="submit">
+          <button className="btn-main" type="submit">
             Submit
-          </Button>
+          </button>
         </Form>
         <br />
 
