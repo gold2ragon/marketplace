@@ -84,7 +84,7 @@ class ListingDetail extends Component {
                 {auth.currentUser && (
                   <Fragment>
                     <br />
-                    <h1>Private Information</h1>
+                    <h2>Additional Details</h2>
                     <div
                       className="description"
                       dangerouslySetInnerHTML={{ __html: listing.private.details }}
@@ -105,7 +105,7 @@ class ListingDetail extends Component {
                 <div className="info">
                   <div className="icon-info">i</div>
                   <div className="help">
-                    By clicking Ask a Question you will be chatting with us privately.
+                    By clicking Ask a Question you will be sending an email to hello@thebizhunt.com
                   </div>
                 </div>
               </div>

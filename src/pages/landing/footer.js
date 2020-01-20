@@ -35,7 +35,7 @@ class Footer extends Component {
             </Link>
             <span className="link" onClick={() => this.showModal('TsCs')}>{`Terms & Conditions`}</span>
             <span className="link" onClick={() => this.showModal('Privacy-Policy')} to="/privacy-policy">Privacy Policy</span>
-            <a href="/blog" target="_blank">Blog</a>
+            {/* <a href="/blog" target="_blank">Blog</a> */}
           </Col>
           <Col lg={6} md={12}>
             <span className="link company-info">

@@ -54,6 +54,7 @@ class Header extends Component {
     return (
       <Fragment>
         <Nav.Link as={Link} to={`/search?keyword=&cuisineType=${'Cuisine Type'}&minprice=&maxprice=`}>All Franchises</Nav.Link>
+        <Nav.Link as={Link} to={`/blog`} target="_blank">Blog</Nav.Link>
       </Fragment>
     )
   }

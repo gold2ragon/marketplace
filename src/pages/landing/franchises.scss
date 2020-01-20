@@ -34,7 +34,7 @@
 
   .description {
     margin-top: 20px;
-    max-height: 90px;
+    max-height: 92px;
     overflow: hidden;
     p, span, h1, h2, h3, h4, h5, div {
       text-overflow: ellipsis;
@@ -68,12 +68,17 @@
     }
   }
   .footer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    @media (min-width: 992px) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .link-main {
       margin-top: 20px;
       padding-right: 10px;
+      @media (max-width: 991px) {
+        display: block;
+      }
     }
   }
 }

@@ -171,6 +171,7 @@ class Homepage extends Component {
                 <a href="mailto:hello@thebizhunt.com" className="btn-main btn-contact-us">
                   Contact Us
                 </a>
+                <div className="contact-by-email">Or contact us at <b>hello@thebizhunt.com</b> today!</div>
               </Col>
             </Row>
           </Container>

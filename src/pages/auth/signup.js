@@ -290,6 +290,10 @@ class SignUp extends Component {
               </button>
               {signupErrorMessage && <div className="error">{signupErrorMessage}</div>}
             </Form>
+            <div className="change-modal">
+              Already have an account?
+              <button className="link-main" onClick={this.props.openSignInModal}>Login</button>
+            </div>
           </Modal.Body>
         </Modal>
       );
